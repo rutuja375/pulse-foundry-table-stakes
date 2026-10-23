@@ -59,7 +59,7 @@ export function Rail({ venue, place, runId, date, rivals, actionCount }: RailPro
 
   const onOverview = pathname === '/'
   const onSolutions = pathname.startsWith('/solutions')
-  const onNew = pathname.startsWith('/new') || pathname.startsWith('/run')
+  const onNew = pathname.startsWith('/new') || pathname.startsWith('/run') || pathname.startsWith('/confirm')
 
   return (
     <>
@@ -94,8 +94,14 @@ export function Rail({ venue, place, runId, date, rivals, actionCount }: RailPro
             Overview
           </Link>
 
-          <div className="rail-group">Compare</div>
-          {rivals.map(rival => {
+          {/* Before a run exists, the rail shows the *previous* run's rivals, which
+              is confusing on a screen where you are starting a new one. */}
+          {onNew ? (
+            <span className="rail-empty">Comparing and solutions open once this audit starts.</span>
+          ) : null}
+
+          {!onNew && <div className="rail-group">Compare</div>}
+          {!onNew && rivals.map(rival => {
             const active = pathname === `/compare/${rival.slug}`
             return (
               <Link
@@ -108,13 +114,17 @@ export function Rail({ venue, place, runId, date, rivals, actionCount }: RailPro
               </Link>
             )
           })}
-          {!rivals.length && <span className="rail-empty">No rivals named in this run.</span>}
+          {!onNew && !rivals.length && <span className="rail-empty">No rivals named in this run.</span>}
 
-          <div className="rail-group">Act</div>
-          <Link href="/solutions" className={onSolutions ? 'rail-link active' : 'rail-link'}>
-            <span>Solutions</span>
-            {actionCount !== null && <span className="rail-count">{actionCount}</span>}
-          </Link>
+          {!onNew && (
+            <>
+              <div className="rail-group">Act</div>
+              <Link href="/solutions" className={onSolutions ? 'rail-link active' : 'rail-link'}>
+                <span>Solutions</span>
+                {actionCount !== null && <span className="rail-count">{actionCount}</span>}
+              </Link>
+            </>
+          )}
         </nav>
 
         <div className="rail-foot">
@@ -123,9 +133,12 @@ export function Rail({ venue, place, runId, date, rivals, actionCount }: RailPro
             <br />
             run {runId.slice(0, 22)}
           </div>
-          <Button variant="secondary" onClick={() => window.print()} icon={<Printer size={14} strokeWidth={1.8} />}>
-            Print / save PDF
-          </Button>
+          {/* Nothing to print before a run exists. */}
+          {!onNew && (
+            <Button variant="secondary" onClick={() => window.print()} icon={<Printer size={14} strokeWidth={1.8} />}>
+              Print / save PDF
+            </Button>
+          )}
         </div>
       </aside>
 

@@ -1,13 +1,14 @@
-import { StartComposer } from '@/components/new/StartComposer'
+import { StartDetails } from '@/components/new/StartDetails'
 
 /**
- * The start screen. No card, no form: a headline, a hairline composer, and a
- * panel on the right explaining what the next ninety seconds will do.
+ * The start screen. No card, no rail, no explanation: a headline and three
+ * hairline fields. The details are what make the search correct, so they are the
+ * only thing on the page.
  */
 export default function NewPage() {
   return (
     <div className="pane pane-wide">
-      <StartComposer />
+      <StartDetails />
     </div>
   )
 }

@@ -136,15 +136,15 @@ export function ConfirmSite({ venue, place }: { venue: string; place: string }) 
         <div className="head-row">
           <span className="eyebrow">Step 2 of 3 · confirm the basics</span>
           <Link href="/new" className="back-link">
-            ← Edit the search
+            ← Edit the details
           </Link>
         </div>
         <h1 className="venue-title" style={{ fontSize: 34 }}>
           Is this you?
         </h1>
         <p className="pane-lede">
-          We read <b>{venue}</b> in <b>{place}</b>. Check the name and the place, then approve the website — the
-          evidence table is built from whatever page we collect.
+          You are auditing <b>{venue}</b> in <b>{place}</b>. Approve the website below — the evidence table is built
+          from whatever page we collect.
         </p>
       </header>
 

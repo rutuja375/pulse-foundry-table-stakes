@@ -734,124 +734,76 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .feed-latency { font-family: var(--font-data); font-size: 10.5px; color: var(--muted); padding-top: 3px; }
 
 /* ── Start screen ──────────────────────────────────────────────────────────
-   Modelled on the Weiss landing page: no card, no boxed field. A headline, a
-   rule under the text that acts as the composer, and chips beneath it. The only
-   filled thing on the page is the arrow.                                    */
+   The reference gave us the feel, not the layout: no card, no boxes, fields as a
+   rule under the text, one filled element on the page. The reader sets the
+   details themselves — parsing a sentence was a cute guess and the wrong one. */
 
-.pane-wide { max-width: 1180px; }
+.pane-wide { max-width: 1040px; }
 
-.landing { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 56px; padding-top: 8px; }
-.landing-main { max-width: 680px; }
-.landing-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-.landing-title {
+.start { max-width: 620px; padding-top: 6px; }
+.start-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.start-title {
   font-family: var(--kpi-font);
-  font-size: clamp(34px, 4.4vw, 52px);
+  font-size: clamp(32px, 4vw, 46px);
   font-weight: 400;
   letter-spacing: -0.025em;
-  line-height: 1.06;
+  line-height: 1.08;
   color: var(--fg);
-  margin: 0 0 14px;
+  margin: 0 0 40px;
 }
-.landing-body { font-size: 15px; line-height: 1.72; color: var(--fg2); max-width: 480px; margin: 0 0 26px; }
 
-.composer-form { max-width: 680px; }
-.composer {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid var(--fg);
+.start-fields { display: flex; flex-direction: column; gap: 26px; }
+.start-field { display: flex; flex-direction: column; }
+.start-field-label {
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.start-optional { text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 10px; color: var(--muted); }
+
+.start-input {
+  border: 0;
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  background: transparent;
+  padding: 10px 0 12px;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  letter-spacing: 0.005em;
+  color: var(--fg);
   transition: border-color 140ms ease;
 }
-.composer:focus-within { border-bottom-color: var(--active-accent); }
-.composer-icon {
-  border: 0;
-  background: none;
-  color: var(--fg2);
-  padding: 14px 12px 14px 0;
+.start-input::placeholder { color: var(--muted); }
+.start-input:hover { border-bottom-color: var(--fg2); }
+.start-input:focus { outline: none; border-bottom-color: var(--active-accent); }
+.start-field-invalid .start-input { border-bottom-color: var(--negative); }
+.start-field-hint { font-size: 11.5px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+.start-field-error { font-size: 11.5px; color: var(--negative); margin-top: 8px; line-height: 1.5; }
+
+.start-actions { display: flex; align-items: center; gap: 18px; margin-top: 38px; flex-wrap: wrap; }
+.start-submit {
   display: inline-flex;
   align-items: center;
-  cursor: pointer;
-}
-.composer-icon:hover { color: var(--fg); }
-.composer-input {
-  flex: 1;
-  min-width: 0;
-  border: 0;
-  outline: none;
-  background: transparent;
-  padding: 14px 0;
+  gap: 10px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--active-accent);
+  background: var(--active-accent);
+  color: #fff;
   font-family: var(--font-sans);
-  font-size: 15px;
-  letter-spacing: 0.01em;
-  color: var(--fg);
-}
-.composer-input::placeholder { color: var(--muted); }
-.composer-send {
-  border: 0;
-  background: none;
-  color: var(--fg);
-  padding: 14px 0 14px 16px;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  transition: opacity 120ms ease;
-}
-.composer-send:hover { opacity: 0.55; }
-
-.composer-parse { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; min-height: 24px; align-items: center; }
-.composer-hint { font-size: 12px; color: var(--muted); }
-.composer-error { font-size: 12.5px; color: var(--negative); margin: 8px 0 0; }
-
-.parse-chip {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 7px;
-  font-size: 12.5px;
-  color: var(--fg);
-  background: var(--surf-1);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 4px 9px;
-}
-.parse-key { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
-
-.chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
-.chip-btn {
-  font-family: var(--font-sans);
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--muted);
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 7px 12px;
+  letter-spacing: 0.01em;
   cursor: pointer;
-  transition: color 120ms ease, border-color 120ms ease;
+  transition: background-color 120ms ease, border-color 120ms ease, transform 60ms ease;
 }
-.chip-btn:hover { color: var(--fg); border-color: var(--border-strong); }
-
-.landing-side { border-left: 1px solid var(--border); padding-left: 28px; }
-.side-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 14px; }
-.side-steps { list-style: none; display: flex; flex-direction: column; gap: 18px; margin: 0; padding: 0; }
-.side-steps li { display: flex; gap: 12px; align-items: flex-start; }
-.step-n {
-  flex: 0 0 auto;
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--border-strong);
-  border-radius: 50%;
-  font-family: var(--font-data);
-  font-size: 10px;
-  color: var(--muted);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1px;
-}
-.side-steps b { font-size: 13px; color: var(--fg); font-weight: 600; display: block; }
-.side-steps p { font-size: 12px; line-height: 1.55; color: var(--muted); margin: 3px 0 0; }
-.side-block { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--border); }
-.side-note { margin-top: 24px; padding-left: 12px; border-left: 2px solid var(--border-strong); font-size: 11.5px; line-height: 1.6; color: var(--muted); }
+.start-submit:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.start-submit:active { transform: translateY(1px); }
+.start-next { font-size: 12px; color: var(--muted); }
 
 /* ── Confirm step ──────────────────────────────────────────────────────────
    The preview is the point: a guessed domain is only worth anything if the page
@@ -893,7 +845,5 @@ button, input, textarea, select { font: inherit; color: inherit; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 @media (max-width: 1100px) {
-  .landing { grid-template-columns: 1fr; gap: 34px; }
-  .landing-side { border-left: 0; border-top: 1px solid var(--border); padding-left: 0; padding-top: 24px; }
   .field-row { grid-template-columns: 1fr; }
 }
