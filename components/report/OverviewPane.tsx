@@ -182,7 +182,7 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
               label: 'Answers on record',
               value: String(completed.length),
               delta: report.totals.failed ? `${report.totals.failed} failed` : undefined,
-              deltaColor: report.totals.failed ? 'var(--warning)' : undefined,
+              deltaDirection: report.totals.failed ? ('down' as const) : undefined,
               tooltip:
                 'Verbatim answers stored in this run.\n' +
                 `Completed: ${completed.length}\nFailed: ${report.totals.failed}\n` +
