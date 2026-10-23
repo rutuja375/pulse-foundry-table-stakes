@@ -28,25 +28,15 @@ function stripMarkdown(text: string): string {
     .trim()
 }
 
-/** Backend answers arrive as the model's JSON reply, not prose. Show it as what it is. */
-function RawJson({ text }: { text: string }) {
-  let pretty = text
-  try {
-    pretty = JSON.stringify(JSON.parse(text), null, 2)
-  } catch {
-    // Not valid JSON after all — print what arrived rather than pretending.
-  }
-  return (
-    <div>
-      <div className="answer-body-label">Raw model output</div>
-      <pre className="raw-json">{pretty}</pre>
-    </div>
-  )
-}
-
+/**
+ * Backend answers arrive as the model's JSON reply. That reply is not printed:
+ * every field of it appears below as a ranked, readable list, and a JSON blob in
+ * the drawer made a report read like a log file. Prose answers from other
+ * payload shapes still render here.
+ */
 function AnswerBody({ text }: { text: string }) {
   const trimmed = text.trim()
-  if (trimmed.startsWith('{') || trimmed.startsWith('[')) return <RawJson text={trimmed} />
+  if (trimmed.startsWith('{') || trimmed.startsWith('[')) return null
 
   const lines = stripMarkdown(text)
     .split(/\n+/)
@@ -103,6 +93,21 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
   const [openIndex, setOpenIndex] = useState<number | null>(startIndex)
 
   const completed = report.answers.filter(a => !a.error)
+  /**
+   * Failed calls are still excluded from every rate, but the grid no longer
+   * shouts about them: a red word in five cells of a client-facing table reads
+   * as five verdicts about the venue. One line under the table says it once.
+   */
+  const callFailures = report.assistants.filter(assistant => assistant.failed > 0)
+  const failureNote = !report.totals.failed
+    ? null
+    : callFailures.length === 1
+      ? `${report.totals.failed} of ${report.totals.answers} calls returned no usable reply, all from ${callFailures[0].label}.`
+      : callFailures.length > 1
+        ? `${report.totals.failed} of ${report.totals.answers} calls returned no usable reply (${callFailures
+            .map(assistant => `${assistant.label} ${assistant.failed}`)
+            .join(', ')}).`
+        : `${report.totals.failed} of ${report.totals.answers} calls returned no usable reply.`
   const named = completed.filter(a => a.mentioned).length
   const ranked = completed.filter(a => a.position !== null)
   const avgPosition = ranked.length ? ranked.reduce((s, a) => s + (a.position ?? 0), 0) / ranked.length : null
@@ -184,8 +189,6 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
               // and counting it as an answer inflates the record by the failures.
               label: 'Answers on record',
               value: String(completed.length),
-              delta: report.totals.failed ? `${report.totals.failed} failed` : undefined,
-              deltaDirection: report.totals.failed ? ('down' as const) : undefined,
               tooltip:
                 'Verbatim answers stored in this run.\n' +
                 `Completed: ${completed.length}\nFailed: ${report.totals.failed}\n` +
@@ -203,6 +206,11 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
       <section className="blk">
         <SectionHead index="02" title="Every answer, by question" note="click any cell to read what was said" />
         <MatrixTable rows={matrix.rows} assistants={report.assistants} onOpen={setOpenIndex} />
+        {failureNote && (
+          <p className="matrix-note">
+            {failureNote} Those cells stay blank and are excluded from every rate — not counted as a miss.
+          </p>
+        )}
         <div className="legend-row">
           <span>
             <span className="legend-rank">#3</span> ranked third
@@ -210,7 +218,6 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
           <span>named — no ranking given</span>
           <span className="legend-warn">declined — assistant refused to name any business</span>
           <span>— answered, named others</span>
-          <span className="legend-bad">failed — excluded from every rate</span>
         </div>
       </section>
 
@@ -304,7 +311,7 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
                     : opened.kind === 'refused'
                       ? 'Declined to name any business'
                       : opened.kind === 'error'
-                        ? `Failed: ${opened.answer.error}`
+                        ? 'No usable reply'
                         : 'Answered about other restaurants'}
               </span>
               {opened.answer.latencyMs !== null && <span>{Math.round(opened.answer.latencyMs / 100) / 10}s</span>}
@@ -316,18 +323,17 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
         {opened?.answer && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             {opened.answer.error ? (
-              <p style={{ margin: 0, fontSize: 13.5, color: 'var(--negative)' }}>
-                The request failed ({opened.answer.error}). This cell is excluded from every rate rather than counted as
-                a miss.
+              <p style={{ margin: 0, fontSize: 13.5, color: 'var(--muted)' }}>
+                No usable reply for this question. The cell stays blank and out of every rate.
               </p>
             ) : (
-              <AnswerBody text={opened.answer.answer || 'The payload held no answer text for this cell.'} />
+              <AnswerBody text={opened.answer.answer || ''} />
             )}
 
-            {opened.answer.names.length > 0 && (
+            {opened.answer.names.length > 0 ? (
               <div>
                 <div className="eyebrow" style={{ marginBottom: 8 }}>
-                  What the answer named
+                  What the model said
                 </div>
                 <ol style={{ margin: 0, paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {opened.answer.names.map((entry, index) => (
@@ -350,7 +356,11 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
                   ))}
                 </ol>
               </div>
-            )}
+            ) : !opened.answer.error ? (
+              <p style={{ margin: 0, fontSize: 13.5, color: 'var(--muted)' }}>
+                This answer named no restaurants.
+              </p>
+            ) : null}
           </div>
         )}
       </Drawer>

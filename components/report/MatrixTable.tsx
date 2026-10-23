@@ -13,7 +13,9 @@
  *   named     named without a ranking — real, but not a position
  *   declined  the assistant refused to name any business at all
  *   ·         answered about other restaurants
- *   failed    the call failed; never rendered as a zero
+ *   blank     no usable reply; never rendered as a zero, and never rendered as
+ *             a red word either — a table of verdicts should not blame a venue
+ *             for a failed HTTP call. The count is stated once under the table.
  *
  * Every cell opens the verbatim answer. The claim and its evidence are one click
  * apart, which is the only way a restaurant owner can check us.
@@ -41,7 +43,7 @@ const CELL_COPY: Record<Cell['kind'], { label: string; title: string }> = {
   passing: { label: 'named', title: 'Named, but never ranked — no position to record' },
   refused: { label: 'declined', title: 'The assistant declined to name any business' },
   absent: { label: '—', title: 'Answered, recommended other restaurants' },
-  error: { label: 'failed', title: 'The request failed — excluded from every rate' },
+  error: { label: '', title: 'No usable reply — excluded from every rate' },
   missing: { label: '', title: 'No answer for this pair' },
 }
 
@@ -65,7 +67,7 @@ function cellStyle(cell: Cell): CSSProperties {
     case 'absent':
       return { ...base, color: 'var(--muted)', fontSize: 13 }
     case 'error':
-      return { ...base, color: 'var(--negative)', fontSize: 11.5 }
+      return { ...base, color: 'var(--muted)' }
     default:
       return { ...base, color: 'var(--surf-3)' }
   }

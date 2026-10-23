@@ -108,7 +108,6 @@ export function AssistantTable({ rows }: { rows: IngestedAssistant[] }) {
           <Head label="Named" definition="Answers where this assistant mentioned the venue, ranked or in passing, out of the answers it completed." />
           <Head label="Avg pos" definition="Mean rank across the answers where the venue was ranked. Answers that named it in passing are excluded — they carry no position." />
           <Head label="Declined" definition="Answers where the assistant refused to name any business at all. Not a rival win, and not evidence of invisibility either — it is an answer that answers nothing." />
-          <Head label="Failed" definition="Requests that errored or timed out. Excluded from every rate; never counted as a miss." />
         </tr>
       </thead>
       <tbody>
@@ -145,7 +144,6 @@ export function AssistantTable({ rows }: { rows: IngestedAssistant[] }) {
             </td>
             <td style={cellStyle}>{formatPosition(row.averagePosition)}</td>
             <td style={{ ...cellStyle, color: row.refused ? 'var(--warning)' : 'var(--muted)' }}>{row.refused || '—'}</td>
-            <td style={{ ...cellStyle, color: row.failed ? 'var(--negative)' : 'var(--muted)' }}>{row.failed || '—'}</td>
           </tr>
         ))}
       </tbody>
