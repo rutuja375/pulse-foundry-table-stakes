@@ -18,6 +18,7 @@ import { Check, ExternalLink, Globe, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { candidateDomains } from '@/lib/site/candidates'
 import type { SiteCandidate } from '@/lib/site/lookup'
+import { readSavedVenue, saveSite } from '@/lib/prefs'
 
 type Row = {
   domain: string
@@ -37,12 +38,56 @@ export function ConfirmSite({ venue, place }: { venue: string; place: string }) 
   const [manual, setManual] = useState('')
   const [manualNote, setManualNote] = useState<string | null>(null)
   const [done, setDone] = useState(false)
+  const [restoreChecked, setRestoreChecked] = useState(false)
+
+  /**
+   * A site approved last time is not re-guessed. It comes back as a saved row the
+   * reader can re-check or replace — one less lookup, and no moment where the
+   * screen re-opens a question they already answered.
+   */
+  useEffect(() => {
+    const saved = readSavedVenue()
+    const sameVenue = saved && saved.name.trim().toLowerCase() === venue.trim().toLowerCase()
+    if (saved?.site && sameVenue) {
+      const restored: SiteCandidate = {
+        url: saved.site.url,
+        domain: saved.site.domain,
+        ok: true,
+        title: saved.site.title,
+        description: saved.site.description,
+        finalUrl: saved.site.url,
+        error: null,
+        reason: 'saved from last time',
+      }
+      setRows(current => [{ domain: restored.domain, reason: 'saved from last time', status: 'ok', result: restored }, ...current.filter(row => row.domain !== restored.domain)])
+      setChosen(restored.domain)
+      setDone(true)
+    }
+    setRestoreChecked(true)
+  }, [venue])
+
+  /** Choosing a site is what makes it worth remembering. */
+  function choose(domain: string) {
+    setChosen(domain)
+    const row = rows.find(entry => entry.domain === domain)
+    if (row?.result?.ok) {
+      saveSite({
+        domain: row.result.domain,
+        url: row.result.url,
+        title: row.result.title,
+        description: row.result.description,
+        checkedAt: new Date().toISOString(),
+      })
+    }
+  }
 
   // Walk the guesses in order, stopping at the first page that looks like a venue.
   useEffect(() => {
+    if (!restoreChecked) return
     let cancelled = false
 
     async function run() {
+      if (chosen) return
       for (let index = 0; index < rows.length; index += 1) {
         if (cancelled) return
         if (chosen) return
@@ -74,7 +119,7 @@ export function ConfirmSite({ venue, place }: { venue: string; place: string }) 
       cancelled = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [restoreChecked])
 
   const chosenRow = useMemo(() => rows.find(row => row.domain === chosen), [rows, chosen])
   const stillChecking = rows.some(row => row.status === 'checking' || row.status === 'queued')
@@ -95,7 +140,7 @@ export function ConfirmSite({ venue, place }: { venue: string; place: string }) 
       )
       const result = (await response.json()) as SiteCandidate
       setRows(current => current.map(row => (row.domain === domain ? { ...row, status: result.ok ? 'ok' : 'no', result } : row)))
-      if (result.ok) setChosen(domain)
+      if (result.ok) choose(domain)
     } catch {
       setRows(current => current.map(row => (row.domain === domain ? { ...row, status: 'no' } : row)))
     }
@@ -124,7 +169,7 @@ export function ConfirmSite({ venue, place }: { venue: string; place: string }) 
             row.domain === clean ? { ...row, status: result.ok ? 'ok' : 'no', result } : row
           )
         )
-        if (result.ok) setChosen(result.domain)
+        if (result.ok) choose(result.domain)
         else setManualNote('We could not load that page. You can still continue — the report will say no site evidence was collected.')
       })
       .catch(() => setManualNote('We could not load that page. You can still continue.'))
@@ -209,7 +254,7 @@ export function ConfirmSite({ venue, place }: { venue: string; place: string }) 
                       <button
                         type="button"
                         className={isChosen ? 'btn btn-link btn--primary btn-sm' : 'btn btn-link btn--secondary btn-sm'}
-                        onClick={() => setChosen(row.domain)}
+                        onClick={() => choose(row.domain)}
                       >
                         {isChosen ? 'Using this' : 'Use this'}
                       </button>
