@@ -5,11 +5,11 @@ from pathlib import Path
 QUERY_BANK_PATH = Path(__file__).resolve().parents[1] / "data" / "query_bank.json"
 
 
-def test_query_bank_has_nineteen_valid_unique_prompts():
+def test_query_bank_has_twenty_valid_unique_prompts():
     queries = json.loads(QUERY_BANK_PATH.read_text(encoding="utf-8"))
 
-    assert len(queries) == 19
-    assert len({item["id"] for item in queries}) == 19
+    assert len(queries) == 20
+    assert len({item["id"] for item in queries}) == 20
     assert all(item["category"].strip() for item in queries)
     assert all(item["query"].strip() for item in queries)
     assert all(isinstance(item["secondary_categories"], list) for item in queries)

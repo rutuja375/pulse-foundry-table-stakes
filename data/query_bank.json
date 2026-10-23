@@ -17,5 +17,6 @@
   {"id": "q16", "category": "catering", "secondary_categories": ["dietary_options", "greek_food"], "query": "I need to order lunch catering for an office party in Pacific Beach next week for 15 people. Several coworkers are gluten-free, so I need a Greek or Mediterranean place that delivers box lunches or platters."},
   {"id": "q17", "category": "affordability", "secondary_categories": [], "query": "affordable lunch spots in San Diego"},
   {"id": "q18", "category": "table_size", "secondary_categories": ["private_events"], "query": "We're a group of 10 for my friend's birthday and want somewhere in PB that can seat us at one table without doing a full private room booking."},
-  {"id": "q19", "category": "reservations", "secondary_categories": [], "query": "Looking for well reviewed places in Pacific Beach that take reservations through an app rather than just walk-ins."}
+  {"id": "q19", "category": "reservations", "secondary_categories": [], "query": "Looking for well reviewed places in Pacific Beach that take reservations through an app rather than just walk-ins."},
+  {"id": "q20", "category": "affordability", "secondary_categories": [], "query": "Where should we eat on our first night visiting San Diego?"}
 ]
