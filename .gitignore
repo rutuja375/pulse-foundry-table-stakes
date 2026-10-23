@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Saved local analysis runs
+data/runs/*.json
+!data/runs/.gitkeep
