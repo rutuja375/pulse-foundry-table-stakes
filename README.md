@@ -13,6 +13,11 @@ npm run dev            # http://localhost:3000 — renders the newest payload in
 npm run probe:ingest   # proves the ingestion against three payload shapes: different, thin, broken
 ```
 
+If you rebuild (`npm run build`) while a tab is open, restart the server too — the old tab holds HTML
+pointing at chunk hashes the new build has replaced, and every navigation fails with ChunkLoadError. A
+guard in the layout reloads the tab once when that happens, but a tab loaded before the guard cannot
+benefit from it: hard-reload once (Cmd-Shift-R) and it stays fixed.
+
 ## What is here
 
 ```

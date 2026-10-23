@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Hanken_Grotesk, JetBrains_Mono, Spectral } from 'next/font/google'
 import './globals.css'
 import { Rail } from '@/components/shell/Rail'
+import { StaleBuildGuard } from '@/components/shell/StaleBuildGuard'
 import { loadLatestRun, railRivals } from '@/lib/view/load-run'
 import { formatDate } from '@/lib/view/derive'
 
@@ -48,6 +49,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={`${spectral.variable} ${hankenGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body>
+        <StaleBuildGuard />
         <div className="shell">
           {report ? (
             <Rail
