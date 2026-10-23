@@ -68,16 +68,19 @@ function Bar({ value, max, tone }: { value: number; max: number; tone: string })
   )
 }
 
-function Card({ children }: { children: ReactNode }) {
+/**
+ * Card anatomy, the same on every table in the report: a header that names what
+ * you are looking at and what it counts, then the table. Without the header a
+ * table is just a grid floating on a page; the label is what makes it a
+ * considered object rather than a dump.
+ */
+function Card({ title, meta, children }: { title: string; meta?: string; children: ReactNode }) {
   return (
-    <div
-      style={{
-        background: 'var(--card-bg)',
-        border: '1px solid var(--card-border)',
-        borderRadius: 'var(--card-radius)',
-        overflow: 'hidden',
-      }}
-    >
+    <div className="data-card">
+      <div className="data-card-head">
+        <span className="data-card-title">{title}</span>
+        {meta && <span className="data-card-meta">{meta}</span>}
+      </div>
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>{children}</table>
     </div>
   )
@@ -95,9 +98,10 @@ function Head({ label, definition, align = 'right' }: { label: string; definitio
 
 export function AssistantTable({ rows }: { rows: IngestedAssistant[] }) {
   const max = Math.max(1, ...rows.map(r => r.answered))
+  const answered = rows.reduce((sum, row) => sum + row.answered, 0)
 
   return (
-    <Card>
+    <Card title="Assistant coverage" meta={`${rows.length} assistants · ${answered} answers`}>
       <thead>
         <tr>
           <Head label="Assistant" definition="The model queried, not the company's app. Answers come from the API, which has no memory of you and no account history." align="left" />
@@ -156,7 +160,7 @@ export function CompetitorTable({ report }: { report: IngestedReport }) {
   const max = Math.max(1, targetNamed, ...rows.map(r => r.mentions))
 
   return (
-    <Card>
+    <Card title="Share of answers" meta={`${report.competitors.length} restaurants named`}>
       <thead>
         <tr>
           <Head label="Named instead" definition="Businesses the assistants recommended in place of the venue, counted once per answer. Unverified names are model output, not a researched competitor set." align="left" />

@@ -19,10 +19,14 @@ npm run probe:ingest   # proves the ingestion against three payload shapes: diff
 app/
   layout.tsx              shell: THODI fonts + the rail, loaded once per request
   page.tsx                Overview pane — the report
+  new/page.tsx            Start screen — venue, place, website, rivals
+  run/page.tsx            Preflight — the audit as it happens
   compare/[rival]/page.tsx  Head-to-head pane — you versus one named restaurant
   solutions/page.tsx      Act pane, waiting on the audit's actions[]
 components/
-  shell/Rail.tsx          navigation: report, rivals (with counts), solutions
+  shell/Rail.tsx          navigation: report, rivals (with counts), solutions; collapsible
+  run/VenueForm.tsx       the four fields the audit needs
+  run/RunClient.tsx       preflight grid + activity log, replayed from a seed
   report/OverviewPane.tsx verdict, KPI row, matrix, tables, intent, reading notes
   report/ComparePane.tsx  where you win, where they win, by intent, why-not-yet
   report/MatrixTable.tsx  question x assistant grid — click a cell for the answer
@@ -77,6 +81,15 @@ The reader is assumed to have time and no tolerance for puzzles. So:
 - **Every clickable state has a URL** — `?answer=p1:perplexity` links straight to one answer.
 - **The primary action is always on screen** — Print / save PDF, in the nav, because the report is
   meant to be handed over.
+
+## Preflight, and what is seeded
+
+`/new` → `/run` → the report. The preflight screen shows each question going to each assistant and what
+came back, because an owner watching nothing for ninety seconds assumes it is broken.
+
+The source is `lib/preflight/seed.ts`, which replays the stored run's real answers as timed events. The
+banner says so, and says which run it is replaying if you asked about a different restaurant. When the
+pipeline lands, one adapter emits the same `PreflightEvent`s and the screen stops being a replay.
 
 ## Status
 

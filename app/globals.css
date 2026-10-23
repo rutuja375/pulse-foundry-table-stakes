@@ -234,6 +234,50 @@ button, input, textarea, select { font: inherit; color: inherit; }
 }
 .rail-brand { font-family: var(--kpi-font); font-size: 17px; font-weight: 600; letter-spacing: -0.01em; color: var(--fg); }
 .rail-sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+.rail-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.rail-door {
+  border: 1px solid var(--border-strong);
+  background: var(--card-bg);
+  color: var(--muted);
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+.rail-door:hover { color: var(--fg); border-color: var(--fg2); background: var(--surf-1); }
+.rail-closed { display: none; }
+
+/* The door has to be findable from outside. A 28px tab on the edge, labelled —
+   an icon alone would be a guess. */
+.rail-handle {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px 12px 6px;
+  border: 1px solid var(--border-strong);
+  border-left: 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--card-bg);
+  color: var(--fg2);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  writing-mode: vertical-rl;
+}
+.rail-handle:hover { background: var(--surf-1); color: var(--fg); }
+.rail-new { margin-top: 18px; width: 100%; justify-content: center; }
 .rail nav { margin-top: 24px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
 .rail-group {
   font-size: 10px;
@@ -413,7 +457,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
    The rail has no business on paper. Each pane prints as its own document. */
 
 @media print {
-  .rail { display: none !important; }
+  .rail, .rail-handle { display: none !important; }
   .shell { display: block; }
   .pane { max-width: none; padding: 0; }
   .cta .btn-link { display: none; }
@@ -447,4 +491,159 @@ button, input, textarea, select { font: inherit; color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ── Data cards ────────────────────────────────────────────────────────────
+   Every table sits in the same object: a header that names it and counts it,
+   then the rows. The header is what stops a table reading as a grid that
+   happened to land on the page. */
+
+.data-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+.data-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surf-1);
+}
+.data-card-title { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--fg2); }
+.data-card-meta { font-family: var(--font-data); font-size: 11px; color: var(--muted); }
+.data-card tbody tr:hover td { background: rgba(244, 243, 241, 0.7); }
+
+/* ── Form ──────────────────────────────────────────────────────────────────
+   Labels above fields, hints under them, and an invalid state that says what is
+   wrong in a sentence rather than turning the border red and leaving you there. */
+
+.form-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--card-radius); box-shadow: var(--card-shadow); padding: 26px 28px; }
+.form-head { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 22px; }
+.form-title { font-family: var(--kpi-font); font-size: 22px; font-weight: 600; margin: 0; color: var(--fg); }
+.form-sub { font-size: 12.5px; color: var(--fg2); margin: 6px 0 0; max-width: 60ch; line-height: 1.5; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--muted); }
+.field-optional { font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--muted); font-size: 10.5px; }
+.field-input {
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: var(--fg);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.field-input::placeholder { color: var(--muted); }
+.field-input:hover { border-color: var(--fg2); }
+.field-input:focus { outline: none; border-color: var(--active-accent); box-shadow: 0 0 0 3px rgba(164, 55, 15, 0.12); }
+/* Keep the native arrow: a select with no chevron looks like a text field. */
+.field-select { cursor: pointer; }
+.field-hint { font-size: 11.5px; color: var(--muted); }
+.field-error { font-size: 11.5px; color: var(--negative); }
+.field-invalid .field-input { border-color: var(--negative); }
+
+.form-assistants { margin-top: 24px; padding: 16px 18px; background: var(--surf-1); border: 1px solid var(--border); border-radius: var(--radius); }
+.assistant-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.assistant-chip { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--card-bg); border: 1px solid var(--border-strong); color: var(--fg2); }
+.form-note { font-size: 11.5px; color: var(--muted); margin: 10px 0 0; line-height: 1.55; }
+.form-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.field-inline { width: 220px; }
+.form-actions { display: flex; gap: 10px; align-items: center; }
+.form-foot { margin: 18px 0 0; font-size: 11.5px; color: var(--muted); line-height: 1.55; border-left: 2px solid var(--border-strong); padding-left: 12px; }
+
+/* ── Preflight ─────────────────────────────────────────────────────────────
+   The grid is the product of the run: one row per question, one column per
+   assistant, each cell saying what that assistant did. The log is the receipt. */
+
+.banner {
+  border: 1px solid rgba(164, 55, 15, 0.25);
+  background: rgba(164, 55, 15, 0.04);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--fg2);
+  margin-bottom: 22px;
+}
+.banner b { color: var(--fg); }
+
+.progress-wrap { margin-bottom: 22px; }
+.progress-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.progress-count { font-family: var(--font-data); font-size: 12.5px; color: var(--fg); }
+.progress-state { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.progress-track { height: 6px; background: var(--surf-2); border-radius: 999px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--active-accent); border-radius: 999px; }
+/* No width transition on purpose: the bar steps with the counter, and a tween
+   made it lag a beat behind the number it is supposed to represent. */
+.progress-actions { display: flex; gap: 16px; margin-top: 10px; }
+.link-btn {
+  border: 0;
+  background: transparent;
+  padding: 2px 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--fg2);
+  cursor: pointer;
+  border-bottom: 1px dotted var(--border-strong);
+}
+.link-btn:hover { color: var(--fg); border-bottom-color: var(--active-accent); }
+.link-btn:disabled { color: var(--muted); cursor: default; border-bottom-color: transparent; }
+
+.run-grid-wrap { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--card-radius); box-shadow: var(--card-shadow); overflow: hidden; margin-bottom: 20px; }
+.run-grid { width: 100%; border-collapse: collapse; }
+.run-grid th {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--muted);
+  padding: 11px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  background: var(--surf-1);
+}
+.run-grid th:first-child { text-align: left; width: 46%; }
+.run-question { padding: 10px 14px; font-size: 12.5px; color: var(--fg); border-bottom: 1px solid var(--border); }
+.run-cell {
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  font-family: var(--font-data);
+  font-size: 11.5px;
+  color: var(--muted);
+  height: 44px;
+}
+.run-asking { color: var(--active-accent); animation: pulse 900ms ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+.run-answered { color: var(--fg); }
+.run-rank { font-family: var(--kpi-font); font-size: 15px; font-weight: 600; }
+.run-named { color: var(--brand-teal); font-size: 10.5px; letter-spacing: 0.04em; }
+.run-declined { color: var(--warning); font-size: 10.5px; }
+.run-failed { color: var(--negative); font-size: 10.5px; }
+.run-queued { color: var(--surf-3); }
+
+.run-log-wrap { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--card-radius); overflow: hidden; }
+.run-log-head { display: flex; align-items: baseline; justify-content: space-between; padding: 11px 14px; border-bottom: 1px solid var(--border); background: var(--surf-1); }
+.run-log-hint { font-size: 11px; color: var(--muted); }
+.run-log { max-height: 230px; overflow-y: auto; padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
+.run-log-line { display: flex; gap: 10px; font-size: 12px; line-height: 1.45; }
+.run-log-time { font-family: var(--font-data); font-size: 10.5px; color: var(--muted); min-width: 34px; padding-top: 1px; }
+.run-log-model { font-weight: 600; min-width: 84px; color: var(--fg2); }
+.run-log-text { flex: 1; color: var(--fg2); }
+.run-log-line .good { color: var(--brand-teal); }
+.run-log-line .warn { color: var(--warning); }
+.run-log-line .bad { color: var(--negative); }
+.run-log-line .muted { color: var(--muted); }
+.run-log-empty { color: var(--muted); font-style: italic; }
+
+@media print {
+  .rail, .rail-handle, .progress-actions { display: none !important; }
 }

@@ -182,7 +182,11 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
       {coverage.length > 0 && (
         <section className="blk">
           <SectionHead index="04" title="By customer intent" note="where the gap is concentrated" />
-          <div className="card-flat">
+          <div className="data-card">
+            <div className="data-card-head">
+              <span className="data-card-title">Intent coverage</span>
+              <span className="data-card-meta">{coverage.length} intents · {coverage.reduce((s, r) => s + r.total, 0)} answers</span>
+            </div>
             <table className="plain-table">
               <thead>
                 <tr>
