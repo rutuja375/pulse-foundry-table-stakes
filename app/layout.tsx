@@ -1,14 +1,15 @@
 import type { Metadata } from 'next'
 import { Hanken_Grotesk, JetBrains_Mono, Spectral } from 'next/font/google'
 import './globals.css'
+import { Rail } from '@/components/shell/Rail'
+import { loadLatestRun, railRivals } from '@/lib/view/load-run'
+import { formatDate } from '@/lib/view/derive'
 
 /**
  * THODI's typeface trio, adopted as-is:
  *   Spectral          headlines and figures (the KPI scale is 900 weight)
  *   Hanken Grotesk    everything you read
  *   JetBrains Mono    data columns, so digits align
- *
- * Self-hosted by next/font — no runtime request, no layout shift.
  */
 
 const spectral = Spectral({
@@ -37,10 +38,30 @@ export const metadata: Metadata = {
   description: 'What five AI assistants say when someone asks about your restaurant.',
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+/** Payload comes off disk at request time, never baked at build time. */
+export const dynamic = 'force-dynamic'
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const loaded = loadLatestRun()
+  const report = loaded?.report
+
   return (
     <html lang="en" className={`${spectral.variable} ${hankenGrotesk.variable} ${jetbrainsMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <div className="shell">
+          {report ? (
+            <Rail
+              venue={report.venue.name}
+              place={[report.venue.neighbourhood, report.venue.city].filter(Boolean).join(', ')}
+              runId={report.runId}
+              date={formatDate(report.startedAt)}
+              rivals={railRivals(report)}
+              actionCount={null}
+            />
+          ) : null}
+          <main className="main">{children}</main>
+        </div>
+      </body>
     </html>
   )
 }

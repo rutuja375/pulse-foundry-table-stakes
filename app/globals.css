@@ -211,30 +211,214 @@ button, input, textarea, select { font: inherit; color: inherit; }
   background: var(--card-bg);
 }
 
-/* ── Section navigation ────────────────────────────────────────────────────
-   Position has to be visible: the current section gets a solid terracotta rule
-   and a dark label, not a tint.                                            */
+/* ── Shell and rail ────────────────────────────────────────────────────────
+   The rail owns navigation, so the pane owns nothing but content. One item is
+   highlighted at a time and it is the page you are on: a nav that lights up two
+   things is describing a state that does not exist.
+   Rail labels and counts are deliberately quiet — the report is the loud part. */
 
-.report-nav {
+.shell { display: flex; min-height: 100vh; align-items: stretch; }
+
+.rail {
+  width: 268px;
+  flex: 0 0 268px;
+  background: var(--card-bg);
+  border-right: 1px solid var(--border);
+  padding: 22px 16px;
   position: sticky;
   top: 0;
-  z-index: 50;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 40;
 }
-.report-nav a {
-  padding: 12px 2px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+.rail-brand { font-family: var(--kpi-font); font-size: 17px; font-weight: 600; letter-spacing: -0.01em; color: var(--fg); }
+.rail-sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+.rail nav { margin-top: 24px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
+.rail-group {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
   color: var(--muted);
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: color 120ms ease, border-color 120ms ease;
+  margin: 18px 0 6px 10px;
 }
-.report-nav a:hover { color: var(--fg2); }
-.report-nav a[data-active='true'] { color: var(--fg); border-bottom-color: var(--active-accent); }
+.rail-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--fg2);
+  text-decoration: none;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.rail-link:hover { background: var(--surf-1); color: var(--fg); }
+.rail-link.active {
+  background: rgba(164, 55, 15, 0.07);
+  color: var(--fg);
+  font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--active-accent);
+}
+.rail-rival { padding-left: 14px; font-size: 12.5px; }
+.rail-count { font-family: var(--font-data); font-variant-numeric: tabular-nums; font-size: 11px; color: var(--muted); }
+.rail-empty { font-size: 11.5px; color: var(--muted); padding: 4px 10px; }
+.rail-foot { margin-top: auto; border-top: 1px solid var(--border); padding-top: 14px; display: flex; flex-direction: column; gap: 10px; }
+.rail-meta { font-family: var(--font-data); font-size: 10.5px; color: var(--muted); line-height: 1.5; }
+
+.main { flex: 1; min-width: 0; }
+
+/* ── Pane ──────────────────────────────────────────────────────────────────
+   One measure for every pane, so moving between report and comparison does not
+   change the line length the reader is used to. */
+
+.pane { max-width: 1000px; margin: 0 auto; padding: 34px 36px 96px; }
+.pane-head { border-bottom: 1px solid var(--border); padding-bottom: 22px; margin-bottom: 26px; }
+.head-row { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.eyebrow { font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.mono-label { font-family: var(--font-data); font-size: 11px; color: var(--muted); letter-spacing: 0.14em; }
+.mono-label-soft { font-family: var(--font-data); letter-spacing: 0; text-transform: none; font-weight: 500; }
+.venue-title {
+  font-family: var(--kpi-font);
+  font-size: 42px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 12px 0 0;
+  color: var(--fg);
+}
+.venue-title .vs { color: var(--muted); font-weight: 400; font-size: 26px; }
+.verdict { font-family: var(--kpi-font); font-size: 19px; margin: 10px 0 0; max-width: 42ch; line-height: 1.4; }
+.verdict-bad { color: var(--negative); }
+.verdict-good { color: var(--positive); }
+.pane-lede { font-size: 13px; line-height: 1.65; color: var(--fg2); max-width: 70ch; margin: 12px 0 0; }
+.pane-title { font-family: var(--kpi-font); font-size: 32px; font-weight: 400; margin: 0 0 10px; }
+.back-link { font-size: 12.5px; color: var(--fg2); text-decoration: none; border-bottom: 1px dotted var(--border-strong); }
+.back-link:hover { color: var(--fg); border-bottom-color: var(--active-accent); }
+
+.blk { margin-bottom: 38px; }
+.section-title { font-family: var(--kpi-font); font-size: 17px; font-weight: 500; letter-spacing: -0.01em; margin: 0; color: var(--fg); }
+.section-note { font-size: 12px; color: var(--muted); }
+.section-head-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+
+.card-flat {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+}
+.plain-table { width: 100%; border-collapse: collapse; }
+.plain-table th {
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--muted);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.plain-table td {
+  height: 46px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--fg2);
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+}
+.plain-table tr:last-child td { border-bottom: 0; }
+
+.bar-track { position: relative; display: inline-block; height: 6px; background: var(--surf-2); border-radius: 999px; vertical-align: middle; }
+.bar-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; }
+
+.legend-row { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; font-size: 11px; color: var(--muted); }
+.legend-rank { font-family: var(--kpi-font); font-size: 13px; color: var(--fg); }
+.legend-warn { color: var(--warning); }
+.legend-bad { color: var(--negative); }
+
+.named-basis { margin-left: 8px; font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.drawer-foot { display: flex; gap: 18px; font-size: 11.5px; color: var(--muted); flex-wrap: wrap; }
+
+.notes {
+  background: var(--surf-1);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  padding: 18px 20px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--fg2);
+}
+.notes ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+.notes p { margin: 0; }
+.notes-foot { margin-top: 14px !important; font-size: 11.5px; color: var(--muted); }
+
+/* ── Comparison ────────────────────────────────────────────────────────────
+   Stats hold the three numbers that decide how the reader should feel about the
+   rival; the two columns answer "where"; the intent table answers "is this the
+   same fight"; the notes admit what is still missing. */
+
+.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 26px; }
+.stat { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+.stat-k { font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--muted); }
+.stat-v { font-family: var(--kpi-font); font-size: 26px; font-weight: 700; margin-top: 4px; color: var(--fg); }
+.stat-n { font-size: 11.5px; color: var(--muted); }
+
+.cmp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 38px; }
+.cmp-block { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.cmp-block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surf-1);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.cmp-win .cmp-block-head { color: var(--brand-teal); }
+.cmp-loss .cmp-block-head { color: var(--negative); }
+.cmp-count { font-family: var(--font-data); font-size: 12px; color: var(--muted); letter-spacing: 0; }
+.q-line { display: flex; align-items: baseline; gap: 10px; padding: 11px 14px; border-bottom: 1px solid var(--border); font-size: 12.5px; }
+.q-line:last-child { border-bottom: 0; }
+.q-text { flex: 1; color: var(--fg2); }
+.q-pos { font-family: var(--font-data); font-variant-numeric: tabular-nums; font-size: 12px; min-width: 58px; text-align: right; }
+.q-pos-you { color: var(--brand-teal); }
+.q-pos-them { color: var(--negative); }
+.q-pos-mute { color: var(--muted); }
+.q-empty { color: var(--muted); font-style: italic; }
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  background: var(--card-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--card-radius);
+  padding: 20px 22px;
+}
+.cta-title { font-family: var(--kpi-font); font-size: 18px; font-weight: 600; color: var(--fg); }
+.cta-sub { font-size: 12.5px; color: var(--fg2); margin-top: 4px; max-width: 56ch; line-height: 1.5; }
+.btn-link { text-decoration: none; display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: var(--radius); font-size: 13px; font-weight: 600; }
+.btn-link.btn--primary { background: var(--active-accent); color: #fff; border: 1px solid var(--active-accent); }
+.btn-link.btn--primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+/* ── Print ─────────────────────────────────────────────────────────────────
+   The rail has no business on paper. Each pane prints as its own document. */
+
+@media print {
+  .rail { display: none !important; }
+  .shell { display: block; }
+  .pane { max-width: none; padding: 0; }
+  .cta .btn-link { display: none; }
+  section { break-inside: avoid; }
+}
 
 /* ── Answer matrix ─────────────────────────────────────────────────────────
    A clickable cell is underlined at rest so the grid looks interactive before
@@ -256,7 +440,6 @@ button, input, textarea, select { font: inherit; color: inherit; }
 
 @media print {
   body { background: #fff; }
-  .report-nav { display: none; }
   .mx-cell { cursor: default; text-decoration: none; }
   main { padding: 0 !important; max-width: none !important; }
   section { break-inside: avoid; }

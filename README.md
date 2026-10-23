@@ -16,21 +16,32 @@ npm run probe:ingest   # proves the ingestion against three payload shapes: diff
 ## What is here
 
 ```
-app/                     shell, design tokens, the single report route
-components/report/       the report itself
-  ReportView.tsx           verdict, KPI row, sections, evidence drawer
-  MatrixTable.tsx          question x assistant grid — the centre of the page
-  SideTables.tsx           who can see you / who is named instead
-components/primitives/   KPI card, KPI grid, tooltip
-components/ui/           drill-down drawer
-lib/view/                ingest → derive, and nothing else
-  ingest.ts                the one place that knows what the backend sends
-  derive.ts                every number the page asserts
-  venue-match.ts           normalisation and alias matching, with a rival guard
-data/runs/               payloads to render. Real answers, from a real run.
-docs/report-payload.md   the contract: what the display reads, and why three fields matter
-scripts/probe-ingest.ts  the adapter proof
+app/
+  layout.tsx              shell: THODI fonts + the rail, loaded once per request
+  page.tsx                Overview pane — the report
+  compare/[rival]/page.tsx  Head-to-head pane — you versus one named restaurant
+  solutions/page.tsx      Act pane, waiting on the audit's actions[]
+components/
+  shell/Rail.tsx          navigation: report, rivals (with counts), solutions
+  report/OverviewPane.tsx verdict, KPI row, matrix, tables, intent, reading notes
+  report/ComparePane.tsx  where you win, where they win, by intent, why-not-yet
+  report/MatrixTable.tsx  question x assistant grid — click a cell for the answer
+  report/SideTables.tsx   who can see you / who is named instead
+  primitives/             KPI card, KPI grid, definition tooltip
+  ui/                     drawer, button
+lib/view/
+  ingest.ts               the one place that knows what the backend sends
+  derive.ts               every number the report asserts
+  compare.ts              head-to-head + the overlap that separates parallel from contested
+  venue-match.ts          normalisation and alias matching, with a rival guard
+  load-run.ts             reads the newest payload; the only filesystem call
+data/runs/                one real run: 25 answers, 5 assistants, 5 questions
+docs/report-payload.md    the contract, including the three load-bearing fields
+scripts/probe-ingest.ts   adapter proof against different / thin / broken payloads
 ```
+
+Navigation is three routes, not a scroll position: `/`, `/compare/<rival>`, `/solutions`.
+Rivals in the rail are the restaurants actually named in the run, with their mention counts.
 
 ## Three rules the code enforces
 

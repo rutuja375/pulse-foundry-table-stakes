@@ -77,6 +77,56 @@ Anything that had to be assumed is printed at the bottom of the report under **H
 If the payload contradicts itself (for example a `perModel` mention rate that disagrees with the
 answers), the answers win and the conflict is logged rather than silently averaged.
 
+## Comparison layer — what the display needs beyond the base payload
+
+Clicking a rival opens a head-to-head. Most of it is computed from `answers` alone, so nothing below is
+required for the comparison to work. The two blocks that need the audit's input are the **why** and the
+**red herrings**, and the display will not invent either.
+
+### Where each side is stronger — computed, no field needed
+
+Per question: best position you received, best position they received, and a verdict
+(`ahead` / `behind` / `only-you` / `only-them` / `neither`). Plus an overlap figure — the share of
+questions naming both — which is what separates *parallel visibility* (each of you named on different
+questions, so equal mention counts are not a dead heat) from *contested*.
+
+### Why — needs `evidence`
+
+```json
+"evidence": [
+  { "factor": "Review count", "target": "412",
+    "rivals": [{ "name": "Costa Brava", "value": "1,240" }],
+    "impact": "explains" }
+]
+```
+
+`impact` is the field that makes the third block possible:
+
+| value       | meaning                                                              |
+|-------------|----------------------------------------------------------------------|
+| `explains`  | this difference plausibly accounts for the visibility gap            |
+| `context`   | a real difference that does not explain the gap                      |
+| `unknown`   | measured, causality unproven — shown, but not sold as a reason       |
+
+`context` is what an owner needs most and gets least: the differences that *look* alarming and change
+nothing. Without the flag, the display has to guess which is which, and guessing is how a report starts
+telling a restaurant to fix things that were never broken.
+
+### Solutions — needs `actions` with targets
+
+```json
+"actions": [
+  { "title": "Add vegan, vegetarian and gluten-free labels to the menu page",
+    "detail": "…", "priority": "high",
+    "evidence": "0 of 5 dietary questions named the venue",
+    "fixes": { "intents": ["dietary"], "rivals": ["Costa Brava"] } }
+]
+```
+
+`fixes` lets the comparison hand its filter to the solutions layer: click Costa Brava, then
+"show me how to win these three questions", and the action list arrives already scoped. Without it the
+button can only scroll to a generic list, which is a much weaker promise.
+
 ## Local check
 
 ```bash
