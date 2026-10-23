@@ -111,6 +111,7 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
   const named = completed.filter(a => a.mentioned).length
   const ranked = completed.filter(a => a.position !== null)
   const avgPosition = ranked.length ? ranked.reduce((s, a) => s + (a.position ?? 0), 0) / ranked.length : null
+  const firstPlace = ranked.filter(a => a.position === 1).length
 
   const columns = report.assistants.length
   const opened = openIndex === null ? null : matrix.rows[Math.floor(openIndex / columns)]?.cells[openIndex % columns] ?? null
@@ -159,13 +160,13 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
           columns={4}
           items={[
             {
-              label: 'Invisible to',
-              value: `${verdict.invisible.length} of ${verdict.total}`,
-              variant: verdict.invisible.length ? ('neg' as const) : ('pos' as const),
+              label: '#1 rankings',
+              value: String(firstPlace),
+              variant: firstPlace ? ('pos' as const) : ('neu' as const),
               tooltip:
-                'Assistants that never named the venue, of those that answered.\n' +
-                `Invisible: ${verdict.invisible.length}\nAnswered: ${verdict.total}\n` +
-                'A failed call is excluded, never counted as silence.',
+                'Answers that ranked the venue first.\n' +
+                `#1: ${firstPlace}\nRanked answers: ${ranked.length}\nAnswers: ${completed.length}\n` +
+                'A failed call is excluded, never counted as a miss.',
             },
             {
               label: 'Mention rate',
