@@ -4,7 +4,7 @@ A small Streamlit application for the NYU SPS x Pulse Foundry hackathon. It runs
 
 ## What the MVP does
 
-- Uses 20 categorized Pacific Beach / San Diego prompts.
+- Uses 19 curated Pacific Beach / San Diego prompts with primary and secondary categories.
 - Runs OpenAI, Gemini, Claude, Grok, and DeepSeek independently and in parallel.
 - Searches the live web through OpenRouter.
 - Records restaurant recommendations and their positions.
@@ -30,7 +30,7 @@ The dashboard can run any selection of these fixed ranking models:
 - `x-ai/grok-latest`
 - `deepseek/deepseek-flash`
 
-A full run makes 100 model requests: 20 prompts across five models. Each selected model runs independently, and the dashboard keeps its results separate while also calculating combined measurements.
+A full run makes 95 model requests: 19 prompts across five models. Each selected model runs independently, and the dashboard keeps its results separate while also calculating combined measurements.
 
 ## Test
 

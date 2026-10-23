@@ -56,6 +56,7 @@ def test_analytics_separates_models_categories_and_consensus():
             "model_label": "Gemini",
             "query_id": "q01",
             "category": "greek_food",
+            "secondary_categories": ["date_night"],
             "query": "Best Greek food?",
             "status": "success",
             "result": {
@@ -66,6 +67,7 @@ def test_analytics_separates_models_categories_and_consensus():
             "model_label": "Claude",
             "query_id": "q01",
             "category": "greek_food",
+            "secondary_categories": ["date_night"],
             "query": "Best Greek food?",
             "status": "success",
             "result": {
@@ -80,4 +82,5 @@ def test_analytics_separates_models_categories_and_consensus():
     assert analytics["by_model"]["Gemini"]["mention_rate"] == 100.0
     assert analytics["by_model"]["Claude"]["mention_rate"] == 0.0
     assert analytics["by_category"]["greek_food"]["mention_rate"] == 50.0
+    assert analytics["by_category"]["date_night"]["mention_rate"] == 50.0
     assert analytics["consensus"][0]["agreement"] == "models_disagree"

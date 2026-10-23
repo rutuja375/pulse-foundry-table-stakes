@@ -5,17 +5,29 @@ from pathlib import Path
 QUERY_BANK_PATH = Path(__file__).resolve().parents[1] / "data" / "query_bank.json"
 
 
-def test_query_bank_has_twenty_valid_unique_prompts():
+def test_query_bank_has_nineteen_valid_unique_prompts():
     queries = json.loads(QUERY_BANK_PATH.read_text(encoding="utf-8"))
 
-    assert len(queries) == 20
-    assert len({item["id"] for item in queries}) == 20
+    assert len(queries) == 19
+    assert len({item["id"] for item in queries}) == 19
     assert all(item["category"].strip() for item in queries)
-    assert all(item["query"].strip().endswith("?") for item in queries)
+    assert all(item["query"].strip() for item in queries)
+    assert all(isinstance(item["secondary_categories"], list) for item in queries)
 
 
 def test_query_bank_contains_requested_categories():
     queries = json.loads(QUERY_BANK_PATH.read_text(encoding="utf-8"))
     categories = {item["category"] for item in queries}
 
-    assert {"reservations", "pet_friendly", "table_size", "service_speed"} <= categories
+    assert {"reservations", "table_size", "private_events", "catering"} <= categories
+
+
+def test_query_bank_preserves_secondary_categories():
+    queries = json.loads(QUERY_BANK_PATH.read_text(encoding="utf-8"))
+    query_five = next(item for item in queries if item["id"] == "q05")
+
+    assert query_five["secondary_categories"] == [
+        "affordability",
+        "mediterranean_food",
+        "table_size",
+    ]

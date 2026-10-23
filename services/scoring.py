@@ -116,11 +116,24 @@ def calculate_category_scorecards(
     target_name: str = TARGET_NAME,
 ) -> dict[str, dict[str, Any]]:
     categories = sorted(
-        {item["category"] for item in results if item.get("category")}
+        {
+            category
+            for item in results
+            for category in [
+                item.get("category"),
+                *item.get("secondary_categories", []),
+            ]
+            if category
+        }
     )
     return {
         category: calculate_visibility(
-            [item for item in results if item.get("category") == category],
+            [
+                item
+                for item in results
+                if item.get("category") == category
+                or category in item.get("secondary_categories", [])
+            ],
             target_name,
         )
         for category in categories

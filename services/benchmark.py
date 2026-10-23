@@ -35,6 +35,9 @@ def run_model_benchmark(
                     "model_id": model_id,
                     "query_id": query_item["id"],
                     "category": query_item["category"],
+                    "secondary_categories": query_item.get(
+                        "secondary_categories", []
+                    ),
                     "query": query_item["query"],
                     "status": "success",
                     "result": result,
@@ -47,6 +50,9 @@ def run_model_benchmark(
                     "model_id": model_id,
                     "query_id": query_item["id"],
                     "category": query_item["category"],
+                    "secondary_categories": query_item.get(
+                        "secondary_categories", []
+                    ),
                     "query": query_item["query"],
                     "status": "failed",
                     "error": str(error),

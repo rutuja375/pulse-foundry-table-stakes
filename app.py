@@ -51,6 +51,8 @@ def recommendation_rows(results: list[dict]) -> list[dict]:
     return rows
 
 
+queries = load_query_bank()
+
 st.set_page_config(
     page_title="Cafe Athena AI Visibility",
     page_icon="🔎",
@@ -74,8 +76,9 @@ with st.sidebar:
         help="Every selected model runs the same query bank independently.",
     )
     st.info(
-        "Web search is enabled for every query. A full five-model run makes "
-        "100 model requests and may incur OpenRouter charges."
+        "Web search is enabled for every query. With the current selection, "
+        f"a full run makes {len(queries) * len(selected_model_labels)} model "
+        "requests and may incur OpenRouter charges."
     )
 
 st.subheader("Target restaurant")
@@ -91,7 +94,6 @@ left.text_input("Restaurant", value=restaurant["name"], disabled=True)
 middle.text_input("Website", value=restaurant["website"], disabled=True)
 right.text_input("Location", value=restaurant["address"], disabled=True)
 
-queries = load_query_bank()
 with st.expander(f"Fixed query bank ({len(queries)} questions)"):
     st.dataframe(
         pd.DataFrame(queries).rename(

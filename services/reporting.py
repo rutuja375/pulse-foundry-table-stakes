@@ -69,5 +69,9 @@ def filter_results(
         item
         for item in results
         if (model == "All models" or item.get("model_label") == model)
-        and (category == "All categories" or item.get("category") == category)
+        and (
+            category == "All categories"
+            or item.get("category") == category
+            or category in item.get("secondary_categories", [])
+        )
     ]

@@ -21,8 +21,18 @@ def test_parallel_benchmark_preserves_model_and_query_identity():
 
     models = {"Model A": "provider/a", "Model B": "provider/b"}
     queries = [
-        {"id": "q01", "category": "food", "query": "Question one?"},
-        {"id": "q02", "category": "events", "query": "Question two?"},
+        {
+            "id": "q01",
+            "category": "food",
+            "secondary_categories": ["dietary"],
+            "query": "Question one?",
+        },
+        {
+            "id": "q02",
+            "category": "events",
+            "secondary_categories": [],
+            "query": "Question two?",
+        },
     ]
 
     results = run_parallel_benchmark(
@@ -35,6 +45,7 @@ def test_parallel_benchmark_preserves_model_and_query_identity():
     assert len(results) == 4
     assert {item["model_label"] for item in results} == set(models)
     assert {item["query_id"] for item in results} == {"q01", "q02"}
+    assert results[0]["secondary_categories"] == ["dietary"]
     assert maximum_active_calls >= 2
 
 
@@ -46,7 +57,14 @@ def test_parallel_benchmark_records_individual_failures():
 
     results = run_parallel_benchmark(
         selected_models={"Model A": "provider/a", "Model B": "provider/b"},
-        queries=[{"id": "q01", "category": "food", "query": "Question?"}],
+        queries=[
+            {
+                "id": "q01",
+                "category": "food",
+                "secondary_categories": [],
+                "query": "Question?",
+            }
+        ],
         api_key="test-key",
         query_runner=fake_runner,
     )
