@@ -19,7 +19,7 @@ DEFAULT_MODEL = os.getenv("OPENROUTER_SEARCH_MODEL", "google/gemini-3.8-flash")
 TARGET_NAME = "Cafe Athena"
 
 
-def load_query_bank() -> list[str]:
+def load_query_bank() -> list[dict]:
     return json.loads(QUERY_BANK_PATH.read_text(encoding="utf-8"))
 
 
@@ -79,8 +79,13 @@ right.text_input("Location", value=restaurant["address"], disabled=True)
 
 queries = load_query_bank()
 with st.expander(f"Fixed query bank ({len(queries)} questions)"):
-    for number, query in enumerate(queries, start=1):
-        st.write(f"{number}. {query}")
+    st.dataframe(
+        pd.DataFrame(queries).rename(
+            columns={"id": "ID", "category": "Category", "query": "Question"}
+        ),
+        use_container_width=True,
+        hide_index=True,
+    )
 
 if "analysis" not in st.session_state:
     st.session_state.analysis = None
@@ -94,7 +99,8 @@ if st.button("Run visibility analysis", type="primary", use_container_width=True
         results = []
         progress = st.progress(0, text="Starting analysis...")
 
-        for index, query in enumerate(queries, start=1):
+        for index, query_item in enumerate(queries, start=1):
+            query = query_item["query"]
             progress.progress(
                 (index - 1) / len(queries),
                 text=f"Searching {index} of {len(queries)}: {query}",
@@ -105,9 +111,25 @@ if st.button("Run visibility analysis", type="primary", use_container_width=True
                     api_key=api_key,
                     model=model.strip(),
                 )
-                results.append({"query": query, "status": "success", "result": result})
+                results.append(
+                    {
+                        "query_id": query_item["id"],
+                        "category": query_item["category"],
+                        "query": query,
+                        "status": "success",
+                        "result": result,
+                    }
+                )
             except Exception as error:
-                results.append({"query": query, "status": "failed", "error": str(error)})
+                results.append(
+                    {
+                        "query_id": query_item["id"],
+                        "category": query_item["category"],
+                        "query": query,
+                        "status": "failed",
+                        "error": str(error),
+                    }
+                )
 
         scorecard = calculate_visibility(results)
         run_path = save_run(
