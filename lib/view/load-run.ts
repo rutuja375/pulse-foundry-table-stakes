@@ -48,6 +48,10 @@ export function loadLatestRun(): LoadedRun | null {
       'Produced by the audit backend (services/storage.py), adapted to this display. Answers are the models\' JSON replies, and the reasons and sources are the ones the pipeline captured.'
     )
 
+    // A demo subset has to say it is one, in the report, not just in the filename.
+    const demoNote = (found.payload as { demo_note?: unknown }).demo_note
+    if (typeof demoNote === 'string' && demoNote.trim()) report.issues.unshift(demoNote.trim())
+
     // Their scorecard is a second opinion on the same answers. Disagreement is
     // surfaced rather than averaged: whoever reads this needs to know which one
     // to trust.

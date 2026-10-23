@@ -115,6 +115,15 @@ pipeline lands, one adapter emits the same `PreflightEvent`s and the screen stop
 
 ## Status
 
-The report renders a run of 25 real answers across five assistants (ChatGPT, Claude, Gemini,
-Perplexity, DeepSeek) on five questions for Café Athena, Pacific Beach. Print styles are wired, so
-Cmd-P produces the hand-over PDF. A single answer can be linked directly: `/?answer=p1:perplexity`.
+The report renders `data/runs/demo-cafe-athena.json`: 15 real answers, five assistants (OpenAI, Gemini,
+Claude, Grok, DeepSeek), three questions — the ones every model answered in the full 20-question run.
+Built by `build_demo.py` against the backend's own scoring, so the mention rate (33%) and average
+position (1.4) are theirs, not ours. The demo note appears in the report's "How this was read".
+
+Why three questions and not twenty: the full run lost 57 of its 100 requests to credit exhaustion
+(52 × 402 payment required, 4 × 429, 1 × 504) and the failures were uneven, so per-assistant
+denominators were not comparable. A smaller complete subset is more honest than a larger half-missing
+one, and the 17 dropped questions stay in `data/runs/archive/` with everything else.
+
+Print styles are wired, so Cmd-P produces the hand-over PDF. A single answer can be linked directly:
+`/?answer=q01:openai`.
