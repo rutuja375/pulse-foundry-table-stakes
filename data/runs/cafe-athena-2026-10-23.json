@@ -1,0 +1,954 @@
+{
+  "runId": "cafe-athena_2026-10-23_15-15-50",
+  "startedAt": "2026-10-23T15:15:50.225Z",
+  "bankId": "cafe-athena-probe-v1",
+  "venue": {
+    "name": "Café Athena",
+    "aliases": [
+      "Café Athena",
+      "Cafe Athena",
+      "Athena Greek",
+      "Athena PB"
+    ],
+    "neighbourhood": "Pacific Beach",
+    "city": "San Diego",
+    "cuisine": [
+      "Greek",
+      "Mediterranean"
+    ],
+    "competitors": [],
+    "address": "1846 Garnet Ave, San Diego, CA 92109"
+  },
+  "questions": [
+    {
+      "id": "p1",
+      "text": "What are the best Greek restaurants in Pacific Beach, San Diego?",
+      "intent": "cuisine"
+    },
+    {
+      "id": "p2",
+      "text": "Where can I get gluten-free Mediterranean food near Pacific Beach?",
+      "intent": "dietary"
+    },
+    {
+      "id": "p3",
+      "text": "Good restaurant for a group dinner in Pacific Beach?",
+      "intent": "group"
+    },
+    {
+      "id": "p4",
+      "text": "Where should I take someone for a date night dinner in Pacific Beach?",
+      "intent": "occasion"
+    },
+    {
+      "id": "p5",
+      "text": "What is good to eat within a ten-minute walk of Garnet Avenue?",
+      "intent": "location"
+    }
+  ],
+  "answers": [
+    {
+      "questionId": "p1",
+      "modelKey": "gpt",
+      "answer": "In Pacific Beach, the standout for Greek food is:\n\n1. **Café Athena** – Best overall  \n   Long-running PB favorite for classic Greek dishes like gyros, souvlaki, moussaka, spanakopita, lamb plates, saganaki, and Greek salads. Good patio and date-night vibe.\n\nIf you’re open to **Greek/Mediterranean-style** rather than strictly Greek:\n\n2. **The Kebab Shop – Pacific Beach**  \n   Casual option for wraps, bowls, kebabs, gyro-style meats, and good sauces. More Mediterranean/Turkish-inspired than traditional Greek.\n\n3. **Luna Grill**  \n   Fast-casual Mediterranean with Greek-style plates, kabobs, salads, and pita. Good for a quick, reliable meal.\n\nFor true Greek in PB, **Café Athena is the one to prioritize**.",
+      "extracted": [
+        {
+          "name": "Café Athena",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "The Kebab Shop – Pacific Beach",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Luna Grill",
+          "position": 3,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": true,
+        "position": 1,
+        "via": "ranked",
+        "refusal": false
+      },
+      "latencyMs": 14616,
+      "error": null
+    },
+    {
+      "questionId": "p1",
+      "modelKey": "claude",
+      "answer": "I don't have reliable, up-to-date information on Greek restaurants in Pacific Beach, and I don't want to recommend a place that has closed or moved. To find good options:\n\n- **Search Google Maps or Yelp** for \"Greek restaurant Pacific Beach San Diego\" and sort by rating, then read recent reviews.\n- **Check Tripadvisor** or **Eater San Diego** for curated lists.\n- **Ask locals** in r/sandiego or a local Facebook group, which often surface neighborhood favorites.\n\nIf you tell me what you're in the mood for (a casual gyro spot, a sit-down dinner, or a place with a view), I can suggest what to look for or help you narrow down your search.",
+      "extracted": [],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": true
+      },
+      "latencyMs": 3519,
+      "error": null
+    },
+    {
+      "questionId": "p1",
+      "modelKey": "gemini",
+      "answer": "Pacific Beach itself is a bit limited when it comes to traditional, sit-down Greek dining—it leans mostly fast-casual Mediterranean. However, here are the best options in and right around PB",
+      "extracted": [],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": true
+      },
+      "latencyMs": 9126,
+      "error": null
+    },
+    {
+      "questionId": "p1",
+      "modelKey": "perplexity",
+      "answer": "The **best Greek restaurant in Pacific Beach** is **Café Athena**. It is the clearly established Greek option in the neighborhood, with long-running local recognition, strong review volume, and repeated awards for best Greek restaurant in San Diego.[1][3][4][16]\n\nA few useful details:\n- **Café Athena** — 1846 Garnet Ave, Pacific Beach; Greek and Mediterranean cuisine; open since 1990 and described as a Pacific Beach staple.[1][3][4]\n- It has been recognized by **San Diego Magazine**, **City Beat**, and the **Zagat Survey** for Greek food, and San Diego Magazine lists it as both **Best Greek Readers’ Pick** and **Best Greek Critic’s Pick** in Pacific Beach.[4][8][16]\n- Recent reviews also show solid popularity, including a **4.4** rating on TripAdvisor and **4.9** with 3,000+ ratings on Uber Eats.[6][9]\n\nIf you want, I can also give you:\n- the **top 3 Greek/Mediterranean spots near Pacific Beach**, or\n- a **breakdown by best for takeout, sit-down dining, or value**.",
+      "extracted": [
+        {
+          "name": "Café Athena",
+          "position": 1,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": true,
+        "position": 1,
+        "via": "ranked",
+        "refusal": false
+      },
+      "latencyMs": 2299,
+      "error": null
+    },
+    {
+      "questionId": "p1",
+      "modelKey": "deepseek",
+      "answer": "For Greek food in Pacific Beach, these are the top spots:\n\n- **The Greek Corner Café** – A casual, no-frills classic on Mission Blvd. Known for huge portions of gyros, souvlaki, and their famous Greek fries. Great for a quick, satisfying bite.\n\n- **Cafe Athena** – A more upscale, sit-down option on Garnet Ave with a lovely patio. Offers a broader Mediterranean menu, but their Greek dishes (moussaka, pastitsio, lamb chops) are standouts. Great for a date or group dinner.\n\n- **Zgara Greek Grill** – A fast-casual spot on Garnet, perfect for build-your-own pitas, bowls, and salads. Fresh, healthy, and affordable, with excellent grilled meats and homemade sauces.\n\nAll three are local favorites depending on the vibe you’re after.",
+      "extracted": [
+        {
+          "name": "The Greek Corner Café",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Cafe Athena",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Zgara Greek Grill",
+          "position": 3,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": true,
+        "position": 2,
+        "via": "ranked",
+        "refusal": false
+      },
+      "latencyMs": 9679,
+      "error": null
+    },
+    {
+      "questionId": "p2",
+      "modelKey": "gpt",
+      "answer": "Good gluten-free Mediterranean options near Pacific Beach:\n\n- **Café Athena** — Pacific Beach/Clairemont area Greek spot. Good for grilled meats, Greek salads, rice plates; ask to skip pita and confirm sauces.\n- **Luna Grill** — Mediterranean bowls/plates with an allergen-friendly menu; grilled kabobs, rice, salads are usually easy GF choices.\n- **The Kebab Shop** — Choose a **plate or salad box** instead of a wrap; confirm sauces and avoid pita/crouton-type add-ons.\n- **CAVA** — If you’re willing to drive a bit, their bowls are very GF-friendly; avoid pita/pita crisps.\n- **Micheline’s Pita House** — La Jolla/UTC area; can do plates/salads without pita, but confirm cross-contact.\n\nIf you’re gluten-free due to celiac, call ahead and ask about shared grills/fryers and pita handling.",
+      "extracted": [
+        {
+          "name": "Café Athena",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Luna Grill",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "The Kebab Shop",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "CAVA",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Micheline’s Pita House",
+          "position": 5,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": true,
+        "position": 1,
+        "via": "ranked",
+        "refusal": false
+      },
+      "latencyMs": 17754,
+      "error": null
+    },
+    {
+      "questionId": "p2",
+      "modelKey": "claude",
+      "answer": "I don't have reliable, up-to-date info on specific restaurants in Pacific Beach, so I'd suggest checking these:\n\n- **Google Maps or Yelp:** Search \"gluten-free Mediterranean\" or \"Mediterranean\" and filter for reviews that mention gluten-free options.\n- **Find Me Gluten Free app:** Good for restaurants with verified gluten-free menus and user reviews.\n- **Call ahead:** Ask whether they have a dedicated gluten-free prep process, since cross-contamination is a risk with shared fryers and flour.\n\n**Naturally gluten-free Mediterranean dishes to look for:**\n- Hummus, baba ganoush, and tzatziki (ask about pita, which is not gluten-free)\n- Grilled meats, kebabs, and fish (confirm marinades don't contain soy sauce or flour)\n- Greek salad (skip any croutons)\n- Dolmas (usually rice-based, but check the wrapping)\n- Rice dishes and grilled vegetables\n\n**Watch out for:** tabbouleh (made with bulgur), falafel (often contains flour), couscous, and most pita or flatbread.\n\nIf you tell me what you're in the mood for, I can suggest dishes or questions to ask the staff.",
+      "extracted": [],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": true
+      },
+      "latencyMs": 4971,
+      "error": null
+    },
+    {
+      "questionId": "p2",
+      "modelKey": "gemini",
+      "answer": "Here are the best gluten-free-friendly Mediterranean spots right in or just outside Pacific Beach:\n\n*   **The Kebab Shop (Garnet Ave, PB):** Fast-casual and very allergy-conscious. You can build a bowl with saffron rice, mixed greens, and carved chicken or döner beef/lamb. They have an easy-to-use allergen menu online and in-store.\n*   **Zuma Grill (Mission Blvd, PB):** Great for a quick beach bite. Their gyro/chicken kabob rice plates, hummus, and Greek salads are naturally gluten-free (just hold the pita). \n*   **Spiro’s Mediterranean Bistro (La Jolla – ~",
+      "extracted": [
+        {
+          "name": "The Kebab Shop",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Zuma Grill",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Spiro’s Mediterranean Bistro",
+          "position": 3,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 8075,
+      "error": null
+    },
+    {
+      "questionId": "p2",
+      "modelKey": "perplexity",
+      "answer": "A few solid **gluten-free Mediterranean options near Pacific Beach** are **Café Athena** and **Spitz Pacific Beach**. Café Athena is in Pacific Beach and explicitly offers **gluten-free options**[1][5], while Spitz says **nearly anything can be made vegan or gluten free** except wraps and gyros[2][9].\n\n- **Café Athena** — 1846 Garnet Ave, San Diego, CA 92109; Greek/Mediterranean restaurant with **gluten-free options** and hours listed as 11:00am–9:00pm most days[1][3][5].\n- **Spitz Pacific Beach** — Mediterranean/Greek spot in Pacific Beach with a **gluten-free menu option** and broader gluten-free choices[2][9].\n- **Shawarma Shack Mediterranean Grill** — 2015 Garnet Ave Ste 102; listed by Find Me Gluten Free with **GF menu items** like salad, rice bowls, and soup[10].\n- **Slowly Restaurant & Lounge** — 1520 Garnet Ave; OpenTable lists **gluten-free options**, and gluten-free diners have reported multiple GF dishes[11][17].\n\nIf you want the safest choice for celiac-level strictness, it’s worth calling ahead and asking about cross-contact, since some listings note gluten-free availability without guaranteeing a dedicated gluten-free kitchen[6].",
+      "extracted": [
+        {
+          "name": "Café Athena",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Spitz Pacific Beach",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Shawarma Shack Mediterranean Grill",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "Slowly Restaurant & Lounge",
+          "position": 4,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": true,
+        "position": 1,
+        "via": "ranked",
+        "refusal": false
+      },
+      "latencyMs": 2291,
+      "error": null
+    },
+    {
+      "questionId": "p2",
+      "modelKey": "deepseek",
+      "answer": "You’ll find several solid options in and near Pacific Beach, San Diego. Here are a few with gluten-free Mediterranean dishes:\n\n- **Mediterranean Cafe** (on Garnet Ave) – casual spot with gluten-free pita, salads, and plates.\n- **Zgara Greek Grill** (on Grand Ave) – gluten-free pita available, plus grilled meats and salads.\n- **Cava** (on Garnet Ave) – build-your-own bowls with clearly labeled GF ingredients.\n- **The Kebab Shop** (on Mission Blvd) – offers GF wraps and bowls, with grilled kebabs and Mediterranean sides.\n- **Pita Jungle** (a short drive to Mission Valley) – extensive GF menu, including hummus, salads, and grilled items.\n\nAlways confirm with the staff about cross-contamination if you’re highly sensitive.",
+      "extracted": [
+        {
+          "name": "Mediterranean Cafe",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Zgara Greek Grill",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Cava",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "The Kebab Shop",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Pita Jungle",
+          "position": 5,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 8310,
+      "error": null
+    },
+    {
+      "questionId": "p3",
+      "modelKey": "gpt",
+      "answer": "For a group dinner in Pacific Beach, I’d look at:\n\n- **Waterbar** – Best all-around pick for a group: ocean views, seafood/American menu, lively but not too clubby.\n- **Pueblo** – Great for Mexican food and margaritas; good vibe for groups.\n- **Costa Brava** – Spanish tapas, fun for sharing plates, better if you want something a little nicer.\n- **Pacific Beach Fish Shop** – Casual, great seafood, better for laid-back groups.\n- **Mavericks Beach Club** – Good if the dinner might turn into drinks/night out; big space and easy for groups.\n\nIf you want one solid recommendation: **Waterbar** if you want ocean-view dinner, **Pueblo** if you want Mexican + cocktails. Make a reservation if it’s more than 6 people.",
+      "extracted": [
+        {
+          "name": "Waterbar",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Pueblo",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Costa Brava",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "Pacific Beach Fish Shop",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Mavericks Beach Club",
+          "position": 5,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 7962,
+      "error": null
+    },
+    {
+      "questionId": "p3",
+      "modelKey": "claude",
+      "answer": "Here are a few options that work well for groups in Pacific Beach:\n\n- **Pacific Beach Fish Shop**: Fresh seafood and tacos in a casual setting, good for mixed tastes.\n- **Hodad's**: Famous burgers in a fun, lively atmosphere. It's very casual and can get loud.\n- **Typhoon Restaurant**: Pacific Rim and Asian-inspired dishes, with a menu that suits varied preferences.\n\nSince groups often need reservations or advance planning, I'd check current availability and recent reviews on Google or Yelp before you go. If you tell me your group's budget, cuisine preferences, or group size, I can narrow it down.",
+      "extracted": [
+        {
+          "name": "Pacific Beach Fish Shop",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Hodad's",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Typhoon Restaurant",
+          "position": 3,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 5378,
+      "error": null
+    },
+    {
+      "questionId": "p3",
+      "modelKey": "gemini",
+      "answer": "Here are a few great spots in PB for a group, depending on the vibe you want:\n\n*   **Waterbar** – Best for big groups and ocean views. It’s huge, right on the boardwalk, and serves great seafood and cocktails with floor-to-ceiling windows. \n*   **The Grass Skirt** – Best for a fun, lively night out. It's a hidden tiki speakeasy with amazing Asian-fusion shareable plates and group cocktail bowls. *(Reservations recommended!)*\n*   **Pueblo** – Best for a slightly nicer sit-down meal. Great Baja-style Mexican food with a spacious, heated rooftop patio that works really well for groups.\n*   **Backyard Kitchen & Tap** – Best for a classic, high-energy PB vibe. Massive outdoor/indoor patio setup, solid gastropub food, and plenty of space for large parties. \n\nIf you want a mix of great views and a party atmosphere, **Firehouse** (rooftop) is another great backup.",
+      "extracted": [
+        {
+          "name": "Waterbar",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "The Grass Skirt",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Pueblo",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "Backyard Kitchen & Tap",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Firehouse",
+          "position": 5,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 9733,
+      "error": null
+    },
+    {
+      "questionId": "p3",
+      "modelKey": "perplexity",
+      "answer": "For a **group dinner in Pacific Beach**, my top picks are **Pacific Beach AleHouse**, **Costa Brava**, and **Flamingo Deck**. Pacific Beach AleHouse is the best bet if you want the easiest group setup, since it has **private dining available for groups of 25 to 250**.[9]\n\nIf you want a more specific vibe:\n\n- **Pacific Beach AleHouse** — best for a **large group** or mixed crowd; open for brunch, lunch, dinner, and late night, with private dining options.[9]\n- **Costa Brava** — best for a **fun tapas-style group dinner**; it’s described as a rustic spot with shareable plates and sangria, which works well for groups.[11][14]\n- **Flamingo Deck** — good for a **livelier dinner** with a broad menu and Italian-influenced Modern American food in central Pacific Beach.[1]\n- **Waterbar** — best if you want **waterfront views** and cocktails with dinner.[6][12][15]\n- **Oceana Coastal Kitchen** — a strong pick for a **more polished dinner** with Mission Bay views.[2]\n\nIf you’re telling me your group size and vibe, I can narrow it to the single best option.",
+      "extracted": [
+        {
+          "name": "Pacific Beach AleHouse",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Costa Brava",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Flamingo Deck",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "Waterbar",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Oceana Coastal Kitchen",
+          "position": 5,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 2707,
+      "error": null
+    },
+    {
+      "questionId": "p3",
+      "modelKey": "deepseek",
+      "answer": "Pacific Beach AleHouse is a solid choice—rooftop ocean views, craft beer, and plenty of space for groups. Draft at Belmont Park is another good option, with a big dining room right on the boardwalk.",
+      "extracted": [
+        {
+          "name": "Pacific Beach AleHouse",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Draft at Belmont Park",
+          "position": 2,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 6453,
+      "error": null
+    },
+    {
+      "questionId": "p4",
+      "modelKey": "gpt",
+      "answer": "If you mean Pacific Beach in San Diego, I’d pick based on the vibe:\n\n- **The Fishery** — Best overall date-night pick. Upscale but relaxed, excellent seafood, good wine, quieter North PB vibe.\n- **JRDN at Tower23** — Oceanfront, sleek, great sunset option. More scene-y and romantic if you want beach views.\n- **Costa Brava** — Cozy Spanish tapas spot, great for sharing plates and wine. Good intimate date vibe.\n- **Ambrogio15** — Stylish, casual Italian/pizza with great wine; good if you want something fun but not too formal.\n- **Enoteca Adriano** — Charming neighborhood Italian spot, quieter and more romantic.\n\nMy top recommendation: **The Fishery** for dinner, then drinks or a beach walk afterward.",
+      "extracted": [
+        {
+          "name": "The Fishery",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "JRDN at Tower23",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Costa Brava",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "Ambrogio15",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Enoteca Adriano",
+          "position": 5,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 7014,
+      "error": null
+    },
+    {
+      "questionId": "p4",
+      "modelKey": "claude",
+      "answer": "Pacific Beach is more laid-back than fancy, but a few options work well for a date:\n\n-",
+      "extracted": [],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": true
+      },
+      "latencyMs": 5531,
+      "error": null
+    },
+    {
+      "questionId": "p4",
+      "modelKey": "gemini",
+      "answer": "Here are a few great date night spots in Pacific Beach, depending on the vibe you’re going for:\n\n* **For upscale seafood & an intimate vibe:** **The Fishery** — Easily the best food in PB. It’s a chic, upscale seafood market turned restaurant with an incredible seasonal menu and great wine list.\n* **For ocean views & sunset drinks:** **JRDN** (at Tower23 Hotel) — Modern, sleek, and right on the boardwalk. Perfect for catching the sunset over cocktails and upscale California-coastal fare.\n* **For a cozy, romantic, lively dinner:** **Costa Brava** — Authentic Spanish tapas, warm candlelit atmosphere, and great sangria. Sharing small plates makes for a fun, interactive date.\n* **For great pizza & wine:** **Ambrogio15** — High-end Milan-style gourmet pizza with a fantastic natural wine selection in a cozy, slightly quieter neighborhood setting. \n* **For a stylish patio & craft cocktails:** **Pueblo** — Modern Mexican with a great rooftop deck and excellent margaritas. \n\n**Pro-tip:** Book a reservation around sunset, especially if you pick JRDN or Pueblo's rooftop.",
+      "extracted": [
+        {
+          "name": "The Fishery",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "JRDN",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Costa Brava",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "Ambrogio15",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Pueblo",
+          "position": 5,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 16998,
+      "error": null
+    },
+    {
+      "questionId": "p4",
+      "modelKey": "perplexity",
+      "answer": "If you want the **best all-around date night pick in Pacific Beach**, I’d start with **Slowly Restaurant & Lounge** for a quieter, more intimate dinner vibe, especially on its Tuesday date-night special with a chef-curated three-course menu and champagne.[1][6]\n\nA few strong alternatives, depending on the mood:\n\n- **The Beverly PB** — best for a more polished, rooftop-style date with cocktails and coastal ambiance.[2]\n- **Waterbar San Diego** — best if you want **oceanfront views** and a sunset dinner feel.[8]\n- **JRDN** — a solid choice if you want a classic PB dinner that can easily turn into a beach walk after.[3]\n- **Bar Ella** — good for a more lively, casual date-night atmosphere with a full bar and creative menu.[4]\n- **Firehouse American Eatery & Lounge** — a dependable ocean-near option if you want something easygoing and close to the beach.[10]\n\nIf you want my single recommendation: **Slowly** for a romantic dinner, **The Beverly** for rooftop energy, and **Waterbar** if the view matters most.[1][2][8]",
+      "extracted": [
+        {
+          "name": "Slowly Restaurant & Lounge",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "The Beverly PB",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Waterbar San Diego",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "JRDN",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Bar Ella",
+          "position": 5,
+          "basis": "ranked"
+        },
+        {
+          "name": "Firehouse American Eatery & Lounge",
+          "position": 6,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 2345,
+      "error": null
+    },
+    {
+      "questionId": "p4",
+      "modelKey": "deepseek",
+      "answer": "For a date night in Pacific Beach, here are some top picks depending on the vibe you want:\n\n* **The Fishery** – Upscale seafood with a cozy, candlelit dining room. Excellent wine list and fresh, seasonal dishes. Great for a refined but relaxed evening.\n* **JRDN** – Sleek steakhouse inside Tower23 Hotel with a stunning ocean-view patio. Perfect for sunset cocktails and a more modern, chic atmosphere.\n* **Enoteca Adriano** – Intimate, family-run Italian spot with homemade pasta and a charming, romantic feel. Small and personal, ideal for a quiet dinner.\n* **The Patio on Lamont** – Lush, garden-like setting with twinkling lights and fire pits. California comfort food and craft cocktails in a lively but romantic outdoor space.\n* **Oscar’s Mexican Seafood** – More casual but incredibly fresh fish tacos and ceviche. Grab a seat at the counter or a small table for a fun, low-key date.\n\nIf you want to impress with views, go JRDN. For cozy and intimate, Enoteca Adriano or The Fishery. For a buzzy, pretty patio, The Patio on Lamont.",
+      "extracted": [
+        {
+          "name": "The Fishery",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "JRDN",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Enoteca Adriano",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "The Patio on Lamont",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Oscar’s Mexican Seafood",
+          "position": 5,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 7096,
+      "error": null
+    },
+    {
+      "questionId": "p5",
+      "modelKey": "gpt",
+      "answer": "If you mean **Garnet Avenue in Pacific Beach, San Diego**, good nearby picks include:\n\n- **Pacific Beach Fish Shop** — great fish tacos, grilled fish plates, casual.\n- **Costa Brava** — Spanish tapas; good for a nicer dinner.\n- **Oscar’s Mexican Seafood** — popular fish tacos and ceviche.\n- **Kono’s Cafe** — classic breakfast/brunch near the pier.\n- **Taco Surf PB** — easy tacos and burritos.\n- **The Mad Beet** — smoothies, bowls, vegan/healthy options.\n- **Waterbar** — seafood/oceanfront vibes, better for drinks + view.\n\nIf you tell me what cross street you’re near on Garnet, I can narrow it to the best options within an actual 10-minute walk.",
+      "extracted": [
+        {
+          "name": "Pacific Beach Fish Shop",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Costa Brava",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Oscar’s Mexican Seafood",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "Kono’s Cafe",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Taco Surf PB",
+          "position": 5,
+          "basis": "ranked"
+        },
+        {
+          "name": "The Mad Beet",
+          "position": 6,
+          "basis": "ranked"
+        },
+        {
+          "name": "Waterbar",
+          "position": 7,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 12771,
+      "error": null
+    },
+    {
+      "questionId": "p5",
+      "modelKey": "claude",
+      "answer": "Garnet Avenue is best known as the main street in **Pacific Beach, San Diego**, so I'll assume that's the one you mean. Within a short walk you'll find:\n\n- **Seafood and tacos:** Pacific Beach Fish Shop is a local favorite for fish tacos and casual seafood.\n- **Casual American and breakfast:** The Pacific Beach area has several diners and brunch spots with good pancakes, eggs, and burgers.\n- **Pizza and Italian:** Several neighborhood pizzerias and trattorias are along Garnet and the nearby side streets.\n- **Quick bites:** Coffee shops, bakeries, and smoothie or acai bowl spots are common on the main strip.\n- **Beachside casual:** Places near the boardwalk serve fish, burgers, and cold drinks.\n\nHours and openings change often, so check recent reviews on Google Maps or Yelp before you go. If you meant a different Garnet Avenue, tell me the city and I'll adjust.",
+      "extracted": [
+        {
+          "name": "Pacific Beach Fish Shop",
+          "position": 1,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 5238,
+      "error": null
+    },
+    {
+      "questionId": "p5",
+      "modelKey": "gemini",
+      "answer": "Assuming you mean **Pacific Beach in San Diego**, here are some of the best spots right on or just off Garnet Ave:\n\n* **PB Fish Shop** *(Garnet Ave)* – A local staple. Pick your fresh fish, marinade, and style (tacos, sandwich, or plate). Don't skip the TKO taco.\n* **The Taco Stand** *(Grand Ave, 1 block south)* – Worth the short walk for top-tier street tacos (especially the al pastor and carne asada) and fresh churros.\n* **Square Pizza Co.** *(Garnet Ave)* – Fantastic Detroit-style thick crust and thin-crust Grandma pies. \n* **Crushed** *(Garnet Ave)* – Great for brunch, tapas, flatbreads, and mimosa flights. \n* **The Fishery** *(Cass St, just north of Garnet)* – Half seafood market, half upscale restaurant. Perfect if you want a sit-down, high-end meal.\n* **Kono’s Surf Club Cafe** *(Boardwalk, end of Garnet)* – Classic, cheap, massive breakfast burritos right by Crystal Pier. \n\nWhat kind of vibe or cuisine are you in the mood for?",
+      "extracted": [
+        {
+          "name": "PB Fish Shop",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "The Taco Stand",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Square Pizza Co.",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "Crushed",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "The Fishery",
+          "position": 5,
+          "basis": "ranked"
+        },
+        {
+          "name": "Kono’s Surf Club Cafe",
+          "position": 6,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 10547,
+      "error": null
+    },
+    {
+      "questionId": "p5",
+      "modelKey": "perplexity",
+      "answer": "If you mean **Garnet Avenue in Pacific Beach, San Diego**, there are several good options within about a ten-minute walk, especially for breakfast, casual lunch, and easy dinner.[2][3][8]\n\nA few strong picks are:\n\n- **Kono’s Cafe** — a long-running breakfast spot near Crystal Pier with all-day breakfast and lunch.[3][1]\n- **Better Buzz Coffee** — a busy coffee stop on Garnet that’s a convenient daytime option for coffee and light bites.[8]\n- **Pacific Beach Fish Shop** — good for seafood tacos, plates, or sandwiches for lunch or an early dinner.[8]\n- **Taco Surf** — casual Mexican food just off Garnet, a simple beach-friendly choice.[8]\n- **Mission + Garnet Food Hall** — a newer food hall at 800 Garnet Avenue with multiple restaurant options in one place.[13]\n- **Costa Brava** — listed on Garnet Avenue and a solid sit-down option nearby.[3]\n- **The Duck Dive** — a short walk on Garnet and a reliable choice for bar food and a more social setting.[12]\n- **Cafe Athena** — Greek and Mediterranean food a bit farther along Garnet, with brunch, lunch, and dinner.[5]\n- **Shawarma Shack Mediterranean Grill** — casual Mediterranean food with strong reviews and a Garnet address.[5]\n- **PB Pho & Grill** — a nearby option if you want pho or Vietnamese food.[5]\n\nIf you want, I can narrow this down by **breakfast, cheap eats, healthiest options, or dinner spots**.",
+      "extracted": [
+        {
+          "name": "Kono’s Cafe",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Better Buzz Coffee",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "Pacific Beach Fish Shop",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "Taco Surf",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Mission + Garnet Food Hall",
+          "position": 5,
+          "basis": "ranked"
+        },
+        {
+          "name": "Costa Brava",
+          "position": 6,
+          "basis": "ranked"
+        },
+        {
+          "name": "The Duck Dive",
+          "position": 7,
+          "basis": "ranked"
+        },
+        {
+          "name": "Cafe Athena",
+          "position": 8,
+          "basis": "ranked"
+        },
+        {
+          "name": "Shawarma Shack Mediterranean Grill",
+          "position": 9,
+          "basis": "ranked"
+        },
+        {
+          "name": "PB Pho & Grill",
+          "position": 10,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": true,
+        "position": 8,
+        "via": "ranked",
+        "refusal": false
+      },
+      "latencyMs": 2401,
+      "error": null
+    },
+    {
+      "questionId": "p5",
+      "modelKey": "deepseek",
+      "answer": "Here are some popular spots within a ten-minute walk of Garnet Avenue in Pacific Beach, San Diego:\n\n- **Oscar's Mexican Seafood** – Famous fish tacos and ceviche.\n- **Kono's Cafe** – Breakfast burritos with ocean views near the pier.\n- **The Fishery** – Fresh seafood and sushi.\n- **Better Buzz Coffee** – Coffee, acai bowls, and light bites.\n- **Taco Surf** – Casual Mexican, solid surf-themed taco shop.\n- **Second Nature** – Healthier bowls, wraps, and smoothies.\n- **Mr. Shawarma** – Mediterranean wraps and plates.\n- **Bare Back Grill** – New Zealand-style burgers and pub fare.\n\nLet me know if you're craving something specific.",
+      "extracted": [
+        {
+          "name": "Oscar's Mexican Seafood",
+          "position": 1,
+          "basis": "ranked"
+        },
+        {
+          "name": "Kono's Cafe",
+          "position": 2,
+          "basis": "ranked"
+        },
+        {
+          "name": "The Fishery",
+          "position": 3,
+          "basis": "ranked"
+        },
+        {
+          "name": "Better Buzz Coffee",
+          "position": 4,
+          "basis": "ranked"
+        },
+        {
+          "name": "Taco Surf",
+          "position": 5,
+          "basis": "ranked"
+        },
+        {
+          "name": "Second Nature",
+          "position": 6,
+          "basis": "ranked"
+        },
+        {
+          "name": "Mr. Shawarma",
+          "position": 7,
+          "basis": "ranked"
+        },
+        {
+          "name": "Bare Back Grill",
+          "position": 8,
+          "basis": "ranked"
+        }
+      ],
+      "detection": {
+        "mentioned": false,
+        "position": null,
+        "via": null,
+        "refusal": false
+      },
+      "latencyMs": 3939,
+      "error": null
+    }
+  ],
+  "perModel": [
+    {
+      "modelKey": "gpt",
+      "label": "ChatGPT (GPT-5.5)",
+      "grounded": false,
+      "mentionRate": 0.4,
+      "averagePosition": 1,
+      "answered": 5,
+      "failed": 0
+    },
+    {
+      "modelKey": "claude",
+      "label": "Claude (Haiku 5.5)",
+      "grounded": false,
+      "mentionRate": 0,
+      "averagePosition": null,
+      "answered": 5,
+      "failed": 0
+    },
+    {
+      "modelKey": "gemini",
+      "label": "Gemini (3.8 Flash)",
+      "grounded": false,
+      "mentionRate": 0,
+      "averagePosition": null,
+      "answered": 5,
+      "failed": 0
+    },
+    {
+      "modelKey": "perplexity",
+      "label": "Perplexity (Sonar)",
+      "grounded": true,
+      "mentionRate": 0.6,
+      "averagePosition": 3.3333333333333335,
+      "answered": 5,
+      "failed": 0
+    },
+    {
+      "modelKey": "deepseek",
+      "label": "DeepSeek (V4 Pro)",
+      "grounded": false,
+      "mentionRate": 0.2,
+      "averagePosition": 2,
+      "answered": 5,
+      "failed": 0
+    }
+  ]
+}
