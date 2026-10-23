@@ -1,0 +1,1894 @@
+{
+  "run_id": "demo-2026-10-23",
+  "created_at": "2026-10-23T19:19:41.142652+00:00",
+  "restaurant": {
+    "name": "Cafe Athena",
+    "website": "https://cafeathena.com",
+    "address": "1846 Garnet Ave, San Diego, CA 92109",
+    "cuisine": [
+      "Greek",
+      "Mediterranean"
+    ]
+  },
+  "models": {
+    "OpenAI": "openai/gpt-5.2",
+    "Gemini": "google/gemini-3.8-flash",
+    "Claude": "anthropic/claude-sonnet-5",
+    "Grok": "x-ai/grok-4.5",
+    "DeepSeek": "deepseek/deepseek-v4-flash"
+  },
+  "results": [
+    {
+      "model_label": "OpenAI",
+      "model_id": "openai/gpt-5.2",
+      "query_id": "q01",
+      "category": "greek_food",
+      "secondary_categories": [],
+      "query": "best Greek food in Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "best Greek food in Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Café Athena",
+            "position": 1,
+            "reason": "It’s an established Greek spot in Pacific Beach (\"since 1990\") and describes itself as an \"Authentic Greek and Mediterranean\" restaurant; Tripadvisor reviewers specifically call out favorites like the gyros plate and avgolemono soup.",
+            "source_urls": [
+              "https://cafeathena.com/",
+              "https://www.tripadvisor.ca/Restaurant_Review-g60750-d3461449-Reviews-Cafe_Athena-San_Diego_California.html"
+            ]
+          },
+          {
+            "restaurant": "Zgara Greek Grill",
+            "position": 2,
+            "reason": "San Diego Reader lists it as a family-operated Greek counter shop, and a Reader feature highlights ordering Greek salad plus a mixed grill of pork and chicken gyros (with itemized prices). Eater also lists the Morena Blvd address and hours.",
+            "source_urls": [
+              "https://www.sandiegoreader.com/places/zgara-greek-grill-baypark/",
+              "https://www.sandiegoreader.com/news/2025/oct/03/meaty-feast-meet-up/",
+              "https://sandiego.eater.com/venue/72935/zgara-greek-grill"
+            ]
+          },
+          {
+            "restaurant": "Arslan's Gyros",
+            "position": 3,
+            "reason": "Tripadvisor lists it as Mediterranean/Greek with a 4.4/5 rating (37 reviews) and shows the Mission Blvd address; San Diego Reader’s listing documents a menu that includes mixed lamb-and-beef gyro, spanakopita, baklava, and Turkish coffee.",
+            "source_urls": [
+              "https://www.tripadvisor.de/Restaurant_Review-g60750-d4154302-Reviews-Arslan_s_Gyros-San_Diego_California.html",
+              "https://www.sandiegoreader.com/places/arslans-gyros/"
+            ]
+          },
+          {
+            "restaurant": "Kojack's",
+            "position": 4,
+            "reason": "Allmenus lists Kojack’s at 714 Ventura Pl (92109) with classic Greek staples like gyro sandwiches (on homemade pita), souvlaki sandwiches, dolmathes plates, and combo plates with Greek salad and tzatziki.",
+            "source_urls": [
+              "https://www.allmenus.com/ca/san-diego/35115-kojacks/menu/"
+            ]
+          },
+          {
+            "restaurant": "Spiro's Mediterranean Cuisine (La Jolla Village)",
+            "position": 5,
+            "reason": "A nearby option north of Pacific Beach: Tripadvisor reviewers describe it as “less Mediterranean than it is Greek,” and the restaurant’s site lists its La Jolla Village location on Prospect St.",
+            "source_urls": [
+              "https://www.tripadvisor.ca/Restaurant_Review-g32578-d21366924-Reviews-Spiro_s_Mediterranean_Cuisine-La_Jolla_San_Diego_California.html",
+              "https://spiroscuisine.com/"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"best Greek food in Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Café Athena\",\n      \"position\": 1,\n      \"reason\": \"It’s an established Greek spot in Pacific Beach (\\\"since 1990\\\") and describes itself as an \\\"Authentic Greek and Mediterranean\\\" restaurant; Tripadvisor reviewers specifically call out favorites like the gyros plate and avgolemono soup.\",\n      \"source_urls\": [\n        \"https://cafeathena.com/\",\n        \"https://www.tripadvisor.ca/Restaurant_Review-g60750-d3461449-Reviews-Cafe_Athena-San_Diego_California.html\"\n      ]\n    },\n    {\n      \"restaurant\": \"Zgara Greek Grill\",\n      \"position\": 2,\n      \"reason\": \"San Diego Reader lists it as a family-operated Greek counter shop, and a Reader feature highlights ordering Greek salad plus a mixed grill of pork and chicken gyros (with itemized prices). Eater also lists the Morena Blvd address and hours.\",\n      \"source_urls\": [\n        \"https://www.sandiegoreader.com/places/zgara-greek-grill-baypark/\",\n        \"https://www.sandiegoreader.com/news/2025/oct/03/meaty-feast-meet-up/\",\n        \"https://sandiego.eater.com/venue/72935/zgara-greek-grill\"\n      ]\n    },\n    {\n      \"restaurant\": \"Arslan's Gyros\",\n      \"position\": 3,\n      \"reason\": \"Tripadvisor lists it as Mediterranean/Greek with a 4.4/5 rating (37 reviews) and shows the Mission Blvd address; San Diego Reader’s listing documents a menu that includes mixed lamb-and-beef gyro, spanakopita, baklava, and Turkish coffee.\",\n      \"source_urls\": [\n        \"https://www.tripadvisor.de/Restaurant_Review-g60750-d4154302-Reviews-Arslan_s_Gyros-San_Diego_California.html\",\n        \"https://www.sandiegoreader.com/places/arslans-gyros/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Kojack's\",\n      \"position\": 4,\n      \"reason\": \"Allmenus lists Kojack’s at 714 Ventura Pl (92109) with classic Greek staples like gyro sandwiches (on homemade pita), souvlaki sandwiches, dolmathes plates, and combo plates with Greek salad and tzatziki.\",\n      \"source_urls\": [\n        \"https://www.allmenus.com/ca/san-diego/35115-kojacks/menu/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Spiro's Mediterranean Cuisine (La Jolla Village)\",\n      \"position\": 5,\n      \"reason\": \"A nearby option north of Pacific Beach: Tripadvisor reviewers describe it as “less Mediterranean than it is Greek,” and the restaurant’s site lists its La Jolla Village location on Prospect St.\",\n      \"source_urls\": [\n        \"https://www.tripadvisor.ca/Restaurant_Review-g32578-d21366924-Reviews-Spiro_s_Mediterranean_Cuisine-La_Jolla_San_Diego_California.html\",\n        \"https://spiroscuisine.com/\"\n      ]\n    }\n  ]\n}",
+        "model": "openai/gpt-5.2"
+      }
+    },
+    {
+      "model_label": "OpenAI",
+      "model_id": "openai/gpt-5.2",
+      "query_id": "q02",
+      "category": "greek_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "vegan friendly restaurants Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "vegan friendly restaurants Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Soulshine Vegan Cafe",
+            "position": 1,
+            "reason": "Listed as “Soulshine Vegan Cafe” with a full menu and a Pacific Beach address at 3864 Mission Boulevard, San Diego, CA 92109.",
+            "source_urls": [
+              "https://www.allmenus.com/ca/san-diego/1025687-soulshine-vegan-cafe/menu/"
+            ]
+          },
+          {
+            "restaurant": "Spitz Pacific Beach",
+            "position": 2,
+            "reason": "Pacific Beach location (967 Garnet Ave, San Diego, CA 92109) is described as having a separate vegan menu with many vegan options (e.g., falafel).",
+            "source_urls": [
+              "https://spinach.guide/venues/spitz-pacific-beach-124664/"
+            ]
+          },
+          {
+            "restaurant": "The Beverly Beach Garden (Pacific Beach)",
+            "position": 3,
+            "reason": "Menu includes a clearly labeled “Vegan Greens & Grains” dish, and the site lists the location as 4190 Mission Blvd, San Diego, CA 92109.",
+            "source_urls": [
+              "https://www.thebeverlypb.com/food-menu/"
+            ]
+          },
+          {
+            "restaurant": "SandBox Pizza - Pacific Beach",
+            "position": 4,
+            "reason": "Online ordering menu for the Pacific Beach location (1466 Garnet Avenue, San Diego, CA 92109) includes a “BUILD YOUR OWN VEGAN/GF 12\"” option and offers vegan cheese.",
+            "source_urls": [
+              "https://order.toasttab.com/online/sandbox-pizza-pacific-beach/item-build-your-own-vegangf-12_1f2e1da0-b905-4887-9837-0db1852c917c"
+            ]
+          },
+          {
+            "restaurant": "Pop Pie Co. - Pacific Beach",
+            "position": 5,
+            "reason": "HappyCow lists this Pacific Beach location at 829 Garnet Ave (92109) as “Serves meat, vegan options available,” with examples of vegan pies and vegan ice cream.",
+            "source_urls": [
+              "https://www.happycow.net/reviews/pop-pie-co-pacific-beach-san-diego-446396"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"vegan friendly restaurants Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Soulshine Vegan Cafe\",\n      \"position\": 1,\n      \"reason\": \"Listed as “Soulshine Vegan Cafe” with a full menu and a Pacific Beach address at 3864 Mission Boulevard, San Diego, CA 92109.\",\n      \"source_urls\": [\n        \"https://www.allmenus.com/ca/san-diego/1025687-soulshine-vegan-cafe/menu/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Spitz Pacific Beach\",\n      \"position\": 2,\n      \"reason\": \"Pacific Beach location (967 Garnet Ave, San Diego, CA 92109) is described as having a separate vegan menu with many vegan options (e.g., falafel).\",\n      \"source_urls\": [\n        \"https://spinach.guide/venues/spitz-pacific-beach-124664/\"\n      ]\n    },\n    {\n      \"restaurant\": \"The Beverly Beach Garden (Pacific Beach)\",\n      \"position\": 3,\n      \"reason\": \"Menu includes a clearly labeled “Vegan Greens & Grains” dish, and the site lists the location as 4190 Mission Blvd, San Diego, CA 92109.\",\n      \"source_urls\": [\n        \"https://www.thebeverlypb.com/food-menu/\"\n      ]\n    },\n    {\n      \"restaurant\": \"SandBox Pizza - Pacific Beach\",\n      \"position\": 4,\n      \"reason\": \"Online ordering menu for the Pacific Beach location (1466 Garnet Avenue, San Diego, CA 92109) includes a “BUILD YOUR OWN VEGAN/GF 12\\\"” option and offers vegan cheese.\",\n      \"source_urls\": [\n        \"https://order.toasttab.com/online/sandbox-pizza-pacific-beach/item-build-your-own-vegangf-12_1f2e1da0-b905-4887-9837-0db1852c917c\"\n      ]\n    },\n    {\n      \"restaurant\": \"Pop Pie Co. - Pacific Beach\",\n      \"position\": 5,\n      \"reason\": \"HappyCow lists this Pacific Beach location at 829 Garnet Ave (92109) as “Serves meat, vegan options available,” with examples of vegan pies and vegan ice cream.\",\n      \"source_urls\": [\n        \"https://www.happycow.net/reviews/pop-pie-co-pacific-beach-san-diego-446396\"\n      ]\n    }\n  ]\n}",
+        "model": "openai/gpt-5.2"
+      }
+    },
+    {
+      "model_label": "OpenAI",
+      "model_id": "openai/gpt-5.2",
+      "query_id": "q03",
+      "category": "mediterranean_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "Mediterranean restaurant with gluten-free options in San Diego",
+      "status": "success",
+      "result": {
+        "query": "Mediterranean restaurant with gluten-free options in San Diego",
+        "recommendations": [
+          {
+            "restaurant": "Café Athena",
+            "position": 1,
+            "reason": "Greek & Mediterranean restaurant in Pacific Beach; the restaurant states it offers gluten-free options.",
+            "source_urls": [
+              "https://cafeathena.com/"
+            ]
+          },
+          {
+            "restaurant": "Slowly Restaurant & Lounge",
+            "position": 2,
+            "reason": "Mediterranean-Baja spot in Pacific Beach; the current dinner menu explicitly labels multiple dishes as (gf).",
+            "source_urls": [
+              "https://slowlysd.com/dinner-fall-winter-2026/"
+            ]
+          },
+          {
+            "restaurant": "Spitz (Pacific Beach)",
+            "position": 3,
+            "reason": "Pacific Beach Mediterranean restaurant; its menu includes a “gluten friendly” section and notes it is not a gluten-free facility (shared kitchen).",
+            "source_urls": [
+              "https://spitz-restaurant.com/locations/pacific-beach",
+              "https://spitz-restaurant.com/menu"
+            ]
+          },
+          {
+            "restaurant": "Shawarma House SD (Ocean Beach)",
+            "position": 4,
+            "reason": "Iraqi-Mediterranean in Ocean Beach; the menu calls out “Gluten-free-friendly” options (e.g., plates/rice bowls without pita) and notes cross-contact is possible in a shared kitchen.",
+            "source_urls": [
+              "https://shawarmahousesd.com/menu/"
+            ]
+          },
+          {
+            "restaurant": "Callie",
+            "position": 5,
+            "reason": "Mediterranean restaurant in San Diego; the menu labels items as (gf) gluten-free and highlights dietary accommodations.",
+            "source_urls": [
+              "https://www.calliesd.com/menu"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"Mediterranean restaurant with gluten-free options in San Diego\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Café Athena\",\n      \"position\": 1,\n      \"reason\": \"Greek & Mediterranean restaurant in Pacific Beach; the restaurant states it offers gluten-free options.\",\n      \"source_urls\": [\n        \"https://cafeathena.com/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Slowly Restaurant & Lounge\",\n      \"position\": 2,\n      \"reason\": \"Mediterranean-Baja spot in Pacific Beach; the current dinner menu explicitly labels multiple dishes as (gf).\",\n      \"source_urls\": [\n        \"https://slowlysd.com/dinner-fall-winter-2026/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Spitz (Pacific Beach)\",\n      \"position\": 3,\n      \"reason\": \"Pacific Beach Mediterranean restaurant; its menu includes a “gluten friendly” section and notes it is not a gluten-free facility (shared kitchen).\",\n      \"source_urls\": [\n        \"https://spitz-restaurant.com/locations/pacific-beach\",\n        \"https://spitz-restaurant.com/menu\"\n      ]\n    },\n    {\n      \"restaurant\": \"Shawarma House SD (Ocean Beach)\",\n      \"position\": 4,\n      \"reason\": \"Iraqi-Mediterranean in Ocean Beach; the menu calls out “Gluten-free-friendly” options (e.g., plates/rice bowls without pita) and notes cross-contact is possible in a shared kitchen.\",\n      \"source_urls\": [\n        \"https://shawarmahousesd.com/menu/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Callie\",\n      \"position\": 5,\n      \"reason\": \"Mediterranean restaurant in San Diego; the menu labels items as (gf) gluten-free and highlights dietary accommodations.\",\n      \"source_urls\": [\n        \"https://www.calliesd.com/menu\"\n      ]\n    }\n  ]\n}",
+        "model": "openai/gpt-5.2"
+      }
+    },
+    {
+      "model_label": "Gemini",
+      "model_id": "google/gemini-3.8-flash",
+      "query_id": "q01",
+      "category": "greek_food",
+      "secondary_categories": [],
+      "query": "best Greek food in Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "best Greek food in Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Café Athena",
+            "position": 1,
+            "reason": "Located directly on Garnet Avenue in Pacific Beach, this long-running neighborhood restaurant has served traditional Greek and Mediterranean staples—including gyros, souvlaki, moussaka, and avgolemono soup—since 1990.",
+            "source_urls": [
+              "https://cafeathena.com"
+            ]
+          },
+          {
+            "restaurant": "Shawarma Shack",
+            "position": 2,
+            "reason": "Situated on Garnet Avenue in Pacific Beach, Shawarma Shack offers quick-service Mediterranean and Greek items including traditional spit-carved gyros, gyro wraps, and fresh Greek salads.",
+            "source_urls": [
+              "https://shawarmashacksd.com"
+            ]
+          },
+          {
+            "restaurant": "Dino's Gyros Greek Cafe & Taverna",
+            "position": 3,
+            "reason": "Located just east of Pacific Beach in Clairemont Town Square, Dino's is a family-owned Greek taverna operating for over 25 years, known for its authentic gyro plates, Greek lemon chicken, and souvlaki.",
+            "source_urls": [
+              "https://dinosgyroscafe.com"
+            ]
+          },
+          {
+            "restaurant": "Spiro's Mediterranean Cuisine",
+            "position": 4,
+            "reason": "Positioned just north of Pacific Beach in neighboring La Jolla, Spiro's serves taverna-inspired Greek street food, featuring spit-roasted lamb-and-beef gyros, chicken souvlaki, spanakopita, and Greek mezes.",
+            "source_urls": [
+              "https://spiroscuisineca.com"
+            ]
+          },
+          {
+            "restaurant": "Nick the Greek",
+            "position": 5,
+            "reason": "Located a short drive inland on Balboa Avenue, this fast-casual Greek eatery specializes in authentic street foods such as vertical rotisserie gyros, souvlaki skewers, pita sandwiches, and Greek salads.",
+            "source_urls": [
+              "https://nickthegreek.com"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"best Greek food in Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Café Athena\",\n      \"position\": 1,\n      \"reason\": \"Located directly on Garnet Avenue in Pacific Beach, this long-running neighborhood restaurant has served traditional Greek and Mediterranean staples—including gyros, souvlaki, moussaka, and avgolemono soup—since 1990.\",\n      \"source_urls\": [\n        \"https://cafeathena.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Shawarma Shack\",\n      \"position\": 2,\n      \"reason\": \"Situated on Garnet Avenue in Pacific Beach, Shawarma Shack offers quick-service Mediterranean and Greek items including traditional spit-carved gyros, gyro wraps, and fresh Greek salads.\",\n      \"source_urls\": [\n        \"https://shawarmashacksd.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Dino's Gyros Greek Cafe & Taverna\",\n      \"position\": 3,\n      \"reason\": \"Located just east of Pacific Beach in Clairemont Town Square, Dino's is a family-owned Greek taverna operating for over 25 years, known for its authentic gyro plates, Greek lemon chicken, and souvlaki.\",\n      \"source_urls\": [\n        \"https://dinosgyroscafe.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Spiro's Mediterranean Cuisine\",\n      \"position\": 4,\n      \"reason\": \"Positioned just north of Pacific Beach in neighboring La Jolla, Spiro's serves taverna-inspired Greek street food, featuring spit-roasted lamb-and-beef gyros, chicken souvlaki, spanakopita, and Greek mezes.\",\n      \"source_urls\": [\n        \"https://spiroscuisineca.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Nick the Greek\",\n      \"position\": 5,\n      \"reason\": \"Located a short drive inland on Balboa Avenue, this fast-casual Greek eatery specializes in authentic street foods such as vertical rotisserie gyros, souvlaki skewers, pita sandwiches, and Greek salads.\",\n      \"source_urls\": [\n        \"https://nickthegreek.com\"\n      ]\n    }\n  ]\n}",
+        "model": "google/gemini-3.8-flash"
+      }
+    },
+    {
+      "model_label": "Gemini",
+      "model_id": "google/gemini-3.8-flash",
+      "query_id": "q02",
+      "category": "greek_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "vegan friendly restaurants Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "vegan friendly restaurants Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Powerhaus Wholesome Pizza & Eats",
+            "position": 1,
+            "reason": "Located on Garnet Avenue, Powerhaus offers extensive vegan dining options including custom pizzas with house-made creamy vegan mozzarella, non-GMO soy chicken, plant-protein crusts, and vegan wraps and salads.",
+            "source_urls": [
+              "https://powerhauspizza.com"
+            ]
+          },
+          {
+            "restaurant": "Mr. Charlie's",
+            "position": 2,
+            "reason": "A fully plant-based fast-food spot on Garnet Avenue known for 100% vegan burgers, plant-based chicken sandwiches, nuggets, and dairy-free shakes.",
+            "source_urls": [
+              "https://mrcharlies.co"
+            ]
+          },
+          {
+            "restaurant": "Second Nature",
+            "position": 3,
+            "reason": "A neighborhood gastropub and eatery in North Pacific Beach serving a menu with designated vegan options, including chipotle lime cauliflower tacos and plant-protein bowls.",
+            "source_urls": [
+              "https://sandiegomagazine.com/food-drink/very-important-taco-the-chipotle-lime-cauliflower-taco-from-second-nature/"
+            ]
+          },
+          {
+            "restaurant": "The Mad Beet",
+            "position": 4,
+            "reason": "A vibrant cafe on Garnet Avenue specializing in customizable acai bowls, pitaya bowls, cold-pressed juices, and smoothies easily made vegan upon request.",
+            "source_urls": [
+              "https://themadbeet.com"
+            ]
+          },
+          {
+            "restaurant": "Fig Tree Cafe",
+            "position": 5,
+            "reason": "A popular Cass Street breakfast and brunch destination featuring clearly marked vegan items such as vegan lemon strawberry French toast and Just Egg dishes.",
+            "source_urls": [
+              "https://figtreeeatery.com"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"vegan friendly restaurants Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Powerhaus Wholesome Pizza & Eats\",\n      \"position\": 1,\n      \"reason\": \"Located on Garnet Avenue, Powerhaus offers extensive vegan dining options including custom pizzas with house-made creamy vegan mozzarella, non-GMO soy chicken, plant-protein crusts, and vegan wraps and salads.\",\n      \"source_urls\": [\n        \"https://powerhauspizza.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Mr. Charlie's\",\n      \"position\": 2,\n      \"reason\": \"A fully plant-based fast-food spot on Garnet Avenue known for 100% vegan burgers, plant-based chicken sandwiches, nuggets, and dairy-free shakes.\",\n      \"source_urls\": [\n        \"https://mrcharlies.co\"\n      ]\n    },\n    {\n      \"restaurant\": \"Second Nature\",\n      \"position\": 3,\n      \"reason\": \"A neighborhood gastropub and eatery in North Pacific Beach serving a menu with designated vegan options, including chipotle lime cauliflower tacos and plant-protein bowls.\",\n      \"source_urls\": [\n        \"https://sandiegomagazine.com/food-drink/very-important-taco-the-chipotle-lime-cauliflower-taco-from-second-nature/\"\n      ]\n    },\n    {\n      \"restaurant\": \"The Mad Beet\",\n      \"position\": 4,\n      \"reason\": \"A vibrant cafe on Garnet Avenue specializing in customizable acai bowls, pitaya bowls, cold-pressed juices, and smoothies easily made vegan upon request.\",\n      \"source_urls\": [\n        \"https://themadbeet.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Fig Tree Cafe\",\n      \"position\": 5,\n      \"reason\": \"A popular Cass Street breakfast and brunch destination featuring clearly marked vegan items such as vegan lemon strawberry French toast and Just Egg dishes.\",\n      \"source_urls\": [\n        \"https://figtreeeatery.com\"\n      ]\n    }\n  ]\n}",
+        "model": "google/gemini-3.8-flash"
+      }
+    },
+    {
+      "model_label": "Gemini",
+      "model_id": "google/gemini-3.8-flash",
+      "query_id": "q03",
+      "category": "mediterranean_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "Mediterranean restaurant with gluten-free options in San Diego",
+      "status": "success",
+      "result": {
+        "query": "Mediterranean restaurant with gluten-free options in San Diego",
+        "recommendations": [
+          {
+            "restaurant": "Shawarma Shack",
+            "position": 1,
+            "reason": "Located in Pacific Beach, this Mediterranean eatery offers gluten-free shawarma plates and bowls with accommodating kitchen practices for diners with gluten sensitivities.",
+            "source_urls": [
+              "https://shawarmashacksd.com",
+              "https://atly.com"
+            ]
+          },
+          {
+            "restaurant": "Slowly Restaurant and Lounge",
+            "position": 2,
+            "reason": "Situated on Garnet Avenue in Pacific Beach, this spot pairs Mediterranean and Baja coastal cuisine with multiple gluten-free-friendly seafood and shared plate options.",
+            "source_urls": [
+              "https://slowlysd.com",
+              "https://atly.com"
+            ]
+          },
+          {
+            "restaurant": "Aladdin Mediterranean Restaurant",
+            "position": 3,
+            "reason": "Located nearby in Clairemont Mesa, this Mediterranean kitchen offers gluten-free crust for wood-fired pizzas, alongside naturally gluten-free kabobs, dips, and salads.",
+            "source_urls": [
+              "https://aladdincafe.com"
+            ]
+          },
+          {
+            "restaurant": "Luna Grill Clairemont",
+            "position": 4,
+            "reason": "Minutes from Pacific Beach, this Mediterranean grill provides a dietary lifestyle filter featuring gluten-free kabob plates, salads, and bowls.",
+            "source_urls": [
+              "https://lunagrill.com"
+            ]
+          },
+          {
+            "restaurant": "Mezé Greek Fusion",
+            "position": 5,
+            "reason": "A prominent San Diego Mediterranean and Greek dining destination offering labeled gluten-free hot and cold mezze, grilled meats, and salads.",
+            "source_urls": [
+              "https://gaslampmeze.com"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"Mediterranean restaurant with gluten-free options in San Diego\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Shawarma Shack\",\n      \"position\": 1,\n      \"reason\": \"Located in Pacific Beach, this Mediterranean eatery offers gluten-free shawarma plates and bowls with accommodating kitchen practices for diners with gluten sensitivities.\",\n      \"source_urls\": [\n        \"https://shawarmashacksd.com\",\n        \"https://atly.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Slowly Restaurant and Lounge\",\n      \"position\": 2,\n      \"reason\": \"Situated on Garnet Avenue in Pacific Beach, this spot pairs Mediterranean and Baja coastal cuisine with multiple gluten-free-friendly seafood and shared plate options.\",\n      \"source_urls\": [\n        \"https://slowlysd.com\",\n        \"https://atly.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Aladdin Mediterranean Restaurant\",\n      \"position\": 3,\n      \"reason\": \"Located nearby in Clairemont Mesa, this Mediterranean kitchen offers gluten-free crust for wood-fired pizzas, alongside naturally gluten-free kabobs, dips, and salads.\",\n      \"source_urls\": [\n        \"https://aladdincafe.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Luna Grill Clairemont\",\n      \"position\": 4,\n      \"reason\": \"Minutes from Pacific Beach, this Mediterranean grill provides a dietary lifestyle filter featuring gluten-free kabob plates, salads, and bowls.\",\n      \"source_urls\": [\n        \"https://lunagrill.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Mezé Greek Fusion\",\n      \"position\": 5,\n      \"reason\": \"A prominent San Diego Mediterranean and Greek dining destination offering labeled gluten-free hot and cold mezze, grilled meats, and salads.\",\n      \"source_urls\": [\n        \"https://gaslampmeze.com\"\n      ]\n    }\n  ]\n}",
+        "model": "google/gemini-3.8-flash"
+      }
+    },
+    {
+      "model_label": "Claude",
+      "model_id": "anthropic/claude-sonnet-5",
+      "query_id": "q01",
+      "category": "greek_food",
+      "secondary_categories": [],
+      "query": "best Greek food in Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "best Greek food in Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Spitz - Pacific Beach",
+            "position": 1,
+            "reason": "Highest Yelp rating among Greek-tagged results in Pacific Beach (4.8 stars, 166 reviews), with reviewers specifically noting it satisfies Greek food cravings in the area.",
+            "source_urls": [
+              "https://www.yelp.com/search?cflt=greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109"
+            ]
+          },
+          {
+            "restaurant": "Shawarma Shack",
+            "position": 2,
+            "reason": "Located in Pacific Beach with a strong 4.7-star rating (490 reviews) on Yelp; reviewers call it great for Greek food with a build-your-own bowl option.",
+            "source_urls": [
+              "https://www.yelp.com/search?cflt=greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://www.yelp.com/search?find_desc=Mediterranean+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109"
+            ]
+          },
+          {
+            "restaurant": "Cafe Athena",
+            "position": 3,
+            "reason": "Long-running Pacific Beach sit-down Greek/Mediterranean restaurant (established 1990) with 890 Yelp reviews (4.2 stars) and a Tripadvisor rating of 4.4/5 across 101 reviews; frequently praised for gyros, avgolemono soup, and authentic Greek menu.",
+            "source_urls": [
+              "https://www.yelp.com/search?cflt=greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://www.tripadvisor.com/Restaurant_Review-g60750-d3461449-Reviews-Cafe_Athena-San_Diego_California.html",
+              "https://pitahousesd.com/greek-food-san-diego/"
+            ]
+          },
+          {
+            "restaurant": "Mr Shawarma",
+            "position": 4,
+            "reason": "Pacific Beach spot with a solid 4.5-star Yelp rating (428 reviews); reviewers highlight the baba ganoush, chicken bowl, and tzatziki.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=athena+greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109"
+            ]
+          },
+          {
+            "restaurant": "Arslan's Gyros",
+            "position": 5,
+            "reason": "Described as a cozy spot near the beach offering authentic Mediterranean flavors with standout beef/lamb gyros, and rated 4.5 stars (633+ reviews) with reviewers calling it the most authentic Greek food in San Diego.",
+            "source_urls": [
+              "https://www.atly.com/united-states/california/san-diego/best-greek-food",
+              "https://www.yelp.com/search?find_desc=athena+greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109"
+            ]
+          }
+        ],
+        "raw_response": "```json\n{\n  \"query\": \"best Greek food in Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Spitz - Pacific Beach\",\n      \"position\": 1,\n      \"reason\": \"Highest Yelp rating among Greek-tagged results in Pacific Beach (4.8 stars, 166 reviews), with reviewers specifically noting it satisfies Greek food cravings in the area.\",\n      \"source_urls\": [\"https://www.yelp.com/search?cflt=greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\"]\n    },\n    {\n      \"restaurant\": \"Shawarma Shack\",\n      \"position\": 2,\n      \"reason\": \"Located in Pacific Beach with a strong 4.7-star rating (490 reviews) on Yelp; reviewers call it great for Greek food with a build-your-own bowl option.\",\n      \"source_urls\": [\"https://www.yelp.com/search?cflt=greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://www.yelp.com/search?find_desc=Mediterranean+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\"]\n    },\n    {\n      \"restaurant\": \"Cafe Athena\",\n      \"position\": 3,\n      \"reason\": \"Long-running Pacific Beach sit-down Greek/Mediterranean restaurant (established 1990) with 890 Yelp reviews (4.2 stars) and a Tripadvisor rating of 4.4/5 across 101 reviews; frequently praised for gyros, avgolemono soup, and authentic Greek menu.\",\n      \"source_urls\": [\"https://www.yelp.com/search?cflt=greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://www.tripadvisor.com/Restaurant_Review-g60750-d3461449-Reviews-Cafe_Athena-San_Diego_California.html\", \"https://pitahousesd.com/greek-food-san-diego/\"]\n    },\n    {\n      \"restaurant\": \"Mr Shawarma\",\n      \"position\": 4,\n      \"reason\": \"Pacific Beach spot with a solid 4.5-star Yelp rating (428 reviews); reviewers highlight the baba ganoush, chicken bowl, and tzatziki.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=athena+greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\"]\n    },\n    {\n      \"restaurant\": \"Arslan's Gyros\",\n      \"position\": 5,\n      \"reason\": \"Described as a cozy spot near the beach offering authentic Mediterranean flavors with standout beef/lamb gyros, and rated 4.5 stars (633+ reviews) with reviewers calling it the most authentic Greek food in San Diego.\",\n      \"source_urls\": [\"https://www.atly.com/united-states/california/san-diego/best-greek-food\", \"https://www.yelp.com/search?find_desc=athena+greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\"]\n    }\n  ]\n}\n```",
+        "model": "anthropic/claude-sonnet-5"
+      }
+    },
+    {
+      "model_label": "Claude",
+      "model_id": "anthropic/claude-sonnet-5",
+      "query_id": "q02",
+      "category": "greek_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "vegan friendly restaurants Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "vegan friendly restaurants Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Mr. Charlie's",
+            "position": 1,
+            "reason": "An all-vegan eatery with a Pacific Beach location, rated 4.5 stars with reviewers noting the food is delicious even for first-time vegan food tasters.",
+            "source_urls": [
+              "https://www.yelp.com/search?cflt=vegan&find_loc=Pacific+Beach,+San+Diego,+CA+92109",
+              "https://veganinsandiego.com/"
+            ]
+          },
+          {
+            "restaurant": "Spitz - Pacific Beach",
+            "position": 2,
+            "reason": "Highly rated (4.8 stars, 162 reviews) with vegan food highlighted on their website, including praise for the saucy, satisfying Vegan Gyro.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=Vegan+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109"
+            ]
+          },
+          {
+            "restaurant": "Armonía Kitchen",
+            "position": 3,
+            "reason": "Pacific Beach brunch spot rated 4.7 stars (305 reviews) and specifically called out as a perfect spot for vegan diners.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=Vegan+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://sdtoday.6amcity.com/city-guide/live/our-favorite-vegan-and-vegetarian-eats-in-san-diego"
+            ]
+          },
+          {
+            "restaurant": "Fig Tree Cafe - Pacific Beach",
+            "position": 4,
+            "reason": "Popular breakfast/brunch spot (4.1 stars, 2.1k reviews) with reviewers specifically praising the vegan French toast and vegan options.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=Vegan+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109"
+            ]
+          },
+          {
+            "restaurant": "Second Nature",
+            "position": 5,
+            "reason": "Pacific Beach brunch spot (4.1 stars, 581 reviews) offering unique vegan dishes on both the breakfast and dinner menus that even non-vegans enjoy.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=Vegan+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://sdtoday.6amcity.com/city-guide/live/our-favorite-vegan-and-vegetarian-eats-in-san-diego"
+            ]
+          }
+        ],
+        "raw_response": "```json\n{\n  \"query\": \"vegan friendly restaurants Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Mr. Charlie's\",\n      \"position\": 1,\n      \"reason\": \"An all-vegan eatery with a Pacific Beach location, rated 4.5 stars with reviewers noting the food is delicious even for first-time vegan food tasters.\",\n      \"source_urls\": [\"https://www.yelp.com/search?cflt=vegan&find_loc=Pacific+Beach,+San+Diego,+CA+92109\", \"https://veganinsandiego.com/\"]\n    },\n    {\n      \"restaurant\": \"Spitz - Pacific Beach\",\n      \"position\": 2,\n      \"reason\": \"Highly rated (4.8 stars, 162 reviews) with vegan food highlighted on their website, including praise for the saucy, satisfying Vegan Gyro.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=Vegan+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\"]\n    },\n    {\n      \"restaurant\": \"Armonía Kitchen\",\n      \"position\": 3,\n      \"reason\": \"Pacific Beach brunch spot rated 4.7 stars (305 reviews) and specifically called out as a perfect spot for vegan diners.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=Vegan+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://sdtoday.6amcity.com/city-guide/live/our-favorite-vegan-and-vegetarian-eats-in-san-diego\"]\n    },\n    {\n      \"restaurant\": \"Fig Tree Cafe - Pacific Beach\",\n      \"position\": 4,\n      \"reason\": \"Popular breakfast/brunch spot (4.1 stars, 2.1k reviews) with reviewers specifically praising the vegan French toast and vegan options.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=Vegan+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\"]\n    },\n    {\n      \"restaurant\": \"Second Nature\",\n      \"position\": 5,\n      \"reason\": \"Pacific Beach brunch spot (4.1 stars, 581 reviews) offering unique vegan dishes on both the breakfast and dinner menus that even non-vegans enjoy.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=Vegan+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://sdtoday.6amcity.com/city-guide/live/our-favorite-vegan-and-vegetarian-eats-in-san-diego\"]\n    }\n  ]\n}\n```",
+        "model": "anthropic/claude-sonnet-5"
+      }
+    },
+    {
+      "model_label": "Claude",
+      "model_id": "anthropic/claude-sonnet-5",
+      "query_id": "q03",
+      "category": "mediterranean_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "Mediterranean restaurant with gluten-free options in San Diego",
+      "status": "success",
+      "result": {
+        "query": "Mediterranean restaurant with gluten-free options in San Diego",
+        "recommendations": [
+          {
+            "restaurant": "Spitz - Pacific Beach",
+            "position": 1,
+            "reason": "Located directly in Pacific Beach, Spitz offers a dedicated gluten-free menu alongside vegan, dairy-free and halal options, and reviewers note \"many gluten free options\" with falafel as a GF menu item.",
+            "source_urls": [
+              "https://spitz-restaurant.com/mediterranean-food-pacific-beach-restaurant-bar/",
+              "https://www.yelp.com/biz/spitz-san-diego-5",
+              "https://www.findmeglutenfree.com/us/ca/pacific-beach/dinner"
+            ]
+          },
+          {
+            "restaurant": "Shawarma Shack Mediterranean Grill",
+            "position": 2,
+            "reason": "This Pacific Beach Mediterranean spot has a GF menu with rice bowls, salad and soup, and reviewers report staff are highly celiac-aware, proactively mentioning shared fryer risks without being asked.",
+            "source_urls": [
+              "https://www.findmeglutenfree.com/us/ca/pacific-beach/dinner",
+              "https://www.findmeglutenfree.com/us/ca/san-diego/mediterranean"
+            ]
+          },
+          {
+            "restaurant": "Akhis Authentic Shawarma & Kebab",
+            "position": 3,
+            "reason": "A highly-rated (4.8 stars) Mediterranean restaurant right in Pacific Beach; reviewers describe the staff as knowledgeable and conscientious about cross-contamination precautions for gluten-free diners.",
+            "source_urls": [
+              "https://www.yelp.com/search?cflt=mediterranean&find_loc=San+Diego%2C+CA",
+              "https://www.findmeglutenfree.com/us/ca/san-diego/mediterranean"
+            ]
+          },
+          {
+            "restaurant": "Callie",
+            "position": 4,
+            "reason": "A top-rated Mediterranean restaurant in East Village with an explicit gluten-free menu; diners report every dish is hand-delivered with an explanation of how it is celiac-safe.",
+            "source_urls": [
+              "https://www.findmeglutenfree.com/us/ca/san-diego/east-village/mediterranean",
+              "https://www.findmeglutenfree.com/us/ca/san-diego"
+            ]
+          },
+          {
+            "restaurant": "CAVA",
+            "position": 5,
+            "reason": "A Mediterranean fast-casual chain with a confirmed gluten-free menu and reviewers noting it's possible to safely avoid cross-contamination when eating gluten-free.",
+            "source_urls": [
+              "https://www.findmeglutenfree.com/us/ca/san-diego/east-village/mediterranean",
+              "https://www.findmeglutenfree.com/us/ca/san-diego/mediterranean"
+            ]
+          }
+        ],
+        "raw_response": "```json\n{\n  \"query\": \"Mediterranean restaurant with gluten-free options in San Diego\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Spitz - Pacific Beach\",\n      \"position\": 1,\n      \"reason\": \"Located directly in Pacific Beach, Spitz offers a dedicated gluten-free menu alongside vegan, dairy-free and halal options, and reviewers note \\\"many gluten free options\\\" with falafel as a GF menu item.\",\n      \"source_urls\": [\n        \"https://spitz-restaurant.com/mediterranean-food-pacific-beach-restaurant-bar/\",\n        \"https://www.yelp.com/biz/spitz-san-diego-5\",\n        \"https://www.findmeglutenfree.com/us/ca/pacific-beach/dinner\"\n      ]\n    },\n    {\n      \"restaurant\": \"Shawarma Shack Mediterranean Grill\",\n      \"position\": 2,\n      \"reason\": \"This Pacific Beach Mediterranean spot has a GF menu with rice bowls, salad and soup, and reviewers report staff are highly celiac-aware, proactively mentioning shared fryer risks without being asked.\",\n      \"source_urls\": [\n        \"https://www.findmeglutenfree.com/us/ca/pacific-beach/dinner\",\n        \"https://www.findmeglutenfree.com/us/ca/san-diego/mediterranean\"\n      ]\n    },\n    {\n      \"restaurant\": \"Akhis Authentic Shawarma & Kebab\",\n      \"position\": 3,\n      \"reason\": \"A highly-rated (4.8 stars) Mediterranean restaurant right in Pacific Beach; reviewers describe the staff as knowledgeable and conscientious about cross-contamination precautions for gluten-free diners.\",\n      \"source_urls\": [\n        \"https://www.yelp.com/search?cflt=mediterranean&find_loc=San+Diego%2C+CA\",\n        \"https://www.findmeglutenfree.com/us/ca/san-diego/mediterranean\"\n      ]\n    },\n    {\n      \"restaurant\": \"Callie\",\n      \"position\": 4,\n      \"reason\": \"A top-rated Mediterranean restaurant in East Village with an explicit gluten-free menu; diners report every dish is hand-delivered with an explanation of how it is celiac-safe.\",\n      \"source_urls\": [\n        \"https://www.findmeglutenfree.com/us/ca/san-diego/east-village/mediterranean\",\n        \"https://www.findmeglutenfree.com/us/ca/san-diego\"\n      ]\n    },\n    {\n      \"restaurant\": \"CAVA\",\n      \"position\": 5,\n      \"reason\": \"A Mediterranean fast-casual chain with a confirmed gluten-free menu and reviewers noting it's possible to safely avoid cross-contamination when eating gluten-free.\",\n      \"source_urls\": [\n        \"https://www.findmeglutenfree.com/us/ca/san-diego/east-village/mediterranean\",\n        \"https://www.findmeglutenfree.com/us/ca/san-diego/mediterranean\"\n      ]\n    }\n  ]\n}\n```",
+        "model": "anthropic/claude-sonnet-5"
+      }
+    },
+    {
+      "model_label": "Grok",
+      "model_id": "x-ai/grok-4.5",
+      "query_id": "q01",
+      "category": "greek_food",
+      "secondary_categories": [],
+      "query": "best Greek food in Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "best Greek food in Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Spitz - Pacific Beach",
+            "position": 1,
+            "reason": "Highly rated (4.8 stars) Mediterranean spot in Pacific Beach specializing in Greek gyros like the OG Gyro with tzatziki, fresh bowls, and salads; praised in recent local coverage for flavorful, modern takes on Greek and Mediterranean dishes.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=Greek+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://www.sandiegouniontribune.com/2026/05/05/on-the-menu-spitz-mediterranean-restaurant-combines-old-world-inspiration-with-modern-touches-in-pacific-beach/",
+              "https://spitz-restaurant.com/mediterranean-food-pacific-beach-restaurant-bar/"
+            ]
+          },
+          {
+            "restaurant": "Arslan's Gyros",
+            "position": 2,
+            "reason": "Family-owned Mediterranean/Greek spot in the Pacific Beach area (Mission Blvd) with strong reviews (4.5+ stars) calling it the best Greek food in PB; known for fresh lamb/beef gyros off the spit, tzatziki, and large portions near the beach.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=Greek+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://arslansgyrossandiego.com/index.html",
+              "https://www.restaurantji.com/ca/san-diego/arslans-gyros-/"
+            ]
+          },
+          {
+            "restaurant": "Shawarma Shack",
+            "position": 3,
+            "reason": "Popular Pacific Beach Mediterranean spot (4.7 stars) offering Greek wraps, gyros, Greek salads, bowls, and baklava; reviewers specifically praise it for Greek food options and fresh flavors.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=Greek+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://shawarmashacksd.com/",
+              "https://shawarmashacksd.com/tags/greek-food"
+            ]
+          },
+          {
+            "restaurant": "Akhis Authentic Shawarma & Kebab",
+            "position": 4,
+            "reason": "Highly rated (4.8 stars) grab-and-go Middle Eastern fusion in North Pacific Beach with gyro options, Greek salad, and fresh kebabs/shawarma; noted for flavorful, high-quality ingredients and Greek-inspired items.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=Greek&find_loc=San+Diego%2C+CA+92109",
+              "https://akhisshawarma.com/",
+              "https://www.sandiegouniontribune.com/2025/11/06/on-the-menu-love-of-travel-and-family-traditions-are-behind-akhis-in-pacific-beach/"
+            ]
+          },
+          {
+            "restaurant": "Kojack's",
+            "position": 5,
+            "reason": "Long-standing casual Greek/Mediterranean spot in adjacent Mission Beach with gyros, Greek salads, plates, and baklava; reviewers highlight authentic Greek food and beachside convenience.",
+            "source_urls": [
+              "https://www.yelp.com/biz/kojacks-san-diego",
+              "https://www.restaurantji.com/ca/san-diego/kojacks-restaurant-/",
+              "https://www.yelp.com/search?cflt=greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"best Greek food in Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Spitz - Pacific Beach\",\n      \"position\": 1,\n      \"reason\": \"Highly rated (4.8 stars) Mediterranean spot in Pacific Beach specializing in Greek gyros like the OG Gyro with tzatziki, fresh bowls, and salads; praised in recent local coverage for flavorful, modern takes on Greek and Mediterranean dishes.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=Greek+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://www.sandiegouniontribune.com/2026/05/05/on-the-menu-spitz-mediterranean-restaurant-combines-old-world-inspiration-with-modern-touches-in-pacific-beach/\", \"https://spitz-restaurant.com/mediterranean-food-pacific-beach-restaurant-bar/\"]\n    },\n    {\n      \"restaurant\": \"Arslan's Gyros\",\n      \"position\": 2,\n      \"reason\": \"Family-owned Mediterranean/Greek spot in the Pacific Beach area (Mission Blvd) with strong reviews (4.5+ stars) calling it the best Greek food in PB; known for fresh lamb/beef gyros off the spit, tzatziki, and large portions near the beach.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=Greek+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://arslansgyrossandiego.com/index.html\", \"https://www.restaurantji.com/ca/san-diego/arslans-gyros-/\"]\n    },\n    {\n      \"restaurant\": \"Shawarma Shack\",\n      \"position\": 3,\n      \"reason\": \"Popular Pacific Beach Mediterranean spot (4.7 stars) offering Greek wraps, gyros, Greek salads, bowls, and baklava; reviewers specifically praise it for Greek food options and fresh flavors.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=Greek+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://shawarmashacksd.com/\", \"https://shawarmashacksd.com/tags/greek-food\"]\n    },\n    {\n      \"restaurant\": \"Akhis Authentic Shawarma & Kebab\",\n      \"position\": 4,\n      \"reason\": \"Highly rated (4.8 stars) grab-and-go Middle Eastern fusion in North Pacific Beach with gyro options, Greek salad, and fresh kebabs/shawarma; noted for flavorful, high-quality ingredients and Greek-inspired items.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=Greek&find_loc=San+Diego%2C+CA+92109\", \"https://akhisshawarma.com/\", \"https://www.sandiegouniontribune.com/2025/11/06/on-the-menu-love-of-travel-and-family-traditions-are-behind-akhis-in-pacific-beach/\"]\n    },\n    {\n      \"restaurant\": \"Kojack's\",\n      \"position\": 5,\n      \"reason\": \"Long-standing casual Greek/Mediterranean spot in adjacent Mission Beach with gyros, Greek salads, plates, and baklava; reviewers highlight authentic Greek food and beachside convenience.\",\n      \"source_urls\": [\"https://www.yelp.com/biz/kojacks-san-diego\", \"https://www.restaurantji.com/ca/san-diego/kojacks-restaurant-/\", \"https://www.yelp.com/search?cflt=greek&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\"]\n    }\n  ]\n}",
+        "model": "x-ai/grok-4.5"
+      }
+    },
+    {
+      "model_label": "Grok",
+      "model_id": "x-ai/grok-4.5",
+      "query_id": "q02",
+      "category": "greek_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "vegan friendly restaurants Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "vegan friendly restaurants Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Mr. Charlie’s",
+            "position": 1,
+            "reason": "Fully plant-based fast-food restaurant in Pacific Beach offering vegan burgers, nuggets, fries, and shakes as a McDonald's-style alternative; frequently tops local vegan-friendly lists and recent reviews.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=Vegan+Friendly+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://timesofsandiego.com/business/2026/08/17/mr-charlies-vegan-mcdonalds-taste/",
+              "https://veganinsandiego.com/"
+            ]
+          },
+          {
+            "restaurant": "Powerhaus Wholesome Pizza & Eats",
+            "position": 2,
+            "reason": "Pacific Beach pizzeria with dedicated vegan pizzas using house-made cashew mozzarella, Beyond sausage, and vegan chicken options on multiple crusts; site and reviews highlight strong plant-based menu.",
+            "source_urls": [
+              "https://www.powerhauspizza.com/healthy-pizza/vegan",
+              "https://www.yelp.com/search?find_desc=Vegan&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://veganinsandiego.com/"
+            ]
+          },
+          {
+            "restaurant": "Spice Lounge",
+            "position": 3,
+            "reason": "Indian restaurant in Pacific Beach with numerous clearly marked vegan curries, dishes, and options praised in reviews and HappyCow for flavor and variety.",
+            "source_urls": [
+              "https://www.yelp.com/search?cflt=vegan&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://www.happycow.net/reviews/spice-lounge-san-diego-63604",
+              "https://www.tripadvisor.com/Restaurant_Review-g60750-d4718535-Reviews-Spice_Lounge-San_Diego_California.html"
+            ]
+          },
+          {
+            "restaurant": "Armonía Kitchen",
+            "position": 4,
+            "reason": "Healthy brunch spot in Pacific Beach offering many vegan, gluten-free, and dairy-free options including mushroom carnitas burritos, bowls, and plant-based smoothies; high ratings for accommodating vegan diners.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=Vegan&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://armoniakitchen.com/menu",
+              "https://www.ubereats.com/store/armonia-kitchen-pacific-beach/3ob1gaj_R9C6EBoInzYJRA"
+            ]
+          },
+          {
+            "restaurant": "Second Nature",
+            "position": 5,
+            "reason": "Plant-forward American restaurant in Pacific Beach with clearly marked vegan dishes like plant-based burgers, cauliflower tacos, and more; noted for sustainable options and vegan-friendly menu.",
+            "source_urls": [
+              "https://www.yelp.com/search?find_desc=Vegan&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109",
+              "https://www.happycow.net/reviews/second-nature-san-diego-108840",
+              "https://secondnaturepb.com/"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"vegan friendly restaurants Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Mr. Charlie’s\",\n      \"position\": 1,\n      \"reason\": \"Fully plant-based fast-food restaurant in Pacific Beach offering vegan burgers, nuggets, fries, and shakes as a McDonald's-style alternative; frequently tops local vegan-friendly lists and recent reviews.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=Vegan+Friendly+Restaurants&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://timesofsandiego.com/business/2026/08/17/mr-charlies-vegan-mcdonalds-taste/\", \"https://veganinsandiego.com/\"]\n    },\n    {\n      \"restaurant\": \"Powerhaus Wholesome Pizza & Eats\",\n      \"position\": 2,\n      \"reason\": \"Pacific Beach pizzeria with dedicated vegan pizzas using house-made cashew mozzarella, Beyond sausage, and vegan chicken options on multiple crusts; site and reviews highlight strong plant-based menu.\",\n      \"source_urls\": [\"https://www.powerhauspizza.com/healthy-pizza/vegan\", \"https://www.yelp.com/search?find_desc=Vegan&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://veganinsandiego.com/\"]\n    },\n    {\n      \"restaurant\": \"Spice Lounge\",\n      \"position\": 3,\n      \"reason\": \"Indian restaurant in Pacific Beach with numerous clearly marked vegan curries, dishes, and options praised in reviews and HappyCow for flavor and variety.\",\n      \"source_urls\": [\"https://www.yelp.com/search?cflt=vegan&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://www.happycow.net/reviews/spice-lounge-san-diego-63604\", \"https://www.tripadvisor.com/Restaurant_Review-g60750-d4718535-Reviews-Spice_Lounge-San_Diego_California.html\"]\n    },\n    {\n      \"restaurant\": \"Armonía Kitchen\",\n      \"position\": 4,\n      \"reason\": \"Healthy brunch spot in Pacific Beach offering many vegan, gluten-free, and dairy-free options including mushroom carnitas burritos, bowls, and plant-based smoothies; high ratings for accommodating vegan diners.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=Vegan&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://armoniakitchen.com/menu\", \"https://www.ubereats.com/store/armonia-kitchen-pacific-beach/3ob1gaj_R9C6EBoInzYJRA\"]\n    },\n    {\n      \"restaurant\": \"Second Nature\",\n      \"position\": 5,\n      \"reason\": \"Plant-forward American restaurant in Pacific Beach with clearly marked vegan dishes like plant-based burgers, cauliflower tacos, and more; noted for sustainable options and vegan-friendly menu.\",\n      \"source_urls\": [\"https://www.yelp.com/search?find_desc=Vegan&find_loc=Pacific+Beach%2C+San+Diego%2C+CA+92109\", \"https://www.happycow.net/reviews/second-nature-san-diego-108840\", \"https://secondnaturepb.com/\"]\n    }\n  ]\n}",
+        "model": "x-ai/grok-4.5"
+      }
+    },
+    {
+      "model_label": "Grok",
+      "model_id": "x-ai/grok-4.5",
+      "query_id": "q03",
+      "category": "mediterranean_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "Mediterranean restaurant with gluten-free options in San Diego",
+      "status": "success",
+      "result": {
+        "query": "Mediterranean restaurant with gluten-free options in San Diego",
+        "recommendations": [
+          {
+            "restaurant": "Shawarma Shack Mediterranean Grill",
+            "position": 1,
+            "reason": "Located in Pacific Beach; multiple recent celiac reviews praise knowledgeable staff who proactively discuss safe options like rice bowls, salads, and soups, with no reported symptoms and accommodations for cross-contamination concerns.",
+            "source_urls": [
+              "https://www.findmeglutenfree.com/us/ca/pacific-beach/mediterranean",
+              "https://www.findmeglutenfree.com/biz/shawarma-shack/5250165030649856"
+            ]
+          },
+          {
+            "restaurant": "Spitz Mediterranean Street Food",
+            "position": 2,
+            "reason": "Pacific Beach location with confirmed gluten-free options and menu items (including falafel); official site and reviews note many GF choices, vegan/GF accommodations, and fresh Mediterranean street food like bowls and salads.",
+            "source_urls": [
+              "https://www.findmeglutenfree.com/us/ca/pacific-beach/mediterranean",
+              "https://spitz-restaurant.com/mediterranean-food-pacific-beach-restaurant-bar/",
+              "https://www.findmeglutenfree.com/biz/spitz/6196392189362176",
+              "https://www.sandiegouniontribune.com/2026/05/05/on-the-menu-spitz-mediterranean-restaurant-combines-old-world-inspiration-with-modern-touches-in-pacific-beach/"
+            ]
+          },
+          {
+            "restaurant": "Pita Bowl",
+            "position": 3,
+            "reason": "Near Pacific Beach in Mission Beach; celiac reviews confirm most items (bowls, proteins, toppings) are naturally gluten-free except pita/wrap, with fresh customizable Mediterranean bowls and no issues reported.",
+            "source_urls": [
+              "https://www.findmeglutenfree.com/us/ca/pacific-beach/mediterranean",
+              "https://www.findmeglutenfree.com/biz/pita-bowl/4614342064865280",
+              "https://thepitabowl.com/"
+            ]
+          },
+          {
+            "restaurant": "Akhis Authentic Shawarma & Kebab",
+            "position": 4,
+            "reason": "In North Pacific Beach; celiac review highlights knowledgeable staff who carefully package and flag items to avoid cross-contamination, with delicious shawarma/kebab bowls and wraps adaptable for GF.",
+            "source_urls": [
+              "https://www.findmeglutenfree.com/us/ca/pacific-beach/mediterranean",
+              "https://www.findmeglutenfree.com/biz/akhis-authentic-shawarma-and-kebab/6239414977429504",
+              "https://akhisshawarma.com/"
+            ]
+          },
+          {
+            "restaurant": "Slowly Restaurant & Lounge",
+            "position": 5,
+            "reason": "Pacific Beach Mediterranean spot with gluten-free options marked on menu; celiac reviews note knowledgeable servers, robust GF choices including risotto and desserts, and safe experiences.",
+            "source_urls": [
+              "https://www.findmeglutenfree.com/biz/slowly/6752773431754752",
+              "https://www.opentable.com/r/slowly-restaurant-and-lounge-san-diego-2"
+            ]
+          }
+        ],
+        "raw_response": "I'll search the web for current information on Mediterranean restaurants with gluten-free options near Pacific Beach, San Diego.Next, I'll gather more details on the top candidates by checking their pages and reviews for gluten-free evidence.{\n  \"query\": \"Mediterranean restaurant with gluten-free options in San Diego\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Shawarma Shack Mediterranean Grill\",\n      \"position\": 1,\n      \"reason\": \"Located in Pacific Beach; multiple recent celiac reviews praise knowledgeable staff who proactively discuss safe options like rice bowls, salads, and soups, with no reported symptoms and accommodations for cross-contamination concerns.\",\n      \"source_urls\": [\n        \"https://www.findmeglutenfree.com/us/ca/pacific-beach/mediterranean\",\n        \"https://www.findmeglutenfree.com/biz/shawarma-shack/5250165030649856\"\n      ]\n    },\n    {\n      \"restaurant\": \"Spitz Mediterranean Street Food\",\n      \"position\": 2,\n      \"reason\": \"Pacific Beach location with confirmed gluten-free options and menu items (including falafel); official site and reviews note many GF choices, vegan/GF accommodations, and fresh Mediterranean street food like bowls and salads.\",\n      \"source_urls\": [\n        \"https://www.findmeglutenfree.com/us/ca/pacific-beach/mediterranean\",\n        \"https://spitz-restaurant.com/mediterranean-food-pacific-beach-restaurant-bar/\",\n        \"https://www.findmeglutenfree.com/biz/spitz/6196392189362176\",\n        \"https://www.sandiegouniontribune.com/2026/05/05/on-the-menu-spitz-mediterranean-restaurant-combines-old-world-inspiration-with-modern-touches-in-pacific-beach/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Pita Bowl\",\n      \"position\": 3,\n      \"reason\": \"Near Pacific Beach in Mission Beach; celiac reviews confirm most items (bowls, proteins, toppings) are naturally gluten-free except pita/wrap, with fresh customizable Mediterranean bowls and no issues reported.\",\n      \"source_urls\": [\n        \"https://www.findmeglutenfree.com/us/ca/pacific-beach/mediterranean\",\n        \"https://www.findmeglutenfree.com/biz/pita-bowl/4614342064865280\",\n        \"https://thepitabowl.com/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Akhis Authentic Shawarma & Kebab\",\n      \"position\": 4,\n      \"reason\": \"In North Pacific Beach; celiac review highlights knowledgeable staff who carefully package and flag items to avoid cross-contamination, with delicious shawarma/kebab bowls and wraps adaptable for GF.\",\n      \"source_urls\": [\n        \"https://www.findmeglutenfree.com/us/ca/pacific-beach/mediterranean\",\n        \"https://www.findmeglutenfree.com/biz/akhis-authentic-shawarma-and-kebab/6239414977429504\",\n        \"https://akhisshawarma.com/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Slowly Restaurant & Lounge\",\n      \"position\": 5,\n      \"reason\": \"Pacific Beach Mediterranean spot with gluten-free options marked on menu; celiac reviews note knowledgeable servers, robust GF choices including risotto and desserts, and safe experiences.\",\n      \"source_urls\": [\n        \"https://www.findmeglutenfree.com/biz/slowly/6752773431754752\",\n        \"https://www.opentable.com/r/slowly-restaurant-and-lounge-san-diego-2\"\n      ]\n    }\n  ]\n}",
+        "model": "x-ai/grok-4.5"
+      }
+    },
+    {
+      "model_label": "DeepSeek",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "query_id": "q01",
+      "category": "greek_food",
+      "secondary_categories": [],
+      "query": "best Greek food in Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "best Greek food in Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Cafe Athena",
+            "position": 1,
+            "reason": "Established 1990, family-owned authentic Greek restaurant in Pacific Beach. Known for gyros, souvlaki, moussaka, and avgolemono soup. 4.5+ stars across platforms, praised by customers as of July 2025. San Diego Magazine's Best Greek Restaurant multiple years. Daily happy hour 3-6pm.",
+            "source_urls": [
+              "https://cafeathena.com/",
+              "https://cafeathena.com/about/",
+              "https://www.tripadvisor.com/Restaurant_Review-g60750-d3461449-Reviews-Cafe_Athena-San_Diego_California.html",
+              "https://www.chamberofcommerce.com/business-directory/california/san-diego/mediterranean-restaurant/2013187974-cafe-athena"
+            ]
+          },
+          {
+            "restaurant": "Spitz - Pacific Beach",
+            "position": 2,
+            "reason": "Modern Mediterranean street food with Greek gyros and doner wraps. Located at 967 Garnet Ave in Pacific Beach, opened mid-2025. Yelp 4.8 stars (77+ reviews). Menu includes gyros, falafel, and vegan/gluten-free options. Casual atmosphere with outdoor patio.",
+            "source_urls": [
+              "https://www.yelp.com/biz/spitz-san-diego-5?start=40",
+              "https://spitz-restaurant.com/locations/pacific-beach",
+              "https://whatnow.com/san-diego/restaurants/spitz-replacing-crushed-in-pacific-beach/"
+            ]
+          },
+          {
+            "restaurant": "Arslan's Gyros",
+            "position": 3,
+            "reason": "Family-run spot at 3861 Mission Blvd (Mission Beach adjacent to Pacific Beach, 92109). 4.7 stars from 625+ reviews. Known for authentic lamb & beef gyros, spanakopita, dolmas, and Balkan specialties. Reviewers praise the gyros meat as on par with Athens, Greece.",
+            "source_urls": [
+              "https://arslansgyrossandiego.com/",
+              "https://www.tripadvisor.com/Restaurant_Review-g60750-d4154302-Reviews-Arslan_s_Gyros-San_Diego_California.html",
+              "https://exa.ai/library/place/2cb21b616rr"
+            ]
+          },
+          {
+            "restaurant": "Shawarma Shack",
+            "position": 4,
+            "reason": "Located at 2015 Garnet Ave in Pacific Beach. 4.6 stars from 582 reviews, inexpensive. Serves Greek classics including gyros, Greek salad, baklava, falafel, and tzatziki. Known for creative shawarma tacos. Fast-casual, family-friendly.",
+            "source_urls": [
+              "https://shawarmashacksd.com/",
+              "https://exa.ai/library/places?q=7c8fb8e687427456"
+            ]
+          }
+        ],
+        "raw_response": "```json\n{\n  \"query\": \"best Greek food in Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Cafe Athena\",\n      \"position\": 1,\n      \"reason\": \"Established 1990, family-owned authentic Greek restaurant in Pacific Beach. Known for gyros, souvlaki, moussaka, and avgolemono soup. 4.5+ stars across platforms, praised by customers as of July 2025. San Diego Magazine's Best Greek Restaurant multiple years. Daily happy hour 3-6pm.\",\n      \"source_urls\": [\n        \"https://cafeathena.com/\",\n        \"https://cafeathena.com/about/\",\n        \"https://www.tripadvisor.com/Restaurant_Review-g60750-d3461449-Reviews-Cafe_Athena-San_Diego_California.html\",\n        \"https://www.chamberofcommerce.com/business-directory/california/san-diego/mediterranean-restaurant/2013187974-cafe-athena\"\n      ]\n    },\n    {\n      \"restaurant\": \"Spitz - Pacific Beach\",\n      \"position\": 2,\n      \"reason\": \"Modern Mediterranean street food with Greek gyros and doner wraps. Located at 967 Garnet Ave in Pacific Beach, opened mid-2025. Yelp 4.8 stars (77+ reviews). Menu includes gyros, falafel, and vegan/gluten-free options. Casual atmosphere with outdoor patio.\",\n      \"source_urls\": [\n        \"https://www.yelp.com/biz/spitz-san-diego-5?start=40\",\n        \"https://spitz-restaurant.com/locations/pacific-beach\",\n        \"https://whatnow.com/san-diego/restaurants/spitz-replacing-crushed-in-pacific-beach/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Arslan's Gyros\",\n      \"position\": 3,\n      \"reason\": \"Family-run spot at 3861 Mission Blvd (Mission Beach adjacent to Pacific Beach, 92109). 4.7 stars from 625+ reviews. Known for authentic lamb & beef gyros, spanakopita, dolmas, and Balkan specialties. Reviewers praise the gyros meat as on par with Athens, Greece.\",\n      \"source_urls\": [\n        \"https://arslansgyrossandiego.com/\",\n        \"https://www.tripadvisor.com/Restaurant_Review-g60750-d4154302-Reviews-Arslan_s_Gyros-San_Diego_California.html\",\n        \"https://exa.ai/library/place/2cb21b616rr\"\n      ]\n    },\n    {\n      \"restaurant\": \"Shawarma Shack\",\n      \"position\": 4,\n      \"reason\": \"Located at 2015 Garnet Ave in Pacific Beach. 4.6 stars from 582 reviews, inexpensive. Serves Greek classics including gyros, Greek salad, baklava, falafel, and tzatziki. Known for creative shawarma tacos. Fast-casual, family-friendly.\",\n      \"source_urls\": [\n        \"https://shawarmashacksd.com/\",\n        \"https://exa.ai/library/places?q=7c8fb8e687427456\"\n      ]\n    }\n  ]\n}\n```",
+        "model": "deepseek/deepseek-v4-flash"
+      }
+    },
+    {
+      "model_label": "DeepSeek",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "query_id": "q02",
+      "category": "greek_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "vegan friendly restaurants Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "vegan friendly restaurants Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Mr. Charlie's",
+            "position": 1,
+            "reason": "100% plant-based fast-food restaurant in Pacific Beach, often called a 'vegan McDonald's.' Serves fully vegan burgers, chicken sandwiches, nuggets, and shakes. Highly rated at 4.8 stars.",
+            "source_urls": [
+              "https://mrcharlies.co/locations",
+              "https://timesofsandiego.com/business/2026/02/24/mr-charlies-opens-pb-vegan-version-mcdonalds/",
+              "https://exa.ai/library/places?q=a068d2e1ffd93ea3"
+            ]
+          },
+          {
+            "restaurant": "Powerhaus Wholesome Pizza & Eats",
+            "position": 2,
+            "reason": "Dedicated vegan pizza menu with housemade vegan mozzarella, vegan sausage, BBQ chick'n, and multiple vegan wraps and salads. 4.8 stars at 1550 Garnet Ave in Pacific Beach.",
+            "source_urls": [
+              "https://www.powerhauspizza.com/healthy-pizza/vegan",
+              "https://www.powerhauspizza.com/",
+              "https://exa.ai/library/places?q=a068d2e1ffd93ea3"
+            ]
+          },
+          {
+            "restaurant": "Spitz",
+            "position": 3,
+            "reason": "Mediterranean street-food restaurant in Pacific Beach (967 Garnet Ave) where nearly the entire menu can be made vegan, including bowls, salads, falafel, and fries. Rated 4.9 stars. Opened September 2025.",
+            "source_urls": [
+              "https://www.spitz-restaurant.com/locations/pacific-beach",
+              "https://hoodline.com/2026/05/pacific-beach-scores-late-night-doner-fix-as-spitz-lands-on-garnet/",
+              "https://www.diningandcooking.com/2629489/on-the-menu-spitz-mediterranean-restaurant-combines-old-world-inspiration-with-modern-touches-in-pacific-beach/"
+            ]
+          },
+          {
+            "restaurant": "Sauced Pizzeria",
+            "position": 4,
+            "reason": "Italian restaurant in Pacific Beach offering extensive clearly marked vegan options including vegan breadsticks, vegan cheese pizzas, vegan meatballs, vegan pepperoni and sausage pizzas, vegan alfredo, and more. Rated 4.7 stars.",
+            "source_urls": [
+              "https://saucedpizzeriapb.com/",
+              "https://exa.ai/library/places?q=a068d2e1ffd93ea3"
+            ]
+          },
+          {
+            "restaurant": "Second Nature",
+            "position": 5,
+            "reason": "American gastropub in Pacific Beach (5026 Cass St) with clearly marked vegan dishes such as plant-based burger, Buddha quinoa salad, coconut Thai curry, and green hummus plate. 4.4 stars with over 600 reviews.",
+            "source_urls": [
+              "https://secondnaturepb.com/san-diego-second-nature-food-menu",
+              "https://secondnaturepb.com/",
+              "https://exa.ai/library/place/xw907r0m383"
+            ]
+          }
+        ],
+        "raw_response": "Here are the results based on my research.\n\n```json\n{\n  \"query\": \"vegan friendly restaurants Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Mr. Charlie's\",\n      \"position\": 1,\n      \"reason\": \"100% plant-based fast-food restaurant in Pacific Beach, often called a 'vegan McDonald's.' Serves fully vegan burgers, chicken sandwiches, nuggets, and shakes. Highly rated at 4.8 stars.\",\n      \"source_urls\": [\n        \"https://mrcharlies.co/locations\",\n        \"https://timesofsandiego.com/business/2026/02/24/mr-charlies-opens-pb-vegan-version-mcdonalds/\",\n        \"https://exa.ai/library/places?q=a068d2e1ffd93ea3\"\n      ]\n    },\n    {\n      \"restaurant\": \"Powerhaus Wholesome Pizza & Eats\",\n      \"position\": 2,\n      \"reason\": \"Dedicated vegan pizza menu with housemade vegan mozzarella, vegan sausage, BBQ chick'n, and multiple vegan wraps and salads. 4.8 stars at 1550 Garnet Ave in Pacific Beach.\",\n      \"source_urls\": [\n        \"https://www.powerhauspizza.com/healthy-pizza/vegan\",\n        \"https://www.powerhauspizza.com/\",\n        \"https://exa.ai/library/places?q=a068d2e1ffd93ea3\"\n      ]\n    },\n    {\n      \"restaurant\": \"Spitz\",\n      \"position\": 3,\n      \"reason\": \"Mediterranean street-food restaurant in Pacific Beach (967 Garnet Ave) where nearly the entire menu can be made vegan, including bowls, salads, falafel, and fries. Rated 4.9 stars. Opened September 2025.\",\n      \"source_urls\": [\n        \"https://www.spitz-restaurant.com/locations/pacific-beach\",\n        \"https://hoodline.com/2026/05/pacific-beach-scores-late-night-doner-fix-as-spitz-lands-on-garnet/\",\n        \"https://www.diningandcooking.com/2629489/on-the-menu-spitz-mediterranean-restaurant-combines-old-world-inspiration-with-modern-touches-in-pacific-beach/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Sauced Pizzeria\",\n      \"position\": 4,\n      \"reason\": \"Italian restaurant in Pacific Beach offering extensive clearly marked vegan options including vegan breadsticks, vegan cheese pizzas, vegan meatballs, vegan pepperoni and sausage pizzas, vegan alfredo, and more. Rated 4.7 stars.\",\n      \"source_urls\": [\n        \"https://saucedpizzeriapb.com/\",\n        \"https://exa.ai/library/places?q=a068d2e1ffd93ea3\"\n      ]\n    },\n    {\n      \"restaurant\": \"Second Nature\",\n      \"position\": 5,\n      \"reason\": \"American gastropub in Pacific Beach (5026 Cass St) with clearly marked vegan dishes such as plant-based burger, Buddha quinoa salad, coconut Thai curry, and green hummus plate. 4.4 stars with over 600 reviews.\",\n      \"source_urls\": [\n        \"https://secondnaturepb.com/san-diego-second-nature-food-menu\",\n        \"https://secondnaturepb.com/\",\n        \"https://exa.ai/library/place/xw907r0m383\"\n      ]\n    }\n  ]\n}\n```",
+        "model": "deepseek/deepseek-v4-flash"
+      }
+    },
+    {
+      "model_label": "DeepSeek",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "query_id": "q03",
+      "category": "mediterranean_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "Mediterranean restaurant with gluten-free options in San Diego",
+      "status": "success",
+      "result": {
+        "query": "Mediterranean restaurant with gluten-free options in San Diego",
+        "recommendations": [
+          {
+            "restaurant": "Spitz - Pacific Beach",
+            "position": 1,
+            "reason": "Explicitly listed as a gluten-free restaurant with a dedicated 'Gluten Friendly' menu section; nearly any item can be made gluten-free except wraps/gyros, per official source.",
+            "source_urls": [
+              "https://spitz-restaurant.com/menu",
+              "https://www.diningandcooking.com/2629489/on-the-menu-spitz-mediterranean-restaurant-combines-old-world-inspiration-with-modern-touches-in-pacific-beach/",
+              "https://www.findmeglutenfree.com/biz/spitz/6196392189362176"
+            ]
+          },
+          {
+            "restaurant": "Shawarma Shack Mediterranean Grill",
+            "position": 2,
+            "reason": "Reported gluten-free menu with rice bowls, salads, and soups; celiac-friendly with knowledgeable staff about cross-contamination (9 safety ratings on Find Me Gluten Free).",
+            "source_urls": [
+              "https://www.findmeglutenfree.com/biz/shawarma-shack/5250165030649856",
+              "https://shawarmashacksd.com/menu",
+              "https://www.atly.com/gluten-free/location/ShawarmaShack1"
+            ]
+          },
+          {
+            "restaurant": "Slowly Restaurant and Lounge",
+            "position": 3,
+            "reason": "Mediterranean-Baja restaurant in Pacific Beach with gluten-free options clearly marked on dinner menu and gluten-free dessert choices; recognized by OpenTable as having 'Gluten-free Options'.",
+            "source_urls": [
+              "https://slowlysd.com/main-course/",
+              "https://www.opentable.com/r/slowly-restaurant-and-lounge-san-diego-2",
+              "https://www.findmeglutenfree.com/biz/slowly/6752773431754752"
+            ]
+          },
+          {
+            "restaurant": "Akhis Authentic Shawarma & Kebab",
+            "position": 4,
+            "reason": "Community reports confirm bowls without pita are gluten-free; staff extremely knowledgeable about cross-contamination and label items separately (per Find Me Gluten Free).",
+            "source_urls": [
+              "https://www.findmeglutenfree.com/biz/akhis-authentic-shawarma-and-kebab/6239414977429504",
+              "https://akhisshawarma.com/"
+            ]
+          },
+          {
+            "restaurant": "Pita Bowl",
+            "position": 5,
+            "reason": "Mediterranean-inspired customizable bowls labeled 'Gluten Friendly' on official menu; celiac diners report most items are naturally gluten-free (only pita and wraps contain gluten).",
+            "source_urls": [
+              "https://thepitabowl.com/menu",
+              "https://www.findmeglutenfree.com/biz/pita-bowl/4614342064865280"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"Mediterranean restaurant with gluten-free options in San Diego\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Spitz - Pacific Beach\",\n      \"position\": 1,\n      \"reason\": \"Explicitly listed as a gluten-free restaurant with a dedicated 'Gluten Friendly' menu section; nearly any item can be made gluten-free except wraps/gyros, per official source.\",\n      \"source_urls\": [\"https://spitz-restaurant.com/menu\", \"https://www.diningandcooking.com/2629489/on-the-menu-spitz-mediterranean-restaurant-combines-old-world-inspiration-with-modern-touches-in-pacific-beach/\", \"https://www.findmeglutenfree.com/biz/spitz/6196392189362176\"]\n    },\n    {\n      \"restaurant\": \"Shawarma Shack Mediterranean Grill\",\n      \"position\": 2,\n      \"reason\": \"Reported gluten-free menu with rice bowls, salads, and soups; celiac-friendly with knowledgeable staff about cross-contamination (9 safety ratings on Find Me Gluten Free).\",\n      \"source_urls\": [\"https://www.findmeglutenfree.com/biz/shawarma-shack/5250165030649856\", \"https://shawarmashacksd.com/menu\", \"https://www.atly.com/gluten-free/location/ShawarmaShack1\"]\n    },\n    {\n      \"restaurant\": \"Slowly Restaurant and Lounge\",\n      \"position\": 3,\n      \"reason\": \"Mediterranean-Baja restaurant in Pacific Beach with gluten-free options clearly marked on dinner menu and gluten-free dessert choices; recognized by OpenTable as having 'Gluten-free Options'.\",\n      \"source_urls\": [\"https://slowlysd.com/main-course/\", \"https://www.opentable.com/r/slowly-restaurant-and-lounge-san-diego-2\", \"https://www.findmeglutenfree.com/biz/slowly/6752773431754752\"]\n    },\n    {\n      \"restaurant\": \"Akhis Authentic Shawarma & Kebab\",\n      \"position\": 4,\n      \"reason\": \"Community reports confirm bowls without pita are gluten-free; staff extremely knowledgeable about cross-contamination and label items separately (per Find Me Gluten Free).\",\n      \"source_urls\": [\"https://www.findmeglutenfree.com/biz/akhis-authentic-shawarma-and-kebab/6239414977429504\", \"https://akhisshawarma.com/\"]\n    },\n    {\n      \"restaurant\": \"Pita Bowl\",\n      \"position\": 5,\n      \"reason\": \"Mediterranean-inspired customizable bowls labeled 'Gluten Friendly' on official menu; celiac diners report most items are naturally gluten-free (only pita and wraps contain gluten).\",\n      \"source_urls\": [\"https://thepitabowl.com/menu\", \"https://www.findmeglutenfree.com/biz/pita-bowl/4614342064865280\"]\n    }\n  ]\n}",
+        "model": "deepseek/deepseek-v4-flash"
+      }
+    }
+  ],
+  "scorecard": {
+    "combined": {
+      "successful_queries": 15,
+      "target_mentions": 5,
+      "mention_rate": 33.3,
+      "average_position": 1.4,
+      "competitors": [
+        {
+          "name": "Spitz Pacific Beach",
+          "mentions": 8,
+          "mention_rate": 53.3
+        },
+        {
+          "name": "Shawarma Shack",
+          "mentions": 5,
+          "mention_rate": 33.3
+        },
+        {
+          "name": "Arslan's Gyros",
+          "mentions": 4,
+          "mention_rate": 26.7
+        },
+        {
+          "name": "Slowly Restaurant & Lounge",
+          "mentions": 4,
+          "mention_rate": 26.7
+        },
+        {
+          "name": "Mr. Charlie's",
+          "mentions": 4,
+          "mention_rate": 26.7
+        },
+        {
+          "name": "Second Nature",
+          "mentions": 4,
+          "mention_rate": 26.7
+        },
+        {
+          "name": "Akhis Authentic Shawarma & Kebab",
+          "mentions": 4,
+          "mention_rate": 26.7
+        },
+        {
+          "name": "Powerhaus Wholesome Pizza & Eats",
+          "mentions": 3,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Shawarma Shack Mediterranean Grill",
+          "mentions": 3,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Kojack's",
+          "mentions": 2,
+          "mention_rate": 13.3
+        },
+        {
+          "name": "Callie",
+          "mentions": 2,
+          "mention_rate": 13.3
+        },
+        {
+          "name": "Armonía Kitchen",
+          "mentions": 2,
+          "mention_rate": 13.3
+        },
+        {
+          "name": "Pita Bowl",
+          "mentions": 2,
+          "mention_rate": 13.3
+        },
+        {
+          "name": "Zgara Greek Grill",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Spiro's Mediterranean Cuisine (La Jolla Village)",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Soulshine Vegan Cafe",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "The Beverly Beach Garden (Pacific Beach)",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "SandBox Pizza - Pacific Beach",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Pop Pie Co. - Pacific Beach",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Shawarma House SD (Ocean Beach)",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Dino's Gyros Greek Cafe & Taverna",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Spiro's Mediterranean Cuisine",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Nick the Greek",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "The Mad Beet",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Fig Tree Cafe",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Aladdin Mediterranean Restaurant",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Luna Grill Clairemont",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Mezé Greek Fusion",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Mr Shawarma",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Fig Tree Cafe - Pacific Beach",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "CAVA",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Spice Lounge",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Spitz Mediterranean Street Food",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Spitz",
+          "mentions": 1,
+          "mention_rate": 6.7
+        },
+        {
+          "name": "Sauced Pizzeria",
+          "mentions": 1,
+          "mention_rate": 6.7
+        }
+      ]
+    },
+    "by_model": {
+      "OpenAI": {
+        "successful_queries": 3,
+        "target_mentions": 2,
+        "mention_rate": 66.7,
+        "average_position": 1.0,
+        "competitors": [
+          {
+            "name": "Spitz Pacific Beach",
+            "mentions": 2,
+            "mention_rate": 66.7
+          },
+          {
+            "name": "Zgara Greek Grill",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Arslan's Gyros",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Kojack's",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Spiro's Mediterranean Cuisine (La Jolla Village)",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Soulshine Vegan Cafe",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "The Beverly Beach Garden (Pacific Beach)",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "SandBox Pizza - Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Pop Pie Co. - Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Slowly Restaurant & Lounge",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Shawarma House SD (Ocean Beach)",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Callie",
+            "mentions": 1,
+            "mention_rate": 33.3
+          }
+        ]
+      },
+      "Gemini": {
+        "successful_queries": 3,
+        "target_mentions": 1,
+        "mention_rate": 33.3,
+        "average_position": 1.0,
+        "competitors": [
+          {
+            "name": "Shawarma Shack",
+            "mentions": 2,
+            "mention_rate": 66.7
+          },
+          {
+            "name": "Dino's Gyros Greek Cafe & Taverna",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Spiro's Mediterranean Cuisine",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Nick the Greek",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Powerhaus Wholesome Pizza & Eats",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Mr. Charlie's",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Second Nature",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "The Mad Beet",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Fig Tree Cafe",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Slowly Restaurant and Lounge",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Aladdin Mediterranean Restaurant",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Luna Grill Clairemont",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Mezé Greek Fusion",
+            "mentions": 1,
+            "mention_rate": 33.3
+          }
+        ]
+      },
+      "Claude": {
+        "successful_queries": 3,
+        "target_mentions": 1,
+        "mention_rate": 33.3,
+        "average_position": 3.0,
+        "competitors": [
+          {
+            "name": "Spitz - Pacific Beach",
+            "mentions": 3,
+            "mention_rate": 100.0
+          },
+          {
+            "name": "Shawarma Shack",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Mr Shawarma",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Arslan's Gyros",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Mr. Charlie's",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Armonía Kitchen",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Fig Tree Cafe - Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Second Nature",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Shawarma Shack Mediterranean Grill",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Akhis Authentic Shawarma & Kebab",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Callie",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "CAVA",
+            "mentions": 1,
+            "mention_rate": 33.3
+          }
+        ]
+      },
+      "Grok": {
+        "successful_queries": 3,
+        "target_mentions": 0,
+        "mention_rate": 0.0,
+        "average_position": null,
+        "competitors": [
+          {
+            "name": "Akhis Authentic Shawarma & Kebab",
+            "mentions": 2,
+            "mention_rate": 66.7
+          },
+          {
+            "name": "Spitz - Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Arslan's Gyros",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Shawarma Shack",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Kojack's",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Mr. Charlie’s",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Powerhaus Wholesome Pizza & Eats",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Spice Lounge",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Armonía Kitchen",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Second Nature",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Shawarma Shack Mediterranean Grill",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Spitz Mediterranean Street Food",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Pita Bowl",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Slowly Restaurant & Lounge",
+            "mentions": 1,
+            "mention_rate": 33.3
+          }
+        ]
+      },
+      "DeepSeek": {
+        "successful_queries": 3,
+        "target_mentions": 1,
+        "mention_rate": 33.3,
+        "average_position": 1.0,
+        "competitors": [
+          {
+            "name": "Spitz - Pacific Beach",
+            "mentions": 2,
+            "mention_rate": 66.7
+          },
+          {
+            "name": "Arslan's Gyros",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Shawarma Shack",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Mr. Charlie's",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Powerhaus Wholesome Pizza & Eats",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Spitz",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Sauced Pizzeria",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Second Nature",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Shawarma Shack Mediterranean Grill",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Slowly Restaurant and Lounge",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Akhis Authentic Shawarma & Kebab",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Pita Bowl",
+            "mentions": 1,
+            "mention_rate": 33.3
+          }
+        ]
+      }
+    },
+    "by_category": {
+      "dietary_options": {
+        "successful_queries": 10,
+        "target_mentions": 1,
+        "mention_rate": 10.0,
+        "average_position": 1.0,
+        "competitors": [
+          {
+            "name": "Spitz Pacific Beach",
+            "mentions": 5,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Slowly Restaurant & Lounge",
+            "mentions": 4,
+            "mention_rate": 40.0
+          },
+          {
+            "name": "Mr. Charlie's",
+            "mentions": 4,
+            "mention_rate": 40.0
+          },
+          {
+            "name": "Second Nature",
+            "mentions": 4,
+            "mention_rate": 40.0
+          },
+          {
+            "name": "Powerhaus Wholesome Pizza & Eats",
+            "mentions": 3,
+            "mention_rate": 30.0
+          },
+          {
+            "name": "Shawarma Shack Mediterranean Grill",
+            "mentions": 3,
+            "mention_rate": 30.0
+          },
+          {
+            "name": "Akhis Authentic Shawarma & Kebab",
+            "mentions": 3,
+            "mention_rate": 30.0
+          },
+          {
+            "name": "Callie",
+            "mentions": 2,
+            "mention_rate": 20.0
+          },
+          {
+            "name": "Armonía Kitchen",
+            "mentions": 2,
+            "mention_rate": 20.0
+          },
+          {
+            "name": "Pita Bowl",
+            "mentions": 2,
+            "mention_rate": 20.0
+          },
+          {
+            "name": "Soulshine Vegan Cafe",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "The Beverly Beach Garden (Pacific Beach)",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "SandBox Pizza - Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Pop Pie Co. - Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Shawarma House SD (Ocean Beach)",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "The Mad Beet",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Fig Tree Cafe",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Shawarma Shack",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Aladdin Mediterranean Restaurant",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Luna Grill Clairemont",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Mezé Greek Fusion",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Fig Tree Cafe - Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "CAVA",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Spice Lounge",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Spitz Mediterranean Street Food",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Spitz",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Sauced Pizzeria",
+            "mentions": 1,
+            "mention_rate": 10.0
+          }
+        ]
+      },
+      "greek_food": {
+        "successful_queries": 10,
+        "target_mentions": 4,
+        "mention_rate": 40.0,
+        "average_position": 1.5,
+        "competitors": [
+          {
+            "name": "Spitz Pacific Beach",
+            "mentions": 5,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Arslan's Gyros",
+            "mentions": 4,
+            "mention_rate": 40.0
+          },
+          {
+            "name": "Shawarma Shack",
+            "mentions": 4,
+            "mention_rate": 40.0
+          },
+          {
+            "name": "Mr. Charlie's",
+            "mentions": 4,
+            "mention_rate": 40.0
+          },
+          {
+            "name": "Second Nature",
+            "mentions": 4,
+            "mention_rate": 40.0
+          },
+          {
+            "name": "Powerhaus Wholesome Pizza & Eats",
+            "mentions": 3,
+            "mention_rate": 30.0
+          },
+          {
+            "name": "Kojack's",
+            "mentions": 2,
+            "mention_rate": 20.0
+          },
+          {
+            "name": "Armonía Kitchen",
+            "mentions": 2,
+            "mention_rate": 20.0
+          },
+          {
+            "name": "Zgara Greek Grill",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Spiro's Mediterranean Cuisine (La Jolla Village)",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Soulshine Vegan Cafe",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "The Beverly Beach Garden (Pacific Beach)",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "SandBox Pizza - Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Pop Pie Co. - Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Dino's Gyros Greek Cafe & Taverna",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Spiro's Mediterranean Cuisine",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Nick the Greek",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "The Mad Beet",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Fig Tree Cafe",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Mr Shawarma",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Fig Tree Cafe - Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Akhis Authentic Shawarma & Kebab",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Spice Lounge",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Spitz",
+            "mentions": 1,
+            "mention_rate": 10.0
+          },
+          {
+            "name": "Sauced Pizzeria",
+            "mentions": 1,
+            "mention_rate": 10.0
+          }
+        ]
+      },
+      "mediterranean_food": {
+        "successful_queries": 5,
+        "target_mentions": 1,
+        "mention_rate": 20.0,
+        "average_position": 1.0,
+        "competitors": [
+          {
+            "name": "Slowly Restaurant & Lounge",
+            "mentions": 4,
+            "mention_rate": 80.0
+          },
+          {
+            "name": "Spitz (Pacific Beach)",
+            "mentions": 3,
+            "mention_rate": 60.0
+          },
+          {
+            "name": "Shawarma Shack Mediterranean Grill",
+            "mentions": 3,
+            "mention_rate": 60.0
+          },
+          {
+            "name": "Akhis Authentic Shawarma & Kebab",
+            "mentions": 3,
+            "mention_rate": 60.0
+          },
+          {
+            "name": "Callie",
+            "mentions": 2,
+            "mention_rate": 40.0
+          },
+          {
+            "name": "Pita Bowl",
+            "mentions": 2,
+            "mention_rate": 40.0
+          },
+          {
+            "name": "Shawarma House SD (Ocean Beach)",
+            "mentions": 1,
+            "mention_rate": 20.0
+          },
+          {
+            "name": "Shawarma Shack",
+            "mentions": 1,
+            "mention_rate": 20.0
+          },
+          {
+            "name": "Aladdin Mediterranean Restaurant",
+            "mentions": 1,
+            "mention_rate": 20.0
+          },
+          {
+            "name": "Luna Grill Clairemont",
+            "mentions": 1,
+            "mention_rate": 20.0
+          },
+          {
+            "name": "Mezé Greek Fusion",
+            "mentions": 1,
+            "mention_rate": 20.0
+          },
+          {
+            "name": "CAVA",
+            "mentions": 1,
+            "mention_rate": 20.0
+          },
+          {
+            "name": "Spitz Mediterranean Street Food",
+            "mentions": 1,
+            "mention_rate": 20.0
+          }
+        ]
+      }
+    },
+    "consensus": [
+      {
+        "query_id": "q01",
+        "category": "greek_food",
+        "query": "best Greek food in Pacific Beach",
+        "successful_models": 5,
+        "target_mentions": 4,
+        "mention_rate": 80.0,
+        "models_mentioning_target": [
+          "OpenAI",
+          "Gemini",
+          "Claude",
+          "DeepSeek"
+        ],
+        "positions": {
+          "OpenAI": 1,
+          "Gemini": 1,
+          "Claude": 3,
+          "DeepSeek": 1
+        },
+        "agreement": "models_disagree"
+      },
+      {
+        "query_id": "q02",
+        "category": "greek_food",
+        "query": "vegan friendly restaurants Pacific Beach",
+        "successful_models": 5,
+        "target_mentions": 0,
+        "mention_rate": 0.0,
+        "models_mentioning_target": [],
+        "positions": {},
+        "agreement": "no_models_mention"
+      },
+      {
+        "query_id": "q03",
+        "category": "mediterranean_food",
+        "query": "Mediterranean restaurant with gluten-free options in San Diego",
+        "successful_models": 5,
+        "target_mentions": 1,
+        "mention_rate": 20.0,
+        "models_mentioning_target": [
+          "OpenAI"
+        ],
+        "positions": {
+          "OpenAI": 1
+        },
+        "agreement": "models_disagree"
+      }
+    ]
+  },
+  "demo": true,
+  "demo_note": "Demo dataset: the 3 questions that all 5 assistants answered, taken from the full 20-question run and scored with the backend's own scoring. The other 17 questions were lost to credit exhaustion, not to the models declining.",
+  "source_run": "20261023T191941Z"
+}

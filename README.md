@@ -49,7 +49,7 @@ lib/view/
 lib/site/
   candidates.ts           domain guesses and the reason for each
   lookup.ts               fetch + verify: title, description, bot blocks, name match
-data/runs/                one real run: 25 answers, 5 assistants, 5 questions
+data/runs/                one real run: 20 questions, 3 assistants, 55 scored answers
 docs/report-payload.md    the contract, including the three load-bearing fields
 scripts/probe-ingest.ts   adapter proof against different / thin / broken payloads
 ```
@@ -115,15 +115,20 @@ pipeline lands, one adapter emits the same `PreflightEvent`s and the screen stop
 
 ## Status
 
-The report renders `data/runs/demo-cafe-athena.json`: 15 real answers, five assistants (OpenAI, Gemini,
-Claude, Grok, DeepSeek), three questions — the ones every model answered in the full 20-question run.
-Built by `build_demo.py` against the backend's own scoring, so the mention rate (33%) and average
-position (1.4) are theirs, not ours. The demo note appears in the report's "How this was read".
+The report renders `data/runs/demo-cafe-athena.json`: 20 questions across 3 assistants (OpenAI, Gemini,
+Claude), 55 scored calls out of 60. Claude returned malformed JSON 5 times; those are recorded as failed
+calls, shown as absent, and excluded from every rate — nothing pretends they were refusals. Mention rate
+(20%) and average position (1.4) are the backend's own scorecard, not ours.
 
-Why three questions and not twenty: the full run lost 57 of its 100 requests to credit exhaustion
-(52 × 402 payment required, 4 × 429, 1 × 504) and the failures were uneven, so per-assistant
-denominators were not comparable. A smaller complete subset is more honest than a larger half-missing
-one, and the 17 dropped questions stay in `data/runs/archive/` with everything else.
+`scripts/build-demo.py` builds that file from a stored run and refuses to write it if the scorecard and
+the answers disagree, so the two cannot drift. The demo note appears in the report's "How this was read".
+
+Why 3 assistants and not 5: the earlier 100-request run answered 43 of its 100 calls (the other 57 died
+on credit exhaustion — 52 × 402 payment required, 4 × 429, 1 × 504), and only q01–q03 were answered by
+all five models. A complete 3-assistant matrix across all 20 questions beats a 5-assistant one that is
+57% holes, because the per-assistant denominators stay comparable and the demo does not have to explain
+what is missing. The superseded 3-question, 5-assistant subset and that 100-request run both sit in
+`data/runs/archive/`.
 
 Print styles are wired, so Cmd-P produces the hand-over PDF. A single answer can be linked directly:
 `/?answer=q01:openai`.
