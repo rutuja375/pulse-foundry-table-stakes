@@ -5,6 +5,7 @@ import { Rail } from '@/components/shell/Rail'
 import { StaleBuildGuard } from '@/components/shell/StaleBuildGuard'
 import { loadLatestRun, railRivals } from '@/lib/view/load-run'
 import { formatDate } from '@/lib/view/derive'
+import { buildFixes } from '@/lib/view/solutions'
 
 /**
  * THODI's typeface trio, adopted as-is:
@@ -58,7 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               runId={report.runId}
               date={formatDate(report.startedAt)}
               rivals={railRivals(report)}
-              actionCount={null}
+              actionCount={buildFixes(report).length}
             />
           ) : null}
           <main className="main">{children}</main>
