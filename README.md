@@ -30,7 +30,7 @@ The dashboard can run any selection of these fixed ranking models:
 - Gemini: `gemini-3.8-flash`
 - Claude: `claude-sonnet-5`
 
-A full direct-provider run makes 60 model requests: 20 prompts across three models. Each selected model runs independently, and the dashboard keeps its results separate while also calculating combined measurements.
+A full direct-provider run makes 60 model requests: 20 prompts across three models. The three models can run alongside one another, but each model receives its 20 questions one by one to reduce rate-limit failures. The dashboard keeps their results separate while also calculating combined measurements.
 
 ## Test
 

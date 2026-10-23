@@ -88,3 +88,33 @@ def test_parallel_benchmark_uses_each_models_own_api_key():
     )
 
     assert observed == {"OpenAI": "openai-key", "Gemini": "google-key"}
+
+
+def test_each_model_processes_only_one_query_at_a_time():
+    active_by_model = {"OpenAI": 0, "Gemini": 0}
+    maximum_by_model = {"OpenAI": 0, "Gemini": 0}
+    lock = threading.Lock()
+
+    def fake_runner(*, query, api_key, model, model_label):
+        with lock:
+            active_by_model[model_label] += 1
+            maximum_by_model[model_label] = max(
+                maximum_by_model[model_label], active_by_model[model_label]
+            )
+        time.sleep(0.01)
+        with lock:
+            active_by_model[model_label] -= 1
+        return {"query": query, "recommendations": []}
+
+    run_parallel_benchmark(
+        selected_models={"OpenAI": "gpt-test", "Gemini": "gemini-test"},
+        queries=[
+            {"id": f"q{index}", "category": "food", "query": f"Question {index}?"}
+            for index in range(4)
+        ],
+        api_keys={"OpenAI": "openai-key", "Gemini": "google-key"},
+        query_runner=fake_runner,
+        max_workers=6,
+    )
+
+    assert maximum_by_model == {"OpenAI": 1, "Gemini": 1}

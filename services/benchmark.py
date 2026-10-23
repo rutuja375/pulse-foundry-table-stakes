@@ -1,4 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock
 from typing import Any, Callable
 
 from services.openrouter import run_restaurant_query
@@ -101,29 +102,39 @@ def run_parallel_benchmark(
     max_workers: int = 10,
     on_result: Callable[[dict[str, Any], int, int], None] | None = None,
 ) -> list[dict[str, Any]]:
-    """Run model-query jobs concurrently and return results in stable input order."""
+    """Run models in parallel while each model processes its queries sequentially."""
     total = len(selected_models) * len(queries)
     results = []
+    completed = 0
+    progress_lock = Lock()
 
-    with ThreadPoolExecutor(max_workers=min(max_workers, total)) as executor:
-        futures = {
-            executor.submit(
-                run_query_job,
+    def run_one_model(model_label: str, model_id: str) -> list[dict[str, Any]]:
+        nonlocal completed
+        model_results = []
+        for query_item in queries:
+            result = run_query_job(
                 model_label=model_label,
                 model_id=model_id,
                 query_item=query_item,
                 api_key=(api_keys or {}).get(model_label, api_key or ""),
                 query_runner=query_runner,
-            ): (model_label, query_item["id"])
-            for query_item in queries
+            )
+            model_results.append(result)
+            if on_result:
+                with progress_lock:
+                    completed += 1
+                    on_result(result, completed, total)
+        return model_results
+
+    worker_count = min(max_workers, len(selected_models))
+    with ThreadPoolExecutor(max_workers=worker_count) as executor:
+        futures = {
+            executor.submit(run_one_model, model_label, model_id): model_label
             for model_label, model_id in selected_models.items()
         }
 
-        for completed, future in enumerate(as_completed(futures), start=1):
-            result = future.result()
-            results.append(result)
-            if on_result:
-                on_result(result, completed, total)
+        for future in as_completed(futures):
+            results.extend(future.result())
 
     model_order = {label: index for index, label in enumerate(selected_models)}
     query_order = {item["id"]: index for index, item in enumerate(queries)}
