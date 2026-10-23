@@ -19,12 +19,16 @@ interface DrawerProps {
   onClose: () => void
   title: string
   subtitle?: string
+  /** Small label above the title — what kind of thing this is. */
+  eyebrow?: string
+  /** Anything that belongs to the masthead: a figure, a strip, a chart. */
+  below?: React.ReactNode
   children: React.ReactNode
   footer?: React.ReactNode
   width?: number
 }
 
-export function Drawer({ open, onClose, title, subtitle, children, footer, width = 520 }: DrawerProps) {
+export function Drawer({ open, onClose, title, subtitle, eyebrow, below, children, footer, width = 520 }: DrawerProps) {
   const panelRef = useRef<HTMLDivElement>(null)
   const restoreFocusTo = useRef<HTMLElement | null>(null)
 
@@ -109,11 +113,38 @@ export function Drawer({ open, onClose, title, subtitle, children, footer, width
               }}
             >
               <div style={{ flex: 1 }}>
-                <h2 style={{ margin: 0, fontSize: 16, fontWeight: 650, color: 'var(--fg)', lineHeight: 1.3 }}>{title}</h2>
+                {eyebrow && (
+                  <div
+                    style={{
+                      fontSize: 10,
+                      letterSpacing: '0.14em',
+                      textTransform: 'uppercase',
+                      fontWeight: 700,
+                      color: 'var(--accent)',
+                      marginBottom: 6,
+                    }}
+                  >
+                    {eyebrow}
+                  </div>
+                )}
+                {/* Serif here too: the drawer is a page from the report, not a dialog box. */}
+                <h2
+                  style={{
+                    margin: 0,
+                    fontFamily: 'var(--kpi-font)',
+                    fontSize: 22,
+                    fontWeight: 500,
+                    color: 'var(--fg)',
+                    lineHeight: 1.25,
+                    letterSpacing: '-0.01em',
+                  }}
+                >
+                  {title}
+                </h2>
                 {subtitle && (
                   <div
                     style={{
-                      marginTop: 4,
+                      marginTop: 6,
                       fontSize: 11.5,
                       color: 'var(--muted)',
                       fontFamily: 'var(--font-data)',
@@ -123,6 +154,7 @@ export function Drawer({ open, onClose, title, subtitle, children, footer, width
                     {subtitle}
                   </div>
                 )}
+                {below && <div style={{ marginTop: 16 }}>{below}</div>}
               </div>
               <button
                 type="button"

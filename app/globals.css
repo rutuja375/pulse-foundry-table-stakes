@@ -968,6 +968,89 @@ button, input, textarea, select { font: inherit; color: inherit; }
   .fix-act { align-items: flex-start; text-align: left; }
 }
 
+/* ── Fix drawer: masthead, spec strip, document blocks ─────────────────────
+   The drawer is a page out of the report, not a form. The gap it opened from
+   appears again at the top in the same face and colours; the facts that used to
+   be a row of "Label: value" become cells with the label above the value; the
+   before/after pair reads as an observation followed by copy, not a diff.     */
+
+.gap-strip { display: flex; gap: 16px; align-items: flex-start; }
+.gap-strip-figure {
+  font-family: var(--kpi-font);
+  font-size: 34px;
+  line-height: 1;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.gap-strip-figure span { font-size: 18px; color: var(--muted); }
+.gap-strip-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; padding-top: 2px; }
+.gap-strip-label { font-size: 11.5px; color: var(--fg2); }
+.gap-bar-wide { height: 7px; }
+.gap-strip-who { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 11px; color: var(--muted); }
+.gap-strip-who b { color: var(--fg2); font-family: var(--font-data); font-weight: 600; }
+.gap-strip-note { font-size: 12px; color: var(--muted); font-family: var(--font-data); }
+
+.spec-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surf-1);
+  overflow: hidden;
+}
+.spec-cell { padding: 10px 14px; border-right: 1px solid var(--border); }
+.spec-cell:last-child { border-right: none; }
+.spec-k {
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+.spec-v { font-family: var(--font-data); font-size: 12.5px; color: var(--fg); }
+
+.drawer-lede { margin: 0; font-size: 14px; line-height: 1.65; color: var(--fg2); max-width: 62ch; }
+
+.doc-block { padding: 16px 18px; border-bottom: 1px solid var(--border); }
+.doc-block-after { border-bottom: none; background: var(--card-bg); }
+.doc-block-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+.doc-k {
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--muted);
+}
+.doc-k-after { color: var(--brand-teal); }
+.doc-tag { font-size: 10.5px; color: var(--muted); }
+.doc-observation {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+  white-space: pre-wrap;
+  padding-left: 12px;
+  border-left: 2px solid var(--border-strong);
+}
+.doc-copy {
+  display: block;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  overflow: auto;
+  padding: 0;
+  font-family: var(--kpi-font);
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--fg);
+}
+.doc-copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 2px; }
+.doc-copy:read-only { color: var(--fg2); }
+
 /* One line under the matrix, instead of a red word in every failed cell: the
    count still exists, it just does not read as five verdicts about the venue. */
 .matrix-note { margin: 10px 0 0; font-size: 11.5px; line-height: 1.55; color: var(--muted); }

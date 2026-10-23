@@ -57,6 +57,10 @@ function initialState(fixes: Fix[]): Record<string, FixState> {
   )
 }
 
+function capitalize(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1)
+}
+
 function domainFor(name: string): string {
   const base = name.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '')
   return `${base || 'yoursite'}.com`
@@ -133,6 +137,72 @@ function GapLead({ fix }: { fix: Fix }) {
           <span>nobody named a rival here</span>
         )}
       </div>
+    </div>
+  )
+}
+
+/**
+ * The same gap as the row, sized for the drawer's masthead: the drawer should
+ * open on the argument that opened it, not on a run-on line of facts.
+ */
+function GapStrip({ fix }: { fix: Fix }) {
+  const gap = fix.gap
+  // Only a fix with no gap of its own (the structured-data one) falls back to
+  // prose; a cross-intent fix still has a figure worth leading with.
+  if (!gap) return <div className="gap-strip-note">{fix.evidence}</div>
+
+  const share = (value: number) => `${(value / Math.max(1, gap.total)) * 100}%`
+
+  return (
+    <div className="gap-strip">
+      <div className="gap-strip-figure">
+        {gap.named}
+        <span>/{gap.total}</span>
+      </div>
+      <div className="gap-strip-body">
+        <div className="gap-strip-label">
+          {gap.intent || 'all'} answers name you
+          {gap.intents.length > 1 ? ` · ${gap.intents.length} intents need this fix` : ''}
+        </div>
+        <div className="gap-bar gap-bar-wide" aria-hidden="true">
+          {gap.named > 0 && <span className="gap-bar-you" style={{ width: share(gap.named) }} />}
+          <span className="gap-bar-them" style={{ width: share(Math.max(0, gap.total - gap.named)) }} />
+        </div>
+        <div className="gap-strip-who">
+          {gap.who.length ? (
+            gap.who.slice(0, 3).map(entry => (
+              <span key={entry.name}>
+                {entry.name} <b>{entry.mentions}</b>
+              </span>
+            ))
+          ) : (
+            <span>nobody named a rival here</span>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/** Priority, effort, impact, provenance: labels above values, not colons. */
+function SpecStrip({ fix, seeded }: { fix: Fix; seeded: boolean }) {
+  const cells: Array<{ key: string; value: string; tone?: string }> = [
+    { key: 'Priority', value: capitalize(fix.priority), tone: (PRIORITY_STYLE[fix.priority].color as string) ?? undefined },
+    { key: 'Effort', value: fix.effort },
+    { key: 'Impact', value: capitalize(fix.impact) },
+    { key: 'Draft', value: seeded ? 'AI draft · seeded' : 'Template' },
+  ]
+
+  return (
+    <div className="spec-strip">
+      {cells.map(cell => (
+        <div key={cell.key} className="spec-cell">
+          <div className="spec-k">{cell.key}</div>
+          <div className="spec-v" style={cell.tone ? { color: cell.tone } : undefined}>
+            {cell.value}
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
@@ -327,7 +397,9 @@ export function SolutionsClient({ report, rival }: { report: IngestedReport; riv
         open={Boolean(fix)}
         onClose={close}
         title={fix?.title ?? ''}
-        subtitle={fix ? `${meta?.noun} · ${fix.evidence}` : undefined}
+        eyebrow={meta ? `Fix · ${meta.noun}` : 'Fix'}
+        subtitle={fix?.example ? `Question it answers: “${fix.example}”` : undefined}
+        below={fix ? <GapStrip fix={fix} /> : undefined}
         width={640}
         footer={
           fix && state && meta ? (
@@ -384,15 +456,10 @@ export function SolutionsClient({ report, rival }: { report: IngestedReport; riv
         }
       >
         {fix && state && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.6, color: 'var(--fg2)' }}>{fix.why}</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <p className="drawer-lede">{fix.why}</p>
 
-            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', fontSize: 11.5, color: 'var(--muted)' }}>
-              <span>Priority: {fix.priority}</span>
-              <span>Effort: {fix.effort}</span>
-              <span>Impact: {fix.impact}</span>
-              <span>Draft: {state.source === 'seeded' ? 'AI draft · seeded preview' : 'template from your report'}</span>
-            </div>
+            <SpecStrip fix={fix} seeded={state.source === 'seeded'} />
 
             {state.handoff.kind === 'email' && (
               <EmailDraft

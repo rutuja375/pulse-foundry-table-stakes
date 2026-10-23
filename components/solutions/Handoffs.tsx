@@ -104,7 +104,7 @@ export function EmailDraft({
           <Dots />
           <span style={{ marginLeft: 6 }}>New message</span>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '64px 1fr', borderBottom: '1px solid var(--border)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '84px 1fr', borderBottom: '1px solid var(--border)' }}>
           <label htmlFor="email-to" style={{ ...label, padding: '11px 14px' }}>To</label>
           <input
             id="email-to"
@@ -115,7 +115,7 @@ export function EmailDraft({
             style={{ ...field, padding: '10px 14px 10px 0' }}
           />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '64px 1fr', borderBottom: '1px solid var(--border)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '84px 1fr', borderBottom: '1px solid var(--border)' }}>
           <label htmlFor="email-subject" style={{ ...label, padding: '11px 14px' }}>Subject</label>
           <input
             id="email-subject"
@@ -191,42 +191,53 @@ export function WebsiteChange({
   domain: string
 }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <div style={frame}>
-        <div style={chrome}>
-          <Dots />
-          <span
-            style={{
-              marginLeft: 6,
-              flex: 1,
-              background: 'var(--card-bg)',
-              border: '1px solid var(--border)',
-              borderRadius: 6,
-              padding: '3px 10px',
-              fontFamily: 'var(--font-data)',
-            }}
-          >
-            {domain}{value.page.startsWith('/') ? value.page : ` ${value.page}`}
-          </span>
-        </div>
+    <div style={frame}>
+      <div style={chrome}>
+        <Dots />
+        <span
+          style={{
+            marginLeft: 6,
+            flex: 1,
+            background: 'var(--card-bg)',
+            border: '1px solid var(--border)',
+            borderRadius: 6,
+            padding: '3px 10px',
+            fontFamily: 'var(--font-data)',
+            fontSize: 11,
+            color: 'var(--fg2)',
+          }}
+        >
+          {domain}{value.page.startsWith('/') ? value.page : ` ${value.page}`}
+        </span>
+      </div>
 
-        <div style={{ padding: '12px 14px', borderBottom: '1px solid var(--border)', background: 'var(--surf-1)' }}>
-          <div style={{ ...label, marginBottom: 6 }}>Today (assumed — site not crawled)</div>
-          <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.55, color: 'var(--muted)', whiteSpace: 'pre-wrap', textDecoration: 'line-through', textDecorationColor: 'var(--border)' }}>
-            {value.before}
-          </p>
+      {/*
+        * "Today" is an observation, not a deletion. Striking it through said
+        * "this is being removed" about copy that does not exist yet — the page
+        * has no happy-hour section at all. The tag admits the one guess in it.
+        */}
+      <div className="doc-block">
+        <div className="doc-block-head">
+          <span className="doc-k">Today</span>
+          <span className="doc-tag">assumed — site not crawled</span>
         </div>
+        <p className="doc-observation">{value.before}</p>
+      </div>
 
-        <div style={{ padding: '12px 14px' }}>
-          <div style={{ ...label, marginBottom: 6, color: 'var(--brand-teal)' }}>After this change</div>
-          <textarea
-            aria-label="New page copy"
-            value={value.after}
-            onChange={e => onChange({ ...value, after: e.target.value })}
-            readOnly={locked}
-            style={{ ...area, fontFamily: 'var(--font-serif)', fontSize: 14.5 }}
-          />
+      <div className="doc-block doc-block-after">
+        <div className="doc-block-head">
+          <span className="doc-k doc-k-after">What to publish</span>
+          <span className="doc-tag">editable · nothing published from here</span>
         </div>
+        <textarea
+          aria-label="New page copy"
+          value={value.after}
+          onChange={e => onChange({ ...value, after: e.target.value })}
+          readOnly={locked}
+          spellCheck={false}
+          className="doc-copy"
+          style={{ minHeight: 240 }}
+        />
       </div>
     </div>
   )
