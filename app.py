@@ -133,10 +133,22 @@ if st.button("Run visibility analysis", type="primary", use_container_width=True
                 f"{len(queries)} prompts..."
             ),
         )
+
+        def update_progress(result, completed, total):
+            progress.progress(
+                completed / total,
+                text=(
+                    f'{completed} of {total}: {result["model_label"]} / '
+                    f'{result["query_id"]} — {result["status"]}'
+                ),
+            )
+
         results = run_parallel_benchmark(
             selected_models=selected_models,
             queries=queries,
             api_key=api_key,
+            max_workers=10,
+            on_result=update_progress,
         )
 
         analytics = calculate_analytics(results)

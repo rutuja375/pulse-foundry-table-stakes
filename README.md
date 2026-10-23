@@ -36,6 +36,22 @@ A full run makes 100 model requests: 20 prompts across five models. Each selecte
 
 Run `pytest`.
 
+## Terminal-first benchmark
+
+Run a quick two-prompt check and stream every response to the terminal:
+
+```bash
+python cli.py --limit 2
+```
+
+Run the complete benchmark and save a backend JSON export:
+
+```bash
+python cli.py
+```
+
+Use `--models Gemini Claude`, `--limit 5`, or `--workers 5` to control cost and concurrency. Completed responses print immediately, and the final JSON is written under `data/exports/` for a frontend team to consume.
+
 ## Important limitation
 
 This application measures results returned by the selected OpenRouter model with web search. It is a repeatable proxy for AI-search visibility, but it is not guaranteed to reproduce the consumer interfaces of Gemini, ChatGPT, Claude, or Perplexity exactly.

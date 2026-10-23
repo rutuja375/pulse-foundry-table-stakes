@@ -61,35 +61,72 @@ def run_model_benchmark(
     return results
 
 
+def run_query_job(
+    *,
+    model_label: str,
+    model_id: str,
+    query_item: dict[str, str],
+    api_key: str,
+    query_runner: Callable[..., dict[str, Any]] = run_restaurant_query,
+) -> dict[str, Any]:
+    identity = {
+        "model_label": model_label,
+        "model_id": model_id,
+        "query_id": query_item["id"],
+        "category": query_item["category"],
+        "secondary_categories": query_item.get("secondary_categories", []),
+        "query": query_item["query"],
+    }
+    try:
+        result = query_runner(
+            query=query_item["query"],
+            api_key=api_key,
+            model=model_id,
+        )
+        return {**identity, "status": "success", "result": result}
+    except Exception as error:
+        return {**identity, "status": "failed", "error": str(error)}
+
+
 def run_parallel_benchmark(
     *,
     selected_models: dict[str, str],
     queries: list[dict[str, str]],
     api_key: str,
     query_runner: Callable[..., dict[str, Any]] = run_restaurant_query,
+    max_workers: int = 10,
+    on_result: Callable[[dict[str, Any], int, int], None] | None = None,
 ) -> list[dict[str, Any]]:
-    """Run one independent worker per model; each worker runs the same query bank."""
-    results_by_model: dict[str, list[dict[str, Any]]] = {}
+    """Run model-query jobs concurrently and return results in stable input order."""
+    total = len(selected_models) * len(queries)
+    results = []
 
-    with ThreadPoolExecutor(max_workers=len(selected_models)) as executor:
+    with ThreadPoolExecutor(max_workers=min(max_workers, total)) as executor:
         futures = {
             executor.submit(
-                run_model_benchmark,
+                run_query_job,
                 model_label=model_label,
                 model_id=model_id,
-                queries=queries,
+                query_item=query_item,
                 api_key=api_key,
                 query_runner=query_runner,
-            ): model_label
+            ): (model_label, query_item["id"])
             for model_label, model_id in selected_models.items()
+            for query_item in queries
         }
 
-        for future in as_completed(futures):
-            model_label = futures[future]
-            results_by_model[model_label] = future.result()
+        for completed, future in enumerate(as_completed(futures), start=1):
+            result = future.result()
+            results.append(result)
+            if on_result:
+                on_result(result, completed, total)
 
-    return [
-        result
-        for model_label in selected_models
-        for result in results_by_model[model_label]
-    ]
+    model_order = {label: index for index, label in enumerate(selected_models)}
+    query_order = {item["id"]: index for index, item in enumerate(queries)}
+    return sorted(
+        results,
+        key=lambda item: (
+            model_order[item["model_label"]],
+            query_order[item["query_id"]],
+        ),
+    )

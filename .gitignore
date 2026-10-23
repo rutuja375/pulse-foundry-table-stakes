@@ -222,3 +222,5 @@ __marimo__/
 # Saved local analysis runs
 data/runs/*.json
 !data/runs/.gitkeep
+data/exports/*.json
+!data/exports/.gitkeep
