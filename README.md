@@ -1,14 +1,15 @@
 # Cafe Athena AI Visibility Agent
 
-A small Streamlit application for the NYU SPS x Pulse Foundry hackathon. It runs a fixed bank of local restaurant queries through an OpenRouter model with web search, measures Cafe Athena's visibility, and identifies the competitors that appear most often.
+A small Streamlit application for the NYU SPS x Pulse Foundry hackathon. It runs a fixed bank of local restaurant queries through multiple OpenRouter models with web search, measures Cafe Athena's visibility, and identifies the competitors that appear most often.
 
 ## What the MVP does
 
-- Uses a fixed Pacific Beach / San Diego query bank.
+- Uses 20 categorized Pacific Beach / San Diego prompts.
+- Runs OpenAI, Gemini, Claude, Grok, and DeepSeek independently and in parallel.
 - Searches the live web through OpenRouter.
 - Records restaurant recommendations and their positions.
-- Calculates mention rate and average position for Cafe Athena.
-- Shows competitor share of voice and query-level evidence.
+- Calculates mention rate and average position by model and category.
+- Shows cross-model consensus, competitor share of voice, and query-level evidence.
 - Saves each successful run locally so the same test can be repeated later.
 
 ## Run locally
@@ -19,9 +20,17 @@ A small Streamlit application for the NYU SPS x Pulse Foundry hackathon. It runs
 
 The API key can also be entered temporarily in the application's sidebar. It is not saved by the application.
 
-## Default model
+## Ranking models
 
-The default search model is `google/gemini-3.8-flash`. The model ID is editable in the sidebar, so another OpenRouter model can be tested without changing the code.
+The dashboard can run any selection of these fixed ranking models:
+
+- `openai/gpt-5.2`
+- `google/gemini-3.8-flash`
+- `anthropic/claude-sonnet-5`
+- `x-ai/grok-latest`
+- `deepseek/deepseek-flash`
+
+A full run makes 100 model requests: 20 prompts across five models. Each selected model runs independently, and the dashboard keeps its results separate while also calculating combined measurements.
 
 ## Test
 
