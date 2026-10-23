@@ -21,6 +21,7 @@
  */
 
 import { matchesVenue, normalizeName } from './venue-match'
+import { mergeCompetitors } from './merge-competitors'
 
 export type Basis = 'ranked' | 'mentioned'
 
@@ -414,9 +415,12 @@ export function ingestRun(input: unknown): IngestedReport {
     }
   }
   const answerCount = Math.max(1, answers.filter(a => !a.error).length)
-  const competitors = Array.from(counts.values())
-    .sort((a, b) => b.mentions - a.mentions || a.name.localeCompare(b.name))
-    .map(row => ({ ...row, share: row.mentions / answerCount }))
+  // The same restaurant arrives under several spellings; merge them here so the
+  // ranking is not an artefact of how the model typed the name, and log what was
+  // merged rather than silently rewriting the pipeline's numbers.
+  const merged = mergeCompetitors(Array.from(counts.values()))
+  const competitors = merged.rows.map(row => ({ ...row, share: row.mentions / answerCount }))
+  for (const note of merged.notes) issues.push(note)
 
   const totals = {
     questions: questions.length,

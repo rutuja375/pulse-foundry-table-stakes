@@ -204,6 +204,16 @@ export function CompetitorTable({ report }: { report: IngestedReport }) {
           </tr>
         )}
       </tbody>
+      {report.competitors.length > rows.length && (
+        <tfoot>
+          <tr>
+            <td colSpan={3} className="table-foot">
+              {report.competitors.length - rows.length} more restaurants were named, each once — the tail of a
+              recommendation list, not rivals to chase.
+            </td>
+          </tr>
+        </tfoot>
+      )}
     </Card>
   )
 }

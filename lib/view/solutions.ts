@@ -437,7 +437,45 @@ export function buildFixes(report: IngestedReport): Fix[] {
   if (worstLost > 0) fixes.push(schemaFix(ctx, worstLost, total))
   if (named / total < 0.5) fixes.push(localOutreachFix(ctx, named, total))
 
-  return fixes
+  /*
+   * One fix per template, not per intent.
+   *
+   * Two intents that need the same work ("greek food" and "mediterranean food"
+   * both needing dietary labels) produced two identical cards with different
+   * evidence — which reads as a bug to anyone holding the report, and inflates
+   * the fix count. They merge into one card carrying both figures.
+   */
+  const merged = new Map<string, Fix>()
+  for (const fix of fixes) {
+    const existing = merged.get(fix.template)
+    if (!existing) {
+      merged.set(fix.template, fix)
+      continue
+    }
+    // Two figures and a count. A card that lists five evidence strings in a row
+    // reads as a dump; the reader needs the worst one and the sense of scale.
+    const evidence = Array.from(
+      new Set([...existing.evidence.split(' · '), ...fix.evidence.split(' · ')])
+    )
+    merged.set(fix.template, {
+      ...existing,
+      // Keep the more urgent priority and the larger body of lost questions.
+      priority: PRIORITY_RANK[fix.priority] < PRIORITY_RANK[existing.priority] ? fix.priority : existing.priority,
+      lost: existing.lost + fix.lost,
+      evidence:
+        evidence.length <= 2
+          ? evidence.join(' · ')
+          : `${evidence.slice(0, 2).join(' · ')} · ${evidence.length - 2} more intent${evidence.length - 2 === 1 ? '' : 's'}`,
+      fixes: {
+        intents: Array.from(new Set([...existing.fixes.intents, ...fix.fixes.intents])),
+        rivals: Array.from(new Set([...existing.fixes.rivals, ...fix.fixes.rivals])),
+      },
+      example: existing.example ?? fix.example,
+      impact: existing.impact === 'High' || fix.impact === 'High' ? 'High' : existing.impact,
+    })
+  }
+
+  return Array.from(merged.values())
     .sort((a, b) => PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority] || b.lost - a.lost)
     .slice(0, MAX_FIXES)
 }
