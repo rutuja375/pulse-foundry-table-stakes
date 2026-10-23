@@ -19,13 +19,15 @@ npm run probe:ingest   # proves the ingestion against three payload shapes: diff
 app/
   layout.tsx              shell: THODI fonts + the rail, loaded once per request
   page.tsx                Overview pane — the report
-  new/page.tsx            Start screen — venue, place, website, rivals
+  new/page.tsx            Start screen — one composer line, parsed and shown back
+  confirm/page.tsx        Confirmation — guessed website, checked live, approved
   run/page.tsx            Preflight — the audit as it happens
   compare/[rival]/page.tsx  Head-to-head pane — you versus one named restaurant
   solutions/page.tsx      Act pane, waiting on the audit's actions[]
 components/
   shell/Rail.tsx          navigation: report, rivals (with counts), solutions; collapsible
-  run/VenueForm.tsx       the four fields the audit needs
+  new/StartComposer.tsx   hero + hairline composer + examples + what-happens-next rail
+  new/ConfirmSite.tsx     candidate domains, each checked against the live page
   run/RunClient.tsx       preflight grid + activity log, replayed from a seed
   report/OverviewPane.tsx verdict, KPI row, matrix, tables, intent, reading notes
   report/ComparePane.tsx  where you win, where they win, by intent, why-not-yet
@@ -39,6 +41,9 @@ lib/view/
   compare.ts              head-to-head + the overlap that separates parallel from contested
   venue-match.ts          normalisation and alias matching, with a rival guard
   load-run.ts             reads the newest payload; the only filesystem call
+lib/site/
+  candidates.ts           domain guesses and the reason for each
+  lookup.ts               fetch + verify: title, description, bot blocks, name match
 data/runs/                one real run: 25 answers, 5 assistants, 5 questions
 docs/report-payload.md    the contract, including the three load-bearing fields
 scripts/probe-ingest.ts   adapter proof against different / thin / broken payloads
@@ -81,6 +86,18 @@ The reader is assumed to have time and no tolerance for puzzles. So:
 - **Every clickable state has a URL** — `?answer=p1:perplexity` links straight to one answer.
 - **The primary action is always on screen** — Print / save PDF, in the nav, because the report is
   meant to be handed over.
+
+## Start → confirm → run
+
+`/new` is one line: "Café Athena, Pacific Beach, San Diego" — parsed into name and place, with the parse
+shown back as chips so nobody has to guess what we understood. There is no competitors field; the audit
+finds who gets named instead.
+
+`/confirm` guesses the website from the name, then checks every guess against the live page: it fetches,
+reads the title and description, rejects bot challenges and redirects, and requires the restaurant's name
+to appear on the page before it offers the match. The preview is the page's own words, and the reader
+approves or pastes the real address. Verified end to end: Café Athena → cafeathena.com, real title and
+description from the site itself.
 
 ## Preflight, and what is seeded
 
