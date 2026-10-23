@@ -647,3 +647,88 @@ button, input, textarea, select { font: inherit; color: inherit; }
 @media print {
   .rail, .rail-handle, .progress-actions { display: none !important; }
 }
+
+/* ── Response feed ─────────────────────────────────────────────────────────
+   Answers arrive at the bottom and push older ones up. Five stay crisp; the
+   next three fade; anything older than eight is unmounted. The window is a
+   constant in the component, not a CSS trick, so the rule can be changed in one
+   place and read as a rule.                                                  */
+
+.feed-wrap {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.feed-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surf-1);
+}
+.feed-hint { font-family: var(--font-data); font-size: 11px; color: var(--muted); }
+
+/* Fixed height, bottom-aligned: new items enter at the floor and the stack
+   pushes upward, out of view. No scrollbar — the reader watches, they do not
+   scroll a live feed. */
+.feed {
+  height: 396px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 12px 14px;
+  gap: 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(250, 249, 247, 0.9) 0%, var(--card-bg) 18%);
+  /* Items leave through the top of the frame rather than being sliced by it. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 56px);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 56px);
+}
+.feed-empty { color: var(--muted); font-style: italic; font-size: 12.5px; padding: 8px 2px; }
+
+.feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  /* Movement only. The first version animated opacity too, and a paused
+     animation left every row washed out — the fade is set inline, not here. */
+  animation: feed-rise 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 240ms ease;
+}
+@keyframes feed-rise {
+  from { transform: translateY(10px); }
+  to { transform: translateY(0); }
+}
+.feed-answered { border-left-color: var(--brand-teal); }
+.feed-declined { border-left-color: var(--warning); }
+.feed-failed { border-left-color: var(--negative); }
+.feed-absent { border-left-color: var(--border-strong); }
+
+.feed-time { font-family: var(--font-data); font-size: 10.5px; color: var(--muted); min-width: 34px; padding-top: 3px; }
+.feed-body { flex: 1; min-width: 0; }
+.feed-line { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.feed-model { font-weight: 600; font-size: 12.5px; color: var(--fg); }
+.feed-result { font-size: 12.5px; }
+.feed-result.good { color: var(--brand-teal); }
+.feed-result.warn { color: var(--warning); }
+.feed-result.bad { color: var(--negative); }
+.feed-result.mute { color: var(--muted); }
+.feed-question {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.feed-latency { font-family: var(--font-data); font-size: 10.5px; color: var(--muted); padding-top: 3px; }

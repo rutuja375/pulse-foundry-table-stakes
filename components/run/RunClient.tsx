@@ -17,15 +17,6 @@ import type { PreflightEvent, PreflightSeed } from '@/lib/preflight/seed'
 
 type CellState = { kind: string; position?: number | null; named?: string | null; error?: string | null }
 
-const CELL_LABEL: Record<string, string> = {
-  queued: '·',
-  asking: '…',
-  answered: 'done',
-  declined: 'declined',
-  absent: '—',
-  failed: 'failed',
-}
-
 function clock(ms: number): string {
   const total = Math.round(ms / 1000)
   const minutes = Math.floor(total / 60)
@@ -89,6 +80,37 @@ export function RunClient({
   }, [cursor, seed.events])
 
   const answered = Array.from(applied.values()).filter(cell => ['answered', 'declined', 'absent', 'failed'].includes(cell.kind)).length
+
+  /**
+   * The feed window. Constants are here rather than in CSS so the rule reads as
+   * a rule: five crisp, the next three fading, everything older dropped.
+   */
+  const CRISP = 5
+  const MAX_VISIBLE = 8
+
+  // Age is measured inside the feed, not against the global event index — the
+  // first version used the event index and every row got the same fade.
+  const feed = seed.events.slice(0, cursor).filter(event => event.kind !== 'asking')
+  const windowed = feed.slice(-MAX_VISIBLE)
+
+  const visible = windowed.map((event, position) => {
+    const age = windowed.length - 1 - position
+    const opacity = age < CRISP ? 1 : age === CRISP ? 0.55 : age === CRISP + 1 ? 0.35 : 0.18
+    const text =
+      event.kind === 'answered'
+        ? event.position
+          ? `named at #${event.position}`
+          : `named ${event.named ?? 'a business'}, unranked`
+        : event.kind === 'declined'
+          ? 'declined to name any business'
+          : event.kind === 'failed'
+            ? `failed — ${event.error ?? 'unknown error'}`
+            : 'named other restaurants'
+    const tone = event.kind === 'answered' ? 'good' : event.kind === 'declined' ? 'warn' : event.kind === 'failed' ? 'bad' : 'mute'
+    const key = `${event.questionId}:${event.modelKey}:${event.at}`
+    return { event, opacity, text, tone, key, age }
+  })
+  const hiddenCount = Math.max(0, feed.length - visible.length)
   const total = questions.length * assistants.length
   const complete = answered >= total
   const current = cursor > 0 ? seed.events[cursor - 1] : null
@@ -157,87 +179,40 @@ export function RunClient({
         </div>
       </section>
 
-      <section className="run-grid-wrap">
-        <table className="run-grid" aria-label="Questions being asked of each assistant">
-          <thead>
-            <tr>
-              <th>Question</th>
-              {assistants.map(assistant => (
-                <th key={assistant.key} className="run-th">
-                  {assistant.label.split('(')[0].trim()}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {questions.map(question => (
-              <tr key={question.id}>
-                <td className="run-question">{question.text}</td>
-                {assistants.map(assistant => {
-                  const cell = applied.get(`${question.id}:${assistant.key}`)
-                  const kind = cell?.kind ?? 'queued'
-                  return (
-                    <td key={assistant.key} className={`run-cell run-${kind}`}>
-                      {kind === 'answered' && cell?.position ? (
-                        <span className="run-rank">#{cell.position}</span>
-                      ) : kind === 'answered' ? (
-                        <span className="run-named">named</span>
-                      ) : (
-                        CELL_LABEL[kind] ?? ''
-                      )}
-                    </td>
-                  )
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
-
-      <section className="run-log-wrap">
-        <div className="run-log-head">
-          <span className="eyebrow">Activity</span>
-          <span className="run-log-hint">each line is one call and what came back</span>
+      {/*
+        The feed. Answers arrive at the bottom and push the older ones up, like a
+        terminal you can read. Five stay crisp; the next three fade as evidence
+        that something came before; anything older than the eighth is dropped —
+        the run is long and the reader only needs to see what just arrived.
+      */}
+      <section className="feed-wrap">
+        <div className="feed-head">
+          <span className="eyebrow">Responses</span>
+          <span className="feed-hint">
+            {hiddenCount > 0 ? `${hiddenCount} earlier response${hiddenCount === 1 ? '' : 's'} cleared` : 'newest at the bottom'}
+          </span>
         </div>
-        <div className="run-log" ref={logRef}>
-          {Array.from(applied.entries()).length === 0 && <div className="run-log-line run-log-empty">Waiting for the first answer…</div>}
-          {seed.events.slice(0, cursor).map((event, index) => {
-            if (event.kind === 'asking') {
-              return (
-                <div key={index} className="run-log-line">
-                  <span className="run-log-time">{clock(event.at)}</span>
-                  <span className="run-log-model">{event.modelLabel.split('(')[0].trim()}</span>
-                  <span className="run-log-text muted">asked “{event.questionText}”</span>
+
+        <div className="feed" aria-live="polite">
+          {visible.length === 0 && <div className="feed-empty">Waiting for the first answer…</div>}
+          {visible.map(item => (
+            <article
+              key={item.key}
+              className={`feed-item feed-${item.event.kind}`}
+              style={{ opacity: item.opacity }}
+              aria-hidden={item.opacity < 0.5}
+            >
+              <span className="feed-time">{clock(item.event.at)}</span>
+              <div className="feed-body">
+                <div className="feed-line">
+                  <span className="feed-model">{item.event.modelLabel.split('(')[0].trim()}</span>
+                  <span className={`feed-result ${item.tone}`}>{item.text}</span>
                 </div>
-              )
-            }
-            if (event.kind === 'failed') {
-              return (
-                <div key={index} className="run-log-line">
-                  <span className="run-log-time">{clock(event.at)}</span>
-                  <span className="run-log-model">{event.modelLabel.split('(')[0].trim()}</span>
-                  <span className="run-log-text bad">failed — {event.error ?? 'unknown error'}</span>
-                </div>
-              )
-            }
-            const text =
-              event.kind === 'answered'
-                ? event.position
-                  ? `named the venue at #${event.position}`
-                  : `named ${event.named ?? 'a business'}, unranked`
-                : event.kind === 'declined'
-                  ? 'declined to name any business'
-                  : 'answered about other restaurants'
-            return (
-              <div key={index} className="run-log-line">
-                <span className="run-log-time">{clock(event.at)}</span>
-                <span className="run-log-model">{event.modelLabel.split('(')[0].trim()}</span>
-                <span className={`run-log-text ${event.kind === 'answered' ? 'good' : event.kind === 'declined' ? 'warn' : 'muted'}`}>
-                  {text}
-                </span>
+                <div className="feed-question">{item.event.questionText}</div>
               </div>
-            )
-          })}
+              {item.event.latencyMs ? <span className="feed-latency">{(item.event.latencyMs / 1000).toFixed(1)}s</span> : null}
+            </article>
+          ))}
         </div>
       </section>
 
