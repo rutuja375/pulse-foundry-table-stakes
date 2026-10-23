@@ -7,7 +7,7 @@ import streamlit as st
 from dotenv import load_dotenv
 
 from services.benchmark import RANKING_MODELS, run_parallel_benchmark
-from services.scoring import calculate_visibility, normalize_name
+from services.scoring import calculate_analytics, is_target_name
 from services.storage import save_run
 
 
@@ -24,7 +24,6 @@ def load_query_bank() -> list[dict]:
 
 def recommendation_rows(results: list[dict]) -> list[dict]:
     rows = []
-    target = normalize_name(TARGET_NAME)
     for item in results:
         if item["status"] != "success":
             continue
@@ -34,9 +33,11 @@ def recommendation_rows(results: list[dict]) -> list[dict]:
                     "Query": item["query"],
                     "Position": recommendation.get("position"),
                     "Restaurant": recommendation.get("restaurant"),
-                    "Cafe Athena?": normalize_name(
+                    "Cafe Athena?": is_target_name(
                         recommendation.get("restaurant", "")
-                    ) == target,
+                    ),
+                    "Model": item.get("model_label"),
+                    "Category": item.get("category"),
                     "Reason": recommendation.get("reason", ""),
                     "Sources": "\n".join(recommendation.get("source_urls", [])),
                 }
@@ -119,16 +120,16 @@ if st.button("Run visibility analysis", type="primary", use_container_width=True
             api_key=api_key,
         )
 
-        scorecard = calculate_visibility(results)
+        analytics = calculate_analytics(results)
         run_path = save_run(
             restaurant=restaurant,
             models=selected_models,
             results=results,
-            scorecard=scorecard,
+            scorecard=analytics,
         )
         st.session_state.analysis = {
             "results": results,
-            "scorecard": scorecard,
+            "analytics": analytics,
             "run_path": str(run_path),
             "models": selected_models,
         }
@@ -136,7 +137,7 @@ if st.button("Run visibility analysis", type="primary", use_container_width=True
 
 analysis = st.session_state.analysis
 if analysis:
-    scorecard = analysis["scorecard"]
+    scorecard = analysis["analytics"]["combined"]
     st.divider()
     st.subheader("Visibility scorecard")
 
