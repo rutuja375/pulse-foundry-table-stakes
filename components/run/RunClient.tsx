@@ -54,16 +54,28 @@ export function RunClient({
     return seen
   }, [seed.events])
 
-  // Play the timeline. 1x by default; the control below lets a presenter speed it up.
+  /**
+   * Playback pacing.
+   *
+   * The seed's event times are synthetic, so replaying them literally means a
+   * 100-answer run takes 35 seconds of screen time — too long to stand through,
+   * and the numbers on the clock are ours, not the models'. The whole timeline is
+   * therefore compressed to fit a target duration, and the reader can still slow
+   * it down with the speed control.
+   */
+  const TARGET_REPLAY_MS = 18_000
+  const plannedMs = seed.events.length ? seed.events[seed.events.length - 1].at : 0
+  const pace = plannedMs > TARGET_REPLAY_MS ? TARGET_REPLAY_MS / plannedMs : 1
+
   const [speed, setSpeed] = useState(1)
   useEffect(() => {
     if (paused || cursor >= seed.events.length) return
     const current = seed.events[cursor]
     const next = seed.events[cursor + 1]
-    const gap = next ? Math.max(60, (next.at - current.at) / speed) : 0
+    const gap = next ? Math.max(45, ((next.at - current.at) * pace) / speed) : 0
     const timer = setTimeout(() => setCursor(c => c + 1), gap)
     return () => clearTimeout(timer)
-  }, [cursor, paused, seed.events, speed])
+  }, [cursor, paused, seed.events, speed, pace])
 
   const applied = useMemo(() => {
     const map = new Map<string, CellState>()
@@ -125,7 +137,7 @@ export function RunClient({
       <header className="pane-head">
         <div className="head-row">
           <span className="eyebrow">Preflight · asking the assistants</span>
-          <span className="eyebrow mono-label-soft">{clock(elapsed)} elapsed</span>
+          <span className="eyebrow mono-label-soft">{clock(elapsed)} · replay</span>
         </div>
         <h1 className="venue-title" style={{ fontSize: 34 }}>
           {seed.venue}

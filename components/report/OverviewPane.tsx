@@ -130,6 +130,20 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
           Only the answers are shown, and every figure on this page is counted from them — verbatim text, one click
           behind each cell.
         </p>
+
+        {/*
+          An incomplete run is a different object from a complete one. Saying so in
+          the header is the difference between "these are the results" and "these
+          are the results we could afford".
+        */}
+        {report.totals.answers > 0 && report.totals.failed / report.totals.answers > 0.1 && (
+          <div className="banner banner-warn" role="status">
+            <b>Incomplete run — {report.totals.failed} of {report.totals.answers} answers failed.</b>{' '}
+            The pipeline stopped partway (the account hit its spending limit mid-run), so every rate below is
+            computed from the {report.totals.answers - report.totals.failed} answers that completed. Per-assistant
+            coverage is not comparable while the denominators differ.
+          </div>
+        )}
       </header>
 
       <section className="blk">
@@ -163,12 +177,16 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
                 'Named-in-passing answers carry no position and are excluded.',
             },
             {
+              // Completed answers, not rows: a failed call is an absence of data,
+              // and counting it as an answer inflates the record by the failures.
               label: 'Answers on record',
-              value: String(report.totals.answers),
+              value: String(completed.length),
+              delta: report.totals.failed ? `${report.totals.failed} failed` : undefined,
+              deltaColor: report.totals.failed ? 'var(--warning)' : undefined,
               tooltip:
                 'Verbatim answers stored in this run.\n' +
-                `Assistants: ${report.totals.assistants}\nQuestions: ${report.totals.questions}\n` +
-                `Failed: ${report.totals.failed}`,
+                `Completed: ${completed.length}\nFailed: ${report.totals.failed}\n` +
+                `Assistants: ${report.totals.assistants}\nQuestions: ${report.totals.questions}`,
             },
           ]}
         />
