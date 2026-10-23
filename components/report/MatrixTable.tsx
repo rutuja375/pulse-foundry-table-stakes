@@ -144,7 +144,7 @@ export function MatrixTable({
                     >
                       {assistant.label.split('(')[0].trim()}
                       {assistant.grounded && (
-                        <span style={{ color: 'var(--azure-strong)', marginLeft: 5, letterSpacing: 0 }}>●</span>
+                        <span style={{ color: 'var(--brand-teal)', marginLeft: 5, letterSpacing: 0 }}>●</span>
                       )}
                     </span>
                   </Tooltip>
@@ -189,7 +189,17 @@ export function MatrixTable({
                   <td
                     key={assistants[cellIndex]?.key ?? cellIndex}
                     className={cell.answer ? 'mx-cell' : undefined}
+                    data-open={cell.answer ? 'true' : undefined}
                     style={cellStyle(cell)}
+                    role={cell.answer ? 'button' : undefined}
+                    tabIndex={cell.answer ? 0 : undefined}
+                    onKeyDown={event => {
+                      if (!cell.answer) return
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault()
+                        onOpen(rowIndex * assistants.length + cellIndex)
+                      }
+                    }}
                     onClick={() => cell.answer && onOpen(rowIndex * assistants.length + cellIndex)}
                     title={cell.answer ? CELL_COPY[cell.kind].title + ' — click to read the answer' : CELL_COPY[cell.kind].title}
                   >

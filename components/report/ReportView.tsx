@@ -13,8 +13,10 @@
  * payload the backend changes next week without a redesign.
  */
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
+import { Printer } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { KpiGrid } from '@/components/primitives/KpiGrid'
 import { Drawer } from '@/components/ui/Drawer'
 import { MatrixTable } from './MatrixTable'
@@ -95,6 +97,19 @@ const intentCell: CSSProperties = {
   whiteSpace: 'nowrap',
 }
 
+/**
+ * The five sections, in the order a reader moves through them. This one list
+ * drives the sticky navigation, so a section cannot exist on the page without
+ * appearing in the nav — the wayfinding cannot silently drift out of date.
+ */
+const SECTIONS = [
+  { id: 'who', label: 'Who can see you' },
+  { id: 'answers', label: 'Every answer' },
+  { id: 'rivals', label: 'Named instead' },
+  { id: 'intent', label: 'By intent' },
+  { id: 'reading', label: 'How this was read' },
+] as const
+
 export function ReportView({ report, initialAnswerKey }: { report: IngestedReport; initialAnswerKey?: string }) {
   const matrix = useMemo(() => buildMatrix(report), [report])
 
@@ -114,6 +129,28 @@ export function ReportView({ report, initialAnswerKey }: { report: IngestedRepor
   }, [initialAnswerKey, matrix.rows, report.assistants])
 
   const [openIndex, setOpenIndex] = useState<number | null>(startIndex)
+  const [activeSection, setActiveSection] = useState<string>('who')
+  const navRef = useRef<HTMLElement>(null)
+
+  // Which section am I in? A plain IntersectionObserver, no scroll maths: the
+  // nav's job is to answer that question honestly, not to animate.
+  useEffect(() => {
+    const nodes = SECTIONS.map(section => document.getElementById(section.id)).filter(
+      (node): node is HTMLElement => Boolean(node)
+    )
+    if (!nodes.length) return
+    const observer = new IntersectionObserver(
+      entries => {
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+        if (visible?.target.id) setActiveSection(visible.target.id)
+      },
+      { rootMargin: '-72px 0px -55% 0px', threshold: [0.1, 0.5, 1] }
+    )
+    nodes.forEach(node => observer.observe(node))
+    return () => observer.disconnect()
+  }, [])
   const verdict = useMemo(() => headline(report), [report])
   const coverage = useMemo(() => intentCoverage(report), [report])
 
@@ -129,7 +166,45 @@ export function ReportView({ report, initialAnswerKey }: { report: IngestedRepor
   const location = [report.venue.neighbourhood, report.venue.city].filter(Boolean).join(', ')
 
   return (
-    <div style={{ maxWidth: 1120, margin: '0 auto', padding: '56px 32px 120px' }}>
+    <>
+      <nav className="report-nav" ref={navRef} aria-label="Report sections">
+        <div
+          style={{
+            maxWidth: 1120,
+            margin: '0 auto',
+            padding: '0 32px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 28,
+            minHeight: 56,
+          }}
+        >
+          <span
+            style={{
+              fontFamily: 'var(--kpi-font)',
+              fontSize: 15,
+              fontWeight: 600,
+              letterSpacing: '-0.01em',
+              whiteSpace: 'nowrap',
+              color: 'var(--fg)',
+            }}
+          >
+            {report.venue.name}
+          </span>
+          <div style={{ display: 'flex', gap: 24, flex: 1, overflowX: 'auto' }}>
+            {SECTIONS.map(section => (
+              <a key={section.id} href={`#${section.id}`} data-active={activeSection === section.id ? 'true' : 'false'}>
+                {section.label}
+              </a>
+            ))}
+          </div>
+          <Button variant="secondary" onClick={() => window.print()} icon={<Printer size={14} strokeWidth={1.8} />}>
+            Print / save PDF
+          </Button>
+        </div>
+      </nav>
+
+      <div style={{ maxWidth: 1120, margin: '0 auto', padding: '48px 32px 120px' }}>
       {/* ── Verdict ─────────────────────────────────────────────────────── */}
       <header style={{ borderBottom: '1px solid var(--border)', paddingBottom: 28, marginBottom: 32 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 24, flexWrap: 'wrap' }}>
@@ -201,13 +276,13 @@ export function ReportView({ report, initialAnswerKey }: { report: IngestedRepor
       </section>
 
       {/* ── Who can see you ─────────────────────────────────────────────── */}
-      <section style={{ marginBottom: 44 }}>
+      <section id="who" style={{ marginBottom: 44, scrollMarginTop: 72 }}>
         <SectionHead index="01" title="Who can see you" note="hover a column heading for its definition" />
         <AssistantTable rows={report.assistants} />
       </section>
 
       {/* ── The matrix ──────────────────────────────────────────────────── */}
-      <section style={{ marginBottom: 44 }}>
+      <section id="answers" style={{ marginBottom: 44, scrollMarginTop: 72 }}>
         <SectionHead index="02" title="Every answer, by question" note="click any cell to read what was said" />
         <MatrixTable rows={matrix.rows} assistants={report.assistants} onOpen={setOpenIndex} />
         <div style={{ display: 'flex', gap: 18, marginTop: 12, flexWrap: 'wrap', fontSize: 11, color: 'var(--muted)' }}>
@@ -220,14 +295,14 @@ export function ReportView({ report, initialAnswerKey }: { report: IngestedRepor
       </section>
 
       {/* ── Who is named instead ────────────────────────────────────────── */}
-      <section style={{ marginBottom: 44 }}>
+      <section id="rivals" style={{ marginBottom: 44, scrollMarginTop: 72 }}>
         <SectionHead index="03" title="Who is named instead" note="counted once per answer" />
         <CompetitorTable report={report} />
       </section>
 
       {/* ── Segment coverage ────────────────────────────────────────────── */}
       {coverage.length > 0 && (
-        <section style={{ marginBottom: 44 }}>
+        <section id="intent" style={{ marginBottom: 44, scrollMarginTop: 72 }}>
           <SectionHead index="04" title="By customer intent" note="where the gap is concentrated" />
           <div
             style={{
@@ -286,7 +361,7 @@ export function ReportView({ report, initialAnswerKey }: { report: IngestedRepor
       )}
 
       {/* ── How this was read ───────────────────────────────────────────── */}
-      <section>
+      <section id="reading" style={{ scrollMarginTop: 72 }}>
         <SectionHead index="05" title="How this was read" note="assumptions the display had to make" />
         <div
           style={{
@@ -361,6 +436,7 @@ export function ReportView({ report, initialAnswerKey }: { report: IngestedRepor
           </div>
         )}
       </Drawer>
-    </div>
+      </div>
+    </>
   )
 }

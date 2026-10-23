@@ -119,9 +119,9 @@ export function AssistantTable({ rows }: { rows: IngestedAssistant[] }) {
                     fontSize: 9.5,
                     letterSpacing: '0.1em',
                     textTransform: 'uppercase',
-                    color: 'var(--azure-strong)',
-                    border: '1px solid var(--azure-soft)',
-                    background: 'var(--azure-soft)',
+                    color: 'var(--brand-teal)',
+                    border: '1px solid rgba(79, 98, 91, 0.18)',
+                    background: 'rgba(79, 98, 91, 0.08)',
                     borderRadius: 999,
                     padding: '1px 6px',
                     verticalAlign: 'middle',
@@ -133,7 +133,7 @@ export function AssistantTable({ rows }: { rows: IngestedAssistant[] }) {
             </td>
             <td style={cellStyle}>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, justifyContent: 'flex-end' }}>
-                <Bar value={row.mentioned} max={max} tone={row.mentioned === 0 ? 'var(--negative)' : 'var(--accent)'} />
+                <Bar value={row.mentioned} max={max} tone={row.mentioned === 0 ? 'var(--negative)' : 'var(--active-accent)'} />
                 <span style={{ color: row.mentioned === 0 ? 'var(--negative)' : 'var(--fg)', minWidth: 42 }}>
                   {row.mentioned}/{row.answered}
                 </span>
@@ -172,7 +172,7 @@ export function CompetitorTable({ report }: { report: IngestedReport }) {
           </td>
           <td style={{ ...cellStyle, color: 'var(--fg)' }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, justifyContent: 'flex-end' }}>
-              <Bar value={targetNamed} max={max} tone="var(--accent)" />
+              <Bar value={targetNamed} max={max} tone="var(--series-1)" />
               {targetNamed}
             </span>
           </td>
@@ -185,7 +185,7 @@ export function CompetitorTable({ report }: { report: IngestedReport }) {
             </td>
             <td style={cellStyle}>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, justifyContent: 'flex-end' }}>
-                <Bar value={row.mentions} max={max} tone="var(--gold)" />
+                <Bar value={row.mentions} max={max} tone="var(--series-2)" />
                 {row.mentions}
               </span>
             </td>

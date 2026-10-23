@@ -1,97 +1,109 @@
-/* ---------------------------------------------------------------------------
-   Aegean Hospitality — design tokens
-   Café Athena · Pacific Beach, San Diego
+/* ───────────────────────────────────────────────────────────────────────────
+   Serene Ember — THODI's design language, adopted rather than reinvented.
 
-   Source of truth: DESIGN.md in this folder. This file is the runtime mapping:
-   every component reads these names, never a raw color.
-
-   Palette comes from the Aegean Hospitality canvas, not from the restaurant's
-   website. Measured WCAG AA (normal text 4.5:1):
-     navy #0A1A29 on plaster          16.6:1
-     navy on brass #C39D63             7.0:1   (white on brass: 2.5 — never)
-     azure #2980B9 on plaster          4.1:1   (fill only; text uses #21618C 6.3)
-     muted #5F5E58 on plaster          6.1:1
-   --------------------------------------------------------------------------- */
+   Tokens are copied from companies/fuego-azteca/web/tokens.css (the :root
+   "Serene Ember" light theme), not re-derived from a screenshot. Anything in
+   this file that THODI does not already define is marked as an adapter alias
+   and kept to a minimum, because the point of adopting a proven system is to
+   stop inventing.
+     0px shadows by default, 8px control radius, 24px card radius
+     Spectral for figures and headlines, Hanken Grotesk for UI, JetBrains Mono
+     for data columns
+     terracotta #a4370f is the only structural accent, teal #4F625B is data
+   ─────────────────────────────────────────────────────────────────────────── */
 
 :root {
-  /* Surfaces — warm plaster, never pure white except cards */
-  --bg:      #f9f8f5;
-  --surf-1:  #f3f2ee;
-  --surf-2:  #eae8e2;
-  --surf-3:  #e0ded7;
+  /* Surfaces */
+  --bg:      #faf9f7;
+  --surf-1:  #f4f3f1;
+  --surf-2:  #e8e6e3;
+  --surf-3:  #dedcda;
   --card-bg: #ffffff;
 
-  /* Text — Aegean navy */
-  --fg:      #0a1a29;
-  --fg2:     #3b4652;
-  --muted:   #5f5e58;
+  /* Text */
+  --fg:      #1a1c1b;
+  --fg2:     #58423b;
+  --muted:   #8c7169;
 
-  /* Structure — hairline borders, gentle 4px corners, no shadows */
-  --border:         #e5e2da;
-  --card-border:    #e5e2da;
-  --card-radius:    4px;
-  --tooltip-radius: 4px;
-  --radius:         4px;
-  --card-shadow:    none;
+  /* Structure */
+  --border:         #efeeec;
+  --border-strong:  #dedcda;   /* adapter: one step stronger for document surfaces */
+  --radius:         8px;
+  --card-radius:    24px;
+  --tooltip-radius: 12px;
+  --card-border:    #efeeec;
+  --card-shadow:    0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px -4px rgba(0, 0, 0, 0.06);
+  --popover-depth:  0 6px 20px rgba(0, 0, 0, 0.12);
 
-  /* Brand — structural UI only */
-  --accent:      #0a1a29;   /* primary — deep navy */
-  --accent-hover:#142a3d;
-  --accent-soft: #edeae3;
-  --on-accent:   #ffffff;
+  /* KPI typography scale */
+  --kpi-size:       30px;
+  --kpi-weight:     900;
+  --kpi-tracking:   -0.03em;
+  --kpi-font:       var(--font-serif);
+  --label-size:     14px;
+  --label-case:     uppercase;
+  --label-tracking: 0.08em;
+  --label-weight:   700;
 
-  /* Supporting brand tones — decoration and data, never a primary action */
-  --gold:       #c39d63;    /* secondary — warm brass; navy text on it, never white */
-  --gold-text:  #7a5c26;    /* brass as type on plaster */
-  --gold-soft:  #f5eee1;
-  --azure:      #2980b9;    /* tertiary — fill and large text only */
-  --azure-strong: #21618c;  /* azure as type, or a button carrying white text */
-  --azure-soft: #e8f1f7;
+  /* Semantic — data signals */
+  --positive: #1a1c1b;
+  --neutral:  #8c7169;
+  --negative: #dc2626;
 
-  /* Signals — muted, so they never outshout the brand */
-  --positive: #3f6b4e;
-  --negative: #a33b2e;
-  --bad:      #a33b2e;
-  --warning:  #8a5a1e;
+  /* Brand — structural UI only, never data signals */
+  --brand-terracotta: #a4370f;
+  --brand-teal:       #4f625b;
+  --active-accent:    var(--brand-terracotta);
 
-  /* KPI typography — Playfair carries the number, as on the restaurant's menu */
-  --kpi-size:     44px;
-  --kpi-weight:   500;
-  --kpi-tracking: -0.015em;
-  --kpi-font:     var(--font-playfair), Georgia, "Times New Roman", serif;
-  --label-size:      11px;
-  --label-case:      uppercase;
-  --label-tracking:  0.14em;
-  --label-weight:    600;
+  /* Chart / series */
+  --chart-stroke: 2.5px;
+  --c1: var(--brand-teal);
+  --c2: var(--brand-terracotta);
+  --c3: #8884d8;
+  --c4: #ffc658;
+  --c5: #82ca9d;
 
-  /* Card variants */
-  --card-accent-grad:   #ebf0f3;
-  --card-accent-border: #d8e0e5;
-  --kpi-pos-grad:       #edf3ee;
-  --kpi-pos-border:     #d7e3d9;
-  --kpi-pos-fg:         #3f6b4e;
-  --kpi-neg-grad:       #faefec;
-  --kpi-neg-border:     #efdad4;
-  --kpi-neg-fg:         #a33b2e;
+  /* Adapter aliases — these names are ours, the values are THODI's.
+     Components read these so the token contract stays the one we ported. */
+  --accent:       var(--active-accent);
+  --accent-hover: #8a2d0c;
+  --on-accent:    #ffffff;
+  --warning:      #d97706;
+  --series-1:     var(--brand-terracotta);   /* the venue */
+  --series-2:     var(--brand-teal);         /* everyone else */
+  --font-serif:   var(--font-spectral), Spectral, Georgia, serif;
+  --font-sans:    var(--font-hanken-grotesk), 'Hanken Grotesk', system-ui, sans-serif;
+  --font-data:    var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, monospace;
 
-  /* Chart series — sea, sapphire, terracotta, olive */
-  --c1: #0a1a29;
-  --c2: #c39d63;
-  --c3: #2980b9;
-  --c4: #8a8880;
+  /* Legacy aliases (THODI keeps these for old code; so do we) */
+  --fire:   var(--negative);
+  --ok:     var(--brand-teal);
+  --warn:   var(--warning);
+  --bad:    var(--negative);
 
-  /* Type stacks */
-  --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
-  --font-sans:  var(--font-montserrat), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  /* Figures in columns: tabular numerals, not a monospace face. Mono is kept
-     for code blocks (JSON-LD drafts) where character alignment is the point. */
-  --font-data:  var(--font-montserrat), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono:  ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* Brand gradients & KPI card variants */
+  --brand-grad:          linear-gradient(135deg, var(--brand-terracotta) 0%, #c9734a 100%);
+  --card-accent-grad:    linear-gradient(180deg, var(--card-bg) 0%, rgba(164, 55, 15, 0.03) 100%);
+  --card-accent-border:  rgba(164, 55, 15, 0.08);
+  --kpi-pos-grad:        linear-gradient(180deg, var(--card-bg) 0%, rgba(79, 98, 91, 0.02) 100%);
+  --kpi-pos-border:      rgba(79, 98, 91, 0.1);
+  --kpi-pos-fg:          var(--brand-teal);
+  --kpi-neg-grad:        linear-gradient(180deg, var(--card-bg) 0%, rgba(220, 38, 38, 0.02) 100%);
+  --kpi-neg-border:      rgba(220, 38, 38, 0.1);
+  --kpi-neg-fg:          var(--negative);
+  --kpi-neu-grad:        linear-gradient(180deg, var(--card-bg) 0%, rgba(140, 113, 105, 0.02) 100%);
+  --kpi-neu-border:      rgba(140, 113, 105, 0.1);
+  --kpi-neu-fg:          var(--neutral);
+  --hero-bg:             linear-gradient(135deg, #f4f3f1 0%, #e8e6e3 100%);
 }
 
-* { box-sizing: border-box; }
+*,
+*::before,
+*::after { box-sizing: border-box; }
 
-html, body {
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+
+body {
   margin: 0;
   padding: 0;
   background: var(--bg);
@@ -99,26 +111,25 @@ html, body {
   font-family: var(--font-sans);
   font-size: 14px;
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
 }
 
 a { color: inherit; }
 button, input, textarea, select { font: inherit; color: inherit; }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--active-accent);
   outline-offset: 2px;
 }
 
-/* Column figures: tabular, sans, never monospace */
+/* Column figures: THODI uses JetBrains Mono for data, not tabular sans */
 .num {
   font-family: var(--font-data);
   font-variant-numeric: tabular-nums;
 }
 
 /* ── KPI card ───────────────────────────────────────────────────────────────
-   Warm card on plaster, hairline border, no shadow, a 300ms lift on hover.
-   The number is Playfair; the label is a tracked caps line.                     */
+   Straight from the THODI card: 24px radius, hairline, the gradient variants,
+   Spectral carrying the number in 900 weight.                                */
 
 .kpi-card {
   background: var(--card-bg);
@@ -134,54 +145,123 @@ button, input, textarea, select { font: inherit; color: inherit; }
 }
 .kpi-card:hover {
   transform: scale(1.02);
-  box-shadow: 0 10px 24px -14px rgba(10, 26, 41, 0.28);
+  box-shadow: 0 10px 24px -14px rgba(26, 28, 27, 0.28);
 }
 
 .kpi-card--brand-accent {
   background: var(--card-accent-grad);
   border-color: var(--card-accent-border);
 }
-.kpi-card--brand-accent:hover { border-color: var(--accent); }
-.kpi-card--brand-accent .kpi-value-text { color: var(--accent); }
+.kpi-card--brand-accent:hover { border-color: var(--active-accent); }
+.kpi-card--brand-accent .kpi-value-text { color: var(--active-accent); }
 
-.kpi-card--pos {
-  background: var(--kpi-pos-grad);
-  border-color: var(--kpi-pos-border);
-}
+.kpi-card--pos { background: var(--kpi-pos-grad); border-color: var(--kpi-pos-border); }
 .kpi-card--pos .kpi-value-text { color: var(--kpi-pos-fg); }
 
-.kpi-card--neg {
-  background: var(--kpi-neg-grad);
-  border-color: var(--kpi-neg-border);
-}
+.kpi-card--neg { background: var(--kpi-neg-grad); border-color: var(--kpi-neg-border); }
 .kpi-card--neg .kpi-value-text { color: var(--kpi-neg-fg); }
 
+.kpi-card--neu { background: var(--kpi-neu-grad); border-color: var(--kpi-neu-border); }
+.kpi-card--neu .kpi-value-text { color: var(--kpi-neu-fg); }
+
+/* ── Buttons ───────────────────────────────────────────────────────────────
+   THODI's button, unchanged: 8px radius, 1px border, 40px minimum, filled
+   primary in terracotta, no shadow. The fill and the border are what make it
+   read as pressable — not depth effects.
+   One adapter: the secondary border sits on the page background rather than on
+   a white card, so it uses the one-step-stronger hairline to stay visible.  */
+
+.btn:not(:disabled):hover { filter: brightness(0.97); }
+.btn--primary:not(:disabled):hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn--secondary:not(:disabled):hover { background: var(--surf-1); border-color: var(--fg2); }
+.btn--quiet:not(:disabled):hover { background: var(--surf-1); }
+.btn:not(:disabled):active { transform: translateY(1px); }
+
+.btn-spinner {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin 700ms linear infinite;
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+/* ── Definition triggers ───────────────────────────────────────────────────
+   A dotted underline says "there is a definition here" before anyone moves a
+   mouse. Kept from our own work — THODI's tooltip is hover-only, which is fine
+   inside an app people use daily and not fine for a reader who arrives once. */
+
+.tip-trigger {
+  border-bottom: 1px dotted var(--muted);
+  padding-bottom: 1px;
+}
+.tip-trigger:hover { border-bottom-color: var(--active-accent); }
+.tip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  font-size: 9.5px;
+  line-height: 1;
+  color: var(--muted);
+  background: var(--card-bg);
+}
+
+/* ── Section navigation ────────────────────────────────────────────────────
+   Position has to be visible: the current section gets a solid terracotta rule
+   and a dark label, not a tint.                                            */
+
+.report-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.report-nav a {
+  padding: 12px 2px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.report-nav a:hover { color: var(--fg2); }
+.report-nav a[data-active='true'] { color: var(--fg); border-bottom-color: var(--active-accent); }
+
 /* ── Answer matrix ─────────────────────────────────────────────────────────
-   A cell is a button in disguise: hover says so, and the click opens the
-   verbatim answer. No colour change on the cell itself — the reader is
-   scanning a grid for absences, and a hover wash that recolours the number
-   would compete with the numbers that matter.                            */
+   A clickable cell is underlined at rest so the grid looks interactive before
+   anyone hovers; hover only adds the wash.                                  */
 
 .mx-cell {
   cursor: pointer;
   transition: background-color 120ms ease;
 }
-.mx-cell:hover {
-  background: var(--surf-1);
+.mx-cell:hover { background: var(--surf-1); }
+.mx-cell[data-open='true'] {
+  text-decoration: underline dotted var(--border-strong);
+  text-underline-offset: 4px;
 }
+.mx-cell[data-open='true']:hover { text-decoration-color: var(--active-accent); }
 
 /* ── Print ─────────────────────────────────────────────────────────────────
-   The report is meant to be handed over as a PDF. Charts and drawers are
-   already click-only, so print hides nothing a reader needs.             */
+   The report is meant to be handed over as a PDF.                          */
 
 @media print {
   body { background: #fff; }
-  .mx-cell { cursor: default; }
+  .report-nav { display: none; }
+  .mx-cell { cursor: default; text-decoration: none; }
   main { padding: 0 !important; max-width: none !important; }
   section { break-inside: avoid; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .kpi-card { transition: none; }
-  .kpi-card:hover { transform: none; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
