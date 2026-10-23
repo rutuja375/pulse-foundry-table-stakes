@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from services.benchmark import RANKING_MODELS, run_parallel_benchmark
 from services.native_providers import MODEL_KEY_ENV, NATIVE_MODELS, run_native_query
 from services.openrouter import OpenRouterError, run_restaurant_query, validate_api_key
+from services.recommendations import build_aiso_recommendations
 from services.scoring import calculate_analytics, is_target_name
 from services.reporting import (
     category_scorecard_rows,
@@ -23,6 +24,7 @@ load_dotenv()
 
 ROOT = Path(__file__).resolve().parent
 QUERY_BANK_PATH = ROOT / "data" / "query_bank.json"
+BASELINE_RUN_PATH = ROOT / "data" / "runs" / "20261023T194307Z.json"
 TARGET_NAME = "Cafe Athena"
 
 
@@ -124,7 +126,17 @@ with st.expander(f"Fixed query bank ({len(queries)} questions)"):
     )
 
 if "analysis" not in st.session_state:
-    st.session_state.analysis = None
+    if BASELINE_RUN_PATH.exists():
+        baseline = json.loads(BASELINE_RUN_PATH.read_text(encoding="utf-8"))
+        st.session_state.analysis = {
+            "results": baseline["results"],
+            "analytics": baseline["scorecard"],
+            "run_path": str(BASELINE_RUN_PATH),
+            "models": baseline["models"],
+            "source": "Saved three-model baseline",
+        }
+    else:
+        st.session_state.analysis = None
 
 if st.button("Run visibility analysis", type="primary", use_container_width=True):
     if not selected_model_labels:
@@ -194,13 +206,14 @@ if analysis:
     analytics = analysis["analytics"]
     scorecard = analytics["combined"]
     st.divider()
-    overview_tab, models_tab, categories_tab, matrix_tab, evidence_tab = st.tabs(
+    overview_tab, models_tab, categories_tab, matrix_tab, evidence_tab, recommendations_tab = st.tabs(
         [
             "Overview",
             "Model comparison",
             "Category analysis",
             "Prompt matrix",
             "Evidence",
+            "AISO recommendations",
         ]
     )
 
@@ -341,7 +354,65 @@ if analysis:
             mime="application/json",
         )
 
+    with recommendations_tab:
+        recommendation_report = build_aiso_recommendations(
+            analysis["results"], analytics
+        )
+        st.subheader("How Café Athena can improve AI-search visibility")
+        st.caption(recommendation_report["method"])
+
+        st.markdown("#### Website and entity foundations")
+        for action in recommendation_report["foundation_actions"]:
+            st.write(f"• {action}")
+
+        summary_rows = [
+            {
+                "Priority": item["priority"],
+                "Category": item["category"].replace("_", " ").title(),
+                "Cafe Athena mentions": (
+                    f'{item["cafe_athena_mentions"]}/'
+                    f'{item["successful_responses"]}'
+                ),
+                "Mention rate": f'{item["mention_rate"]}% ',
+                "Leading competitors": ", ".join(
+                    competitor["restaurant"]
+                    for competitor in item["competitors"][:3]
+                ),
+            }
+            for item in recommendation_report["category_recommendations"]
+        ]
+        st.dataframe(pd.DataFrame(summary_rows), use_container_width=True, hide_index=True)
+
+        for item in recommendation_report["category_recommendations"]:
+            label = item["category"].replace("_", " ").title()
+            with st.expander(
+                f'{item["priority"]} priority — {label} '
+                f'({item["mention_rate"]}% visibility)'
+            ):
+                st.markdown("**Recommended changes**")
+                for change in item["recommended_changes"]:
+                    st.write(f"• {change}")
+                if item["competitors"]:
+                    st.markdown("**Competitor evidence from the model responses**")
+                    for competitor in item["competitors"]:
+                        st.write(
+                            f'**{competitor["restaurant"]}** — '
+                            f'{competitor["mentions"]} category mentions'
+                        )
+                        for reason in competitor["evidence_reasons"]:
+                            st.write(f"• {reason}")
+                        for source in competitor["source_urls"]:
+                            st.write(source)
+
+        st.download_button(
+            "Download AISO recommendations as JSON",
+            data=json.dumps(recommendation_report, indent=2, ensure_ascii=False),
+            file_name="cafe-athena-aiso-recommendations.json",
+            mime="application/json",
+        )
+
     st.caption(
         f'Models: {", ".join(analysis["models"])}. '
-        "Every model ran independently against the same prompt bank."
+        "Every model ran independently against the same prompt bank. "
+        f'Source: {analysis.get("source", "New live run")}. '
     )

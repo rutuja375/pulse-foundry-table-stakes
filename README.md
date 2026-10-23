@@ -10,6 +10,8 @@ A small Streamlit application for the NYU SPS x Pulse Foundry hackathon. It runs
 - Records restaurant recommendations and their positions.
 - Calculates mention rate and average position by model and category.
 - Shows cross-model consensus, competitor share of voice, and query-level evidence.
+- Loads the saved 55-success three-model run as a static baseline on startup.
+- Generates evidence-backed AISO recommendations by category using the competitors, reasons, and URLs in that baseline.
 - Saves each successful run locally so the same test can be repeated later.
 
 ## Run locally
@@ -21,6 +23,8 @@ A small Streamlit application for the NYU SPS x Pulse Foundry hackathon. It runs
 The API key can also be entered temporarily in the application's sidebar. It is not saved by the application.
 
 The `.env` file is ignored by Git and must never be committed. OpenRouter remains available as an optional fallback.
+
+The dashboard does not need API keys to display the static baseline or its AISO recommendations. Keys are required only when starting a new live visibility run.
 
 ## Ranking models
 

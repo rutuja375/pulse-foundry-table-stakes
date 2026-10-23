@@ -222,5 +222,6 @@ __marimo__/
 # Saved local analysis runs
 data/runs/*.json
 !data/runs/.gitkeep
+!data/runs/20261023T194307Z.json
 data/exports/*.json
 !data/exports/.gitkeep
