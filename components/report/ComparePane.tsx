@@ -47,11 +47,29 @@ export function ComparePane({ report, rival, slug }: { report: IngestedReport; r
   /**
    * The sentence has to be generated from the counts, never asserted. "Parallel"
    * is the finding that stops an owner chasing the wrong name — but it is only
-   * said when the overlap is genuinely low.
+   * said when the overlap is genuinely low, and it may not call the counts a
+   * dead heat unless they are one: 11 · 7 beside "you both appear 7 times"
+   * contradicts the stat row directly above it.
    */
+  const closeCounts = Math.min(yours, theirs) > 0 && Math.min(yours, theirs) >= Math.max(yours, theirs) * 0.8
+  const onlyThem = h2h.totals.onlyThem
+  const counts =
+    yours === theirs ? `You are each named ${yours} times` : `You are named ${yours} times and they ${theirs}`
+  const bothLower =
+    bothCount === 0
+      ? 'no question names you both'
+      : bothCount === 1
+        ? `only 1 of ${questionCount} questions names you both`
+        : `only ${bothCount} of ${questionCount} questions name you both`
+  const bothUpper = `${bothLower[0].toUpperCase()}${bothLower.slice(1)}`
+
   const posture =
     h2h.posture === 'parallel'
-      ? `You both appear ${theirs} times, which reads like a dead heat. Only ${bothCount} of ${questionCount} questions ${bothCount === 1 ? 'names' : 'name'} you both, so you are being recommended for different reasons rather than competing for the same customers.`
+      ? closeCounts
+        ? `${counts} — ${yours === theirs ? 'a dead heat on the count alone' : 'close enough to read as a dead heat'}. ${bothUpper}, so you are being recommended for different reasons rather than competing for the same customers.`
+        : onlyThem > 0
+          ? `${counts}, but ${bothLower}. Most of their count comes from questions you are not in at all, so this is two different jobs rather than one contest.`
+          : `${counts}, and ${bothLower}. They win no question without you — they simply appear less often.`
       : h2h.posture === 'you-lead'
         ? h2h.losses.length === 0
           ? `You are named on ${h2h.wins.length} of ${questionCount} questions and they win none of the ones you lose.`
