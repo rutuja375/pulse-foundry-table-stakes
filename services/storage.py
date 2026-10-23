@@ -10,7 +10,7 @@ RUNS_DIRECTORY = Path(__file__).resolve().parents[1] / "data" / "runs"
 def save_run(
     *,
     restaurant: dict[str, Any],
-    model: str,
+    models: dict[str, str],
     results: list[dict[str, Any]],
     scorecard: dict[str, Any],
 ) -> Path:
@@ -24,7 +24,7 @@ def save_run(
                 "run_id": run_id,
                 "created_at": timestamp.isoformat(),
                 "restaurant": restaurant,
-                "model": model,
+                "models": models,
                 "results": results,
                 "scorecard": scorecard,
             },

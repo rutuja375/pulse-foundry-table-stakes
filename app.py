@@ -6,7 +6,7 @@ import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
 
-from services.openrouter import OpenRouterError, run_restaurant_query
+from services.benchmark import RANKING_MODELS, run_parallel_benchmark
 from services.scoring import calculate_visibility, normalize_name
 from services.storage import save_run
 
@@ -15,7 +15,6 @@ load_dotenv()
 
 ROOT = Path(__file__).resolve().parent
 QUERY_BANK_PATH = ROOT / "data" / "query_bank.json"
-DEFAULT_MODEL = os.getenv("OPENROUTER_SEARCH_MODEL", "google/gemini-3.8-flash")
 TARGET_NAME = "Cafe Athena"
 
 
@@ -61,8 +60,16 @@ with st.sidebar:
         type="password",
         help="Used only for this session and never saved by the application.",
     )
-    model = st.text_input("OpenRouter model", value=DEFAULT_MODEL)
-    st.info("Web search is enabled for every query. API and search usage may incur charges.")
+    selected_model_labels = st.multiselect(
+        "Ranking models",
+        options=list(RANKING_MODELS),
+        default=list(RANKING_MODELS),
+        help="Every selected model runs the same query bank independently.",
+    )
+    st.info(
+        "Web search is enabled for every query. A full five-model run makes "
+        "100 model requests and may incur OpenRouter charges."
+    )
 
 st.subheader("Target restaurant")
 restaurant = {
@@ -93,48 +100,29 @@ if "analysis" not in st.session_state:
 if st.button("Run visibility analysis", type="primary", use_container_width=True):
     if not api_key:
         st.error("Enter an OpenRouter API key in the sidebar.")
-    elif not model.strip():
-        st.error("Enter an OpenRouter model ID.")
+    elif not selected_model_labels:
+        st.error("Select at least one ranking model.")
     else:
-        results = []
-        progress = st.progress(0, text="Starting analysis...")
-
-        for index, query_item in enumerate(queries, start=1):
-            query = query_item["query"]
-            progress.progress(
-                (index - 1) / len(queries),
-                text=f"Searching {index} of {len(queries)}: {query}",
-            )
-            try:
-                result = run_restaurant_query(
-                    query=query,
-                    api_key=api_key,
-                    model=model.strip(),
-                )
-                results.append(
-                    {
-                        "query_id": query_item["id"],
-                        "category": query_item["category"],
-                        "query": query,
-                        "status": "success",
-                        "result": result,
-                    }
-                )
-            except Exception as error:
-                results.append(
-                    {
-                        "query_id": query_item["id"],
-                        "category": query_item["category"],
-                        "query": query,
-                        "status": "failed",
-                        "error": str(error),
-                    }
-                )
+        selected_models = {
+            label: RANKING_MODELS[label] for label in selected_model_labels
+        }
+        progress = st.progress(
+            0,
+            text=(
+                f"Running {len(selected_models)} models in parallel across "
+                f"{len(queries)} prompts..."
+            ),
+        )
+        results = run_parallel_benchmark(
+            selected_models=selected_models,
+            queries=queries,
+            api_key=api_key,
+        )
 
         scorecard = calculate_visibility(results)
         run_path = save_run(
             restaurant=restaurant,
-            model=model.strip(),
+            models=selected_models,
             results=results,
             scorecard=scorecard,
         )
@@ -142,7 +130,7 @@ if st.button("Run visibility analysis", type="primary", use_container_width=True
             "results": results,
             "scorecard": scorecard,
             "run_path": str(run_path),
-            "model": model.strip(),
+            "models": selected_models,
         }
         progress.progress(1.0, text="Analysis complete")
 
@@ -199,4 +187,7 @@ if analysis:
         file_name="cafe-athena-visibility-run.json",
         mime="application/json",
     )
-    st.caption(f'Model: {analysis["model"]}. Local run saved for future comparison.')
+    st.caption(
+        f'Models: {", ".join(analysis["models"])}. '
+        "Local run saved for future comparison."
+    )
