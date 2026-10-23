@@ -84,27 +84,40 @@ export function headline(report: IngestedReport): {
   invisible: IngestedReport['assistants']
   total: number
   sentence: string
+  /** The number behind the sentence, so the headline cannot congratulate a 60%. */
+  detail: string
 } {
   const counted = report.assistants.filter(a => a.answered > 0)
   const invisible = counted.filter(a => a.mentioned === 0)
   const total = counted.length
+  const completed = report.answers.filter(a => !a.error)
+  const named = completed.filter(a => a.mentioned).length
+  const detail =
+    completed.length > 0 ? `${named} of ${completed.length} answers named the venue` : 'no answers yet'
 
-  if (!total) return { invisible: [], total: 0, sentence: 'No completed answers in this run.' }
+  if (!total) return { invisible: [], total: 0, sentence: 'No completed answers in this run.', detail }
 
   if (invisible.length === 0) {
+    const everyAnswer = completed.length > 0 && named === completed.length
     return {
       invisible,
       total,
-      sentence: `Named by every assistant that answered${total === 1 ? '' : ` — all ${total}`}.`,
+      // "Named by every assistant" is true when each assistant named it at least
+      // once — which is not the same as being named in every answer. Say which.
+      sentence: everyAnswer
+        ? `Named in every answer — all ${completed.length}.`
+        : `Named by all ${total} assistants, but only in ${named} of ${completed.length} answers.`,
+      detail,
     }
   }
   if (invisible.length === total) {
-    return { invisible, total, sentence: `Not named by a single assistant — 0 of ${total}.` }
+    return { invisible, total, sentence: `Not named by a single assistant — 0 of ${total}.`, detail }
   }
   return {
     invisible,
     total,
     sentence: `Invisible to ${invisible.length} of ${total} assistants.`,
+    detail,
   }
 }
 

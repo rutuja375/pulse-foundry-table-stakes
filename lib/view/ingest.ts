@@ -28,6 +28,10 @@ export interface IngestedName {
   name: string
   position: number | null
   basis: Basis
+  /** The model's stated reason, when the pipeline captured one. */
+  reason?: string
+  /** Pages the model cited for this recommendation. */
+  sources?: string[]
 }
 
 export interface IngestedAnswer {
@@ -198,7 +202,9 @@ export function ingestRun(input: unknown): IngestedReport {
     return {
       id: asText(pick(row, ['id', 'qid', 'key'])) || `q${index + 1}`,
       text: asText(pick(row, ['text', 'question', 'q', 'prompt'])) || `Question ${index + 1}`,
-      intent: asText(pick(row, ['intent', 'category', 'tag', 'type'])),
+      // Backend categories are snake_case keys ("greek_food"); the display never
+      // showed raw keys anywhere else and should not start here.
+      intent: asText(pick(row, ['intent', 'category', 'tag', 'type'])).replace(/_/g, ' ').toLowerCase(),
     }
   })
   if (!questions.length) issues.push('No question bank in the payload; questions are being inferred from the answers.')
@@ -265,7 +271,12 @@ export function ingestRun(input: unknown): IngestedReport {
       const basisRaw = asText(pick(item, ['basis', 'kind', 'type']))
       const basis: Basis = basisRaw === 'mentioned' || basisRaw === 'passing' ? 'mentioned' : 'ranked'
       const position = basis === 'ranked' ? asNumber(pick(item, ['position', 'rank', 'place'])) ?? order + 1 : null
-      return [{ name, position, basis }]
+      const reason = asText(pick(item, ['reason', 'why', 'note'])) || undefined
+      const sources = asList(pick(item, ['sources', 'source_urls', 'urls']))
+        .map(asText)
+        .filter(Boolean)
+        .slice(0, 4)
+      return [{ name, position, basis, ...(reason ? { reason } : {}), ...(sources.length ? { sources } : {}) }]
     })
 
     // Error

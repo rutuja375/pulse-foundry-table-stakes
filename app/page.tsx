@@ -1,7 +1,8 @@
 import { OverviewPane } from '@/components/report/OverviewPane'
 import { loadLatestRun } from '@/lib/view/load-run'
 
-export default async function Page() {
+export default async function Page({ searchParams }: { searchParams: Promise<{ answer?: string }> }) {
+  const params = await searchParams
   const loaded = loadLatestRun()
 
   if (!loaded) {
@@ -16,5 +17,7 @@ export default async function Page() {
     )
   }
 
-  return <OverviewPane report={loaded.report} />
+  // `?answer=q01:openai` still opens one answer directly — the pane refactor had
+  // dropped this, so the link silently did nothing.
+  return <OverviewPane report={loaded.report} initialAnswerKey={params?.answer} />
 }

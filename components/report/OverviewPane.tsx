@@ -28,7 +28,26 @@ function stripMarkdown(text: string): string {
     .trim()
 }
 
+/** Backend answers arrive as the model's JSON reply, not prose. Show it as what it is. */
+function RawJson({ text }: { text: string }) {
+  let pretty = text
+  try {
+    pretty = JSON.stringify(JSON.parse(text), null, 2)
+  } catch {
+    // Not valid JSON after all — print what arrived rather than pretending.
+  }
+  return (
+    <div>
+      <div className="answer-body-label">Raw model output</div>
+      <pre className="raw-json">{pretty}</pre>
+    </div>
+  )
+}
+
 function AnswerBody({ text }: { text: string }) {
+  const trimmed = text.trim()
+  if (trimmed.startsWith('{') || trimmed.startsWith('[')) return <RawJson text={trimmed} />
+
   const lines = stripMarkdown(text)
     .split(/\n+/)
     .map(line => line.trim())
@@ -296,6 +315,16 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
                       <span className="named-basis">
                         {entry.basis === 'ranked' ? `#${entry.position}` : 'named in passing'}
                       </span>
+                      {entry.reason && <span className="named-reason">{entry.reason}</span>}
+                      {entry.sources && entry.sources.length > 0 && (
+                        <span className="named-sources">
+                          {entry.sources.map(source => (
+                            <a key={source} href={source} target="_blank" rel="noreferrer noopener">
+                              {source.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]}
+                            </a>
+                          ))}
+                        </span>
+                      )}
                     </li>
                   ))}
                 </ol>

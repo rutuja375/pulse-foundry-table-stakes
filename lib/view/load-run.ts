@@ -1,33 +1,80 @@
-import { readdirSync, readFileSync } from 'node:fs'
+import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { ingestRun, type IngestedReport } from './ingest'
+import { adaptBackendRun, isBackendRun } from './backend-run'
 
 /**
  * Server-side payload loading, in one place.
  *
- * Today the payload is the newest file in data/runs. When the backend ships an
- * endpoint this function changes and nothing else does — the panes never touch
- * the filesystem and never touch raw JSON.
+ * Two producers now write into data/runs: this repo's display fixtures, and the
+ * Python backend on main (`services/storage.py`). They use different shapes, so
+ * the sniff lives here and nowhere else: backend runs are adapted onto the
+ * contract, then the same ingest reads both.
+ *
+ * Newest wins by modification time, not filename — the two producers name their
+ * files differently and a slug sorts before a timestamp.
  */
 
 export interface LoadedRun {
   report: IngestedReport
   source: string
+  /** 'backend' when the payload came from the Python pipeline. */
+  producer: 'backend' | 'fixture'
 }
 
-export function loadLatestRun(): LoadedRun | null {
-  const dir = join(process.cwd(), 'data', 'runs')
+function newestPayload(dir: string): { file: string; payload: unknown } | null {
   try {
-    const files = readdirSync(dir)
-      .filter(name => name.endsWith('.json'))
-      .sort()
+    const files = readdirSync(dir).filter(name => name.endsWith('.json'))
     if (!files.length) return null
-    const file = files[files.length - 1]
-    const payload = JSON.parse(readFileSync(join(dir, file), 'utf8'))
-    return { report: ingestRun(payload), source: `data/runs/${file}` }
+
+    const newest = files
+      .map(name => ({ name, mtime: statSync(join(dir, name)).mtimeMs }))
+      .sort((a, b) => b.mtime - a.mtime)[0]
+
+    return { file: newest.name, payload: JSON.parse(readFileSync(join(dir, newest.name), 'utf8')) }
   } catch {
     return null
   }
+}
+
+export function loadLatestRun(): LoadedRun | null {
+  const found = newestPayload(join(process.cwd(), 'data', 'runs'))
+  if (!found) return null
+
+  if (isBackendRun(found.payload)) {
+    const adapted = adaptBackendRun(found.payload)
+    const report = ingestRun(adapted.payload)
+    report.issues.unshift(
+      'Produced by the audit backend (services/storage.py), adapted to this display. Answers are the models\' JSON replies, and the reasons and sources are the ones the pipeline captured.'
+    )
+
+    // Their scorecard is a second opinion on the same answers. Disagreement is
+    // surfaced rather than averaged: whoever reads this needs to know which one
+    // to trust.
+    const reported = adapted.reported
+    if (reported) {
+      const ours = report.assistants.reduce(
+        (acc, assistant) => {
+          acc.answered += assistant.answered
+          acc.named += assistant.mentioned
+          return acc
+        },
+        { answered: 0, named: 0 }
+      )
+      const theirMentions = typeof reported.mentions === 'number' ? reported.mentions : null
+      const theirAnswered = typeof reported.answered === 'number' ? reported.answered : null
+
+      if (theirMentions !== null && theirAnswered !== null && (theirMentions !== ours.named || theirAnswered !== ours.answered)) {
+        report.issues.push(
+          `The backend's scorecard reports ${theirMentions} mentions across ${theirAnswered} answers; counting the answers in this payload gives ${ours.named} of ${ours.answered}. The answers win — the scorecard may have been computed on a different model selection.`
+        )
+      }
+    }
+
+    return { report, source: `data/runs/${found.file}`, producer: 'backend' }
+  }
+
+  return { report: ingestRun(found.payload), source: `data/runs/${found.file}`, producer: 'fixture' }
 }
 
 /** Rivals worth offering in the rail: anyone named at least once. */

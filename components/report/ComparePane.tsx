@@ -13,6 +13,10 @@ import type { IngestedReport } from '@/lib/view/ingest'
 import { headToHead, type QuestionComparison } from '@/lib/view/compare'
 import { formatRate } from '@/lib/view/derive'
 
+function plural(count: number, noun: string): string {
+  return `${count} ${noun}${count === 1 ? '' : 's'}`
+}
+
 function position(value: number | null): string {
   return value === null ? 'absent' : `#${value}`
 }
@@ -49,7 +53,9 @@ export function ComparePane({ report, rival, slug }: { report: IngestedReport; r
     h2h.posture === 'parallel'
       ? `You both appear ${theirs} times, which reads like a dead heat. Only ${bothCount} of ${questionCount} questions ${bothCount === 1 ? 'names' : 'name'} you both, so you are being recommended for different reasons rather than competing for the same customers.`
       : h2h.posture === 'you-lead'
-        ? `You come out ahead on ${h2h.wins.length} of ${questionCount} questions and behind on ${h2h.losses.length}. They are named in places you are not, but the exchange favours you.`
+        ? h2h.losses.length === 0
+          ? `You are named on ${h2h.wins.length} of ${questionCount} questions and they win none of the ones you lose.`
+          : `You come out ahead on ${h2h.wins.length} of ${questionCount} questions and behind on ${h2h.losses.length}. The exchange favours you.`
         : h2h.posture === 'they-lead'
           ? `They come out ahead on ${h2h.losses.length} of ${questionCount} questions and behind on ${h2h.wins.length}. This is the comparison worth acting on.`
           : `You are named on the same questions often enough that this is a straight contest: ${h2h.wins.length} to you, ${h2h.losses.length} to them.`
@@ -161,9 +167,9 @@ export function ComparePane({ report, rival, slug }: { report: IngestedReport; r
             <b>unknown</b> flag — without it, the display would be guessing which difference matters.
           </p>
           <p className="notes-foot">
-            What is already certain from the answers: {h2h.totals.onlyYou} questions name you without them,{' '}
-            {h2h.totals.onlyThem} name them without you, and {bothCount} name you both. Nothing on this page is
-            inferred beyond those counts.
+            What is already certain from the answers: {plural(h2h.totals.onlyYou, 'question')} name you without them,{' '}
+            {plural(h2h.totals.onlyThem, 'question')} name them without you, and {bothCount} name you both. Nothing on
+            this page is inferred beyond those counts.
           </p>
         </div>
       </section>

@@ -1,0 +1,776 @@
+{
+  "run_id": "20261023T190146Z",
+  "created_at": "2026-10-23T19:01:46.225879+00:00",
+  "restaurant": {
+    "name": "Cafe Athena",
+    "website": "https://cafeathena.com",
+    "address": "1846 Garnet Ave, San Diego, CA 92109",
+    "cuisine": [
+      "Greek",
+      "Mediterranean"
+    ]
+  },
+  "models": {
+    "OpenAI": "openai/gpt-5.2",
+    "Gemini": "google/gemini-3.8-flash"
+  },
+  "results": [
+    {
+      "model_label": "OpenAI",
+      "model_id": "openai/gpt-5.2",
+      "query_id": "q01",
+      "category": "greek_food",
+      "secondary_categories": [],
+      "query": "best Greek food in Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "best Greek food in Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Cafe Athena",
+            "position": 1,
+            "reason": "Pacific Beach Greek/Mediterranean spot on Garnet Ave; a long-running local staple (opened in 1990) with multiple local “Best Greek”/“Best Greek & Mediterranean” award mentions in local coverage, plus an official site positioning it as Greek food in Pacific Beach.",
+            "source_urls": [
+              "https://cafeathena.com/",
+              "https://www.diningandcooking.com/1965945/cafe-athena-serves-up-greek-east-mediterranean-food-for-34-years-in-pacific-beach/"
+            ]
+          },
+          {
+            "restaurant": "Kojack's Restaurant",
+            "position": 2,
+            "reason": "Greek/Mediterranean restaurant near the beach (92109) described as family-owned; local directory coverage reports a strong Google rating (4.6 stars across 465+ reviews) and review aggregators show substantial review volume.",
+            "source_urls": [
+              "https://sandiegolineup.com/pacific-beach/mediterranean/kojacks-restaurant",
+              "https://www.restaurantji.com/ca/san-diego/kojacks-restaurant-/"
+            ]
+          },
+          {
+            "restaurant": "Zgara Greek Grill",
+            "position": 3,
+            "reason": "Nearby to Pacific Beach (Morena Blvd) and frequently cited for gyros; San Diego Reader coverage mentions the shop’s “Best gyro in San Diego” chalkboard tagline, and review aggregators describe it as authentic Greek with a high review count.",
+            "source_urls": [
+              "https://www.sandiegoreader.com/places/zgara-greek-grill/",
+              "https://www.restaurantji.com/ca/san-diego/zgara-greek-grill-/",
+              "https://www.sandiegoreader.com/news/2025/oct/03/meaty-feast-meet-up/"
+            ]
+          },
+          {
+            "restaurant": "Arslan’s Gyros",
+            "position": 4,
+            "reason": "Mission Beach (92109) gyro-focused spot with published hours, pricing, and menu details in San Diego Reader listings; delivery listings categorize it as a Greek restaurant.",
+            "source_urls": [
+              "https://www.sandiegoreader.com/places/arslans-gyros/",
+              "https://www.grubhub.com/restaurant/arslans-gyros-eatery-3861-mission-blvd-san-diego/337016"
+            ]
+          },
+          {
+            "restaurant": "Spiro's Mediterranean Cuisine (La Jolla)",
+            "position": 5,
+            "reason": "A close-by option in La Jolla with a sizable review footprint; reviewers on major travel/review sites explicitly note it leans more Greek than general Mediterranean.",
+            "source_urls": [
+              "https://www.restaurantji.com/ca/la-jolla/spiros-/",
+              "https://www.tripadvisor.com/Restaurant_Review-g32578-d21366924-Reviews-Spiro_s_Mediterranean_Cuisine-La_Jolla_San_Diego_California.html"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"best Greek food in Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Cafe Athena\",\n      \"position\": 1,\n      \"reason\": \"Pacific Beach Greek/Mediterranean spot on Garnet Ave; a long-running local staple (opened in 1990) with multiple local “Best Greek”/“Best Greek & Mediterranean” award mentions in local coverage, plus an official site positioning it as Greek food in Pacific Beach.\",\n      \"source_urls\": [\n        \"https://cafeathena.com/\",\n        \"https://www.diningandcooking.com/1965945/cafe-athena-serves-up-greek-east-mediterranean-food-for-34-years-in-pacific-beach/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Kojack's Restaurant\",\n      \"position\": 2,\n      \"reason\": \"Greek/Mediterranean restaurant near the beach (92109) described as family-owned; local directory coverage reports a strong Google rating (4.6 stars across 465+ reviews) and review aggregators show substantial review volume.\",\n      \"source_urls\": [\n        \"https://sandiegolineup.com/pacific-beach/mediterranean/kojacks-restaurant\",\n        \"https://www.restaurantji.com/ca/san-diego/kojacks-restaurant-/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Zgara Greek Grill\",\n      \"position\": 3,\n      \"reason\": \"Nearby to Pacific Beach (Morena Blvd) and frequently cited for gyros; San Diego Reader coverage mentions the shop’s “Best gyro in San Diego” chalkboard tagline, and review aggregators describe it as authentic Greek with a high review count.\",\n      \"source_urls\": [\n        \"https://www.sandiegoreader.com/places/zgara-greek-grill/\",\n        \"https://www.restaurantji.com/ca/san-diego/zgara-greek-grill-/\",\n        \"https://www.sandiegoreader.com/news/2025/oct/03/meaty-feast-meet-up/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Arslan’s Gyros\",\n      \"position\": 4,\n      \"reason\": \"Mission Beach (92109) gyro-focused spot with published hours, pricing, and menu details in San Diego Reader listings; delivery listings categorize it as a Greek restaurant.\",\n      \"source_urls\": [\n        \"https://www.sandiegoreader.com/places/arslans-gyros/\",\n        \"https://www.grubhub.com/restaurant/arslans-gyros-eatery-3861-mission-blvd-san-diego/337016\"\n      ]\n    },\n    {\n      \"restaurant\": \"Spiro's Mediterranean Cuisine (La Jolla)\",\n      \"position\": 5,\n      \"reason\": \"A close-by option in La Jolla with a sizable review footprint; reviewers on major travel/review sites explicitly note it leans more Greek than general Mediterranean.\",\n      \"source_urls\": [\n        \"https://www.restaurantji.com/ca/la-jolla/spiros-/\",\n        \"https://www.tripadvisor.com/Restaurant_Review-g32578-d21366924-Reviews-Spiro_s_Mediterranean_Cuisine-La_Jolla_San_Diego_California.html\"\n      ]\n    }\n  ]\n}",
+        "model": "openai/gpt-5.2"
+      }
+    },
+    {
+      "model_label": "OpenAI",
+      "model_id": "openai/gpt-5.2",
+      "query_id": "q03",
+      "category": "mediterranean_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "Mediterranean restaurant with gluten-free options in San Diego",
+      "status": "success",
+      "result": {
+        "query": "Mediterranean restaurant with gluten-free options in San Diego",
+        "recommendations": [
+          {
+            "restaurant": "Café Athena",
+            "position": 1,
+            "reason": "Greek/Mediterranean spot in Pacific Beach that states it offers gluten-free options; its current menu PDF includes a legend marking items as “gf” (gluten free).",
+            "source_urls": [
+              "https://cafeathena.com/",
+              "https://cafeathena.com/wp-content/uploads/CafeAthena-Food-Menu-Summer2025.pdf"
+            ]
+          },
+          {
+            "restaurant": "Spitz – Pacific Beach",
+            "position": 2,
+            "reason": "Pacific Beach Mediterranean spot with a dedicated “Gluten Friendly” menu; Spitz notes it is not a gluten-free facility and gluten-friendly items are prepared in a shared kitchen (cross-contact possible).",
+            "source_urls": [
+              "https://spitz-restaurant.com/menu",
+              "https://order.spitzrestaurant.com/order?branchId=68c09fb0c627050433d97bad&branchName=Pacific+Beach&servingOptionType=pickup"
+            ]
+          },
+          {
+            "restaurant": "The Great Greek Mediterranean Grill (San Diego, CA)",
+            "position": 3,
+            "reason": "Menu uses dietary tags including “GF Gluten-Free,” and the San Diego location page lists its address at 7951 Othello Avenue, Suite 104 (San Diego).",
+            "source_urls": [
+              "https://www.thegreatgreekgrill.com/san-diego-ca"
+            ]
+          },
+          {
+            "restaurant": "Shawarma House SD",
+            "position": 4,
+            "reason": "Ocean Beach Iraqi-Mediterranean restaurant whose menu explicitly describes items as “gluten-free-friendly” (e.g., built without pita), while noting it’s a shared kitchen so cross-contact is possible.",
+            "source_urls": [
+              "https://shawarmahousesd.com/menu/",
+              "https://shawarmahousesd.com/ocean-beach-mediterranean-restaurant/"
+            ]
+          },
+          {
+            "restaurant": "Alforon",
+            "position": 5,
+            "reason": "Lebanese/Mediterranean restaurant whose menu page states “Vegan, Vegetarian & Gluten Free options in abundance,” and lists the restaurant at 5965 El Cajon Blvd, San Diego, CA 92115.",
+            "source_urls": [
+              "https://www.alforon.com/web/alforon-menu/"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"Mediterranean restaurant with gluten-free options in San Diego\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Café Athena\",\n      \"position\": 1,\n      \"reason\": \"Greek/Mediterranean spot in Pacific Beach that states it offers gluten-free options; its current menu PDF includes a legend marking items as “gf” (gluten free).\",\n      \"source_urls\": [\n        \"https://cafeathena.com/\",\n        \"https://cafeathena.com/wp-content/uploads/CafeAthena-Food-Menu-Summer2025.pdf\"\n      ]\n    },\n    {\n      \"restaurant\": \"Spitz – Pacific Beach\",\n      \"position\": 2,\n      \"reason\": \"Pacific Beach Mediterranean spot with a dedicated “Gluten Friendly” menu; Spitz notes it is not a gluten-free facility and gluten-friendly items are prepared in a shared kitchen (cross-contact possible).\",\n      \"source_urls\": [\n        \"https://spitz-restaurant.com/menu\",\n        \"https://order.spitzrestaurant.com/order?branchId=68c09fb0c627050433d97bad&branchName=Pacific+Beach&servingOptionType=pickup\"\n      ]\n    },\n    {\n      \"restaurant\": \"The Great Greek Mediterranean Grill (San Diego, CA)\",\n      \"position\": 3,\n      \"reason\": \"Menu uses dietary tags including “GF Gluten-Free,” and the San Diego location page lists its address at 7951 Othello Avenue, Suite 104 (San Diego).\",\n      \"source_urls\": [\n        \"https://www.thegreatgreekgrill.com/san-diego-ca\"\n      ]\n    },\n    {\n      \"restaurant\": \"Shawarma House SD\",\n      \"position\": 4,\n      \"reason\": \"Ocean Beach Iraqi-Mediterranean restaurant whose menu explicitly describes items as “gluten-free-friendly” (e.g., built without pita), while noting it’s a shared kitchen so cross-contact is possible.\",\n      \"source_urls\": [\n        \"https://shawarmahousesd.com/menu/\",\n        \"https://shawarmahousesd.com/ocean-beach-mediterranean-restaurant/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Alforon\",\n      \"position\": 5,\n      \"reason\": \"Lebanese/Mediterranean restaurant whose menu page states “Vegan, Vegetarian & Gluten Free options in abundance,” and lists the restaurant at 5965 El Cajon Blvd, San Diego, CA 92115.\",\n      \"source_urls\": [\n        \"https://www.alforon.com/web/alforon-menu/\"\n      ]\n    }\n  ]\n}",
+        "model": "openai/gpt-5.2"
+      }
+    },
+    {
+      "model_label": "OpenAI",
+      "model_id": "openai/gpt-5.2",
+      "query_id": "q06",
+      "category": "happy_hour",
+      "secondary_categories": [],
+      "query": "Happy hour Garnet Ave PB?",
+      "status": "success",
+      "result": {
+        "query": "Happy hour Garnet Ave PB?",
+        "recommendations": [
+          {
+            "restaurant": "SD TapRoom",
+            "position": 1,
+            "reason": "Their site lists Happy Hour Mon–Fri 3pm–6pm with “$2 off ALL Taps, Apps, Cocktails, Wines,” and they list a Pacific Beach location on Garnet Ave (1269 Garnet Ave).",
+            "source_urls": [
+              "https://www.sdtaproom.com/"
+            ]
+          },
+          {
+            "restaurant": "bar Ella",
+            "position": 2,
+            "reason": "Their menu page shows Happy Hour times (4–6 Mon–Thurs, 4–7pm Friday) and lists their address on Garnet Ave (1030 Garnet Avenue).",
+            "source_urls": [
+              "https://barellapb.com/our-menu/"
+            ]
+          },
+          {
+            "restaurant": "Sandbox Pizza",
+            "position": 3,
+            "reason": "Their website promotes Happy Hour Monday–Friday from 12:00 PM–5:00 PM and shows they’re located on Garnet Ave (1466 Garnet Ave).",
+            "source_urls": [
+              "https://thesandboxpizza.com/"
+            ]
+          },
+          {
+            "restaurant": "Costa Brava",
+            "position": 4,
+            "reason": "Their website lists Happy Hour Wednesdays & Thursdays 5PM–6PM with 1/2 price sangria and a selected menu of tapas at 1/2 price; public listings place them on Garnet Ave (1653 Garnet Ave).",
+            "source_urls": [
+              "https://costabravasd.com/",
+              "https://sandiego.eater.com/venue/74251/costa-brava"
+            ]
+          },
+          {
+            "restaurant": "Pacific Beach Fish Shop",
+            "position": 5,
+            "reason": "A current happy-hour listing (updated Sep 6, 2026) shows a $15 Mimosa Special from 11am–3pm and places the venue on Garnet Ave; the restaurant’s site also lists its Pacific Beach location on Garnet Ave.",
+            "source_urls": [
+              "https://www.3to6.io/restaurant/pacific-beach-fish-shop-cmq7vcojs0017l1047y48a0ci",
+              "https://thefishshops.com/about/"
+            ]
+          }
+        ],
+        "raw_response": "{\n  \"query\": \"Happy hour Garnet Ave PB?\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"SD TapRoom\",\n      \"position\": 1,\n      \"reason\": \"Their site lists Happy Hour Mon–Fri 3pm–6pm with “$2 off ALL Taps, Apps, Cocktails, Wines,” and they list a Pacific Beach location on Garnet Ave (1269 Garnet Ave).\",\n      \"source_urls\": [\n        \"https://www.sdtaproom.com/\"\n      ]\n    },\n    {\n      \"restaurant\": \"bar Ella\",\n      \"position\": 2,\n      \"reason\": \"Their menu page shows Happy Hour times (4–6 Mon–Thurs, 4–7pm Friday) and lists their address on Garnet Ave (1030 Garnet Avenue).\",\n      \"source_urls\": [\n        \"https://barellapb.com/our-menu/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Sandbox Pizza\",\n      \"position\": 3,\n      \"reason\": \"Their website promotes Happy Hour Monday–Friday from 12:00 PM–5:00 PM and shows they’re located on Garnet Ave (1466 Garnet Ave).\",\n      \"source_urls\": [\n        \"https://thesandboxpizza.com/\"\n      ]\n    },\n    {\n      \"restaurant\": \"Costa Brava\",\n      \"position\": 4,\n      \"reason\": \"Their website lists Happy Hour Wednesdays & Thursdays 5PM–6PM with 1/2 price sangria and a selected menu of tapas at 1/2 price; public listings place them on Garnet Ave (1653 Garnet Ave).\",\n      \"source_urls\": [\n        \"https://costabravasd.com/\",\n        \"https://sandiego.eater.com/venue/74251/costa-brava\"\n      ]\n    },\n    {\n      \"restaurant\": \"Pacific Beach Fish Shop\",\n      \"position\": 5,\n      \"reason\": \"A current happy-hour listing (updated Sep 6, 2026) shows a $15 Mimosa Special from 11am–3pm and places the venue on Garnet Ave; the restaurant’s site also lists its Pacific Beach location on Garnet Ave.\",\n      \"source_urls\": [\n        \"https://www.3to6.io/restaurant/pacific-beach-fish-shop-cmq7vcojs0017l1047y48a0ci\",\n        \"https://thefishshops.com/about/\"\n      ]\n    }\n  ]\n}",
+        "model": "openai/gpt-5.2"
+      }
+    },
+    {
+      "model_label": "Gemini",
+      "model_id": "google/gemini-3.8-flash",
+      "query_id": "q01",
+      "category": "greek_food",
+      "secondary_categories": [],
+      "query": "best Greek food in Pacific Beach",
+      "status": "success",
+      "result": {
+        "query": "best Greek food in Pacific Beach",
+        "recommendations": [
+          {
+            "restaurant": "Café Athena",
+            "position": 1,
+            "reason": "Established in Pacific Beach in 1990, this full-service taverna offers an authentic, traditional Greek menu featuring moussaka, souvlaki, gyros, saganaki, and spanakopita with widespread positive local ratings.",
+            "source_urls": [
+              "https://cafeathena.com"
+            ]
+          },
+          {
+            "restaurant": "Shawarma Shack",
+            "position": 2,
+            "reason": "A casual Mediterranean eatery located on Garnet Avenue in Pacific Beach offering Greek favorites such as traditional gyro wraps, gyro plates, and fresh Greek salads.",
+            "source_urls": [
+              "https://shawarmashacksd.com"
+            ]
+          },
+          {
+            "restaurant": "Arslan's Gyros",
+            "position": 3,
+            "reason": "A family-run spot located on Mission Boulevard in Pacific Beach specializing in classic spit-roasted lamb and beef gyros, Greek salads, and Mediterranean combos.",
+            "source_urls": [
+              "https://arslansgyrossandiego.com"
+            ]
+          },
+          {
+            "restaurant": "Akhis Authentic Shawarma & Kebab",
+            "position": 4,
+            "reason": "Situated on Turquoise Street in North Pacific Beach, this casual Mediterranean spot is popular for gyro bowls, wraps, and house-made tzatziki.",
+            "source_urls": [
+              "https://akhisshawarma.com"
+            ]
+          },
+          {
+            "restaurant": "Kojack's Restaurant",
+            "position": 5,
+            "reason": "Located just off the boardwalk in the adjacent 92109 beach area, Kojack's is a longtime, laid-back Greek staple known for generous gyro combo plates, dolmathes, and Greek salads.",
+            "source_urls": [
+              "https://gotoeat.net"
+            ]
+          }
+        ],
+        "raw_response": "```json\n{\n  \"query\": \"best Greek food in Pacific Beach\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Café Athena\",\n      \"position\": 1,\n      \"reason\": \"Established in Pacific Beach in 1990, this full-service taverna offers an authentic, traditional Greek menu featuring moussaka, souvlaki, gyros, saganaki, and spanakopita with widespread positive local ratings.\",\n      \"source_urls\": [\n        \"https://cafeathena.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Shawarma Shack\",\n      \"position\": 2,\n      \"reason\": \"A casual Mediterranean eatery located on Garnet Avenue in Pacific Beach offering Greek favorites such as traditional gyro wraps, gyro plates, and fresh Greek salads.\",\n      \"source_urls\": [\n        \"https://shawarmashacksd.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Arslan's Gyros\",\n      \"position\": 3,\n      \"reason\": \"A family-run spot located on Mission Boulevard in Pacific Beach specializing in classic spit-roasted lamb and beef gyros, Greek salads, and Mediterranean combos.\",\n      \"source_urls\": [\n        \"https://arslansgyrossandiego.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Akhis Authentic Shawarma & Kebab\",\n      \"position\": 4,\n      \"reason\": \"Situated on Turquoise Street in North Pacific Beach, this casual Mediterranean spot is popular for gyro bowls, wraps, and house-made tzatziki.\",\n      \"source_urls\": [\n        \"https://akhisshawarma.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Kojack's Restaurant\",\n      \"position\": 5,\n      \"reason\": \"Located just off the boardwalk in the adjacent 92109 beach area, Kojack's is a longtime, laid-back Greek staple known for generous gyro combo plates, dolmathes, and Greek salads.\",\n      \"source_urls\": [\n        \"https://gotoeat.net\"\n      ]\n    }\n  ]\n}\n```",
+        "model": "google/gemini-3.8-flash"
+      }
+    },
+    {
+      "model_label": "Gemini",
+      "model_id": "google/gemini-3.8-flash",
+      "query_id": "q03",
+      "category": "mediterranean_food",
+      "secondary_categories": [
+        "dietary_options"
+      ],
+      "query": "Mediterranean restaurant with gluten-free options in San Diego",
+      "status": "success",
+      "result": {
+        "query": "Mediterranean restaurant with gluten-free options in San Diego",
+        "recommendations": [
+          {
+            "restaurant": "Shawarma Shack",
+            "position": 1,
+            "reason": "Located directly in Pacific Beach on Garnet Avenue, Shawarma Shack offers Mediterranean plates, salads, and rice bowls with accommodating gluten-free preparation.",
+            "source_urls": [
+              "https://shawarmashacksd.com"
+            ]
+          },
+          {
+            "restaurant": "Slowly Restaurant and Lounge",
+            "position": 2,
+            "reason": "Situated on Garnet Avenue in Pacific Beach, Slowly serves Mediterranean-coastal cuisine with numerous gluten-free dishes across its dinner and shared-plates menu.",
+            "source_urls": [
+              "https://slowlysd.com"
+            ]
+          },
+          {
+            "restaurant": "Luna Grill",
+            "position": 3,
+            "reason": "With a nearby location in Clairemont serving the Pacific Beach area, Luna Grill provides an interactive lifestyle menu filter highlighting gluten-free kabob plates, lifestyle bowls, and salads.",
+            "source_urls": [
+              "https://lunagrill.com"
+            ]
+          },
+          {
+            "restaurant": "Mezé Greek Fusion",
+            "position": 4,
+            "reason": "Located in Downtown San Diego, this spot features extensive Greek and Mediterranean dining with clearly labeled gluten-free options including cold mezze, salads, and grilled meats.",
+            "source_urls": [
+              "https://gaslampmeze.com"
+            ]
+          },
+          {
+            "restaurant": "PITA 22",
+            "position": 5,
+            "reason": "San Diego Mediterranean eatery offering scratch-made dishes with dedicated gluten-free items, including gluten-free falafel, hummus bowls, salads, and grilled meats.",
+            "source_urls": [
+              "https://pita22.com"
+            ]
+          }
+        ],
+        "raw_response": "```json\n{\n  \"query\": \"Mediterranean restaurant with gluten-free options in San Diego\",\n  \"recommendations\": [\n    {\n      \"restaurant\": \"Shawarma Shack\",\n      \"position\": 1,\n      \"reason\": \"Located directly in Pacific Beach on Garnet Avenue, Shawarma Shack offers Mediterranean plates, salads, and rice bowls with accommodating gluten-free preparation.\",\n      \"source_urls\": [\n        \"https://shawarmashacksd.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Slowly Restaurant and Lounge\",\n      \"position\": 2,\n      \"reason\": \"Situated on Garnet Avenue in Pacific Beach, Slowly serves Mediterranean-coastal cuisine with numerous gluten-free dishes across its dinner and shared-plates menu.\",\n      \"source_urls\": [\n        \"https://slowlysd.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Luna Grill\",\n      \"position\": 3,\n      \"reason\": \"With a nearby location in Clairemont serving the Pacific Beach area, Luna Grill provides an interactive lifestyle menu filter highlighting gluten-free kabob plates, lifestyle bowls, and salads.\",\n      \"source_urls\": [\n        \"https://lunagrill.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"Mezé Greek Fusion\",\n      \"position\": 4,\n      \"reason\": \"Located in Downtown San Diego, this spot features extensive Greek and Mediterranean dining with clearly labeled gluten-free options including cold mezze, salads, and grilled meats.\",\n      \"source_urls\": [\n        \"https://gaslampmeze.com\"\n      ]\n    },\n    {\n      \"restaurant\": \"PITA 22\",\n      \"position\": 5,\n      \"reason\": \"San Diego Mediterranean eatery offering scratch-made dishes with dedicated gluten-free items, including gluten-free falafel, hummus bowls, salads, and grilled meats.\",\n      \"source_urls\": [\n        \"https://pita22.com\"\n      ]\n    }\n  ]\n}\n```",
+        "model": "google/gemini-3.8-flash"
+      }
+    },
+    {
+      "model_label": "Gemini",
+      "model_id": "google/gemini-3.8-flash",
+      "query_id": "q06",
+      "category": "happy_hour",
+      "secondary_categories": [],
+      "query": "Happy hour Garnet Ave PB?",
+      "status": "failed",
+      "error": "OpenRouter returned 504: {'error': {'message': 'The operation was aborted', 'code': 504, 'metadata': {'provider_name': 'Google', 'previous_errors': [{'code': 400, 'message': 'Provider returned error', 'provider_name': 'Google AI Studio', 'raw': '{\\n  \"error\": {\\n    \"code\": 400,\\n    \"message\": \"API key not valid. Please pass a valid API key.\",\\n    \"status\": \"INVALID_ARGUMENT\",\\n    \"details\": [\\n      {\\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\\n        \"reason\": \"API_KEY_INVALID\",\\n        \"domain\": \"googleapis.com\",\\n        \"metadata\": {\\n          \"service\": \"generativelanguage.googleapis.com\"\\n        }\\n      },\\n      {\\n        \"@type\": \"type.googleapis.com/google.rpc.LocalizedMessage\",\\n        \"locale\": \"en-US\",\\n        \"message\": \"API key not valid. Please pass a valid API key.\"\\n      }\\n    ]\\n  }\\n}\\n'}, {'code': 429, 'message': 'Provider returned error', 'provider_name': 'Google AI Studio', 'raw': 'google/gemini-3.8-flash is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}]}}, 'user_id': 'user_3E3WrnMLlTJ0cIav6vopB8SsEFZ'}"
+    }
+  ],
+  "scorecard": {
+    "combined": {
+      "successful_queries": 5,
+      "target_mentions": 3,
+      "mention_rate": 60.0,
+      "average_position": 1.0,
+      "competitors": [
+        {
+          "name": "Kojack's Restaurant",
+          "mentions": 2,
+          "mention_rate": 40.0
+        },
+        {
+          "name": "Arslan’s Gyros",
+          "mentions": 2,
+          "mention_rate": 40.0
+        },
+        {
+          "name": "Shawarma Shack",
+          "mentions": 2,
+          "mention_rate": 40.0
+        },
+        {
+          "name": "Zgara Greek Grill",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Spiro's Mediterranean Cuisine (La Jolla)",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Spitz – Pacific Beach",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "The Great Greek Mediterranean Grill (San Diego, CA)",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Shawarma House SD",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Alforon",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "SD TapRoom",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "bar Ella",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Sandbox Pizza",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Costa Brava",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Pacific Beach Fish Shop",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Akhis Authentic Shawarma & Kebab",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Slowly Restaurant and Lounge",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Luna Grill",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "Mezé Greek Fusion",
+          "mentions": 1,
+          "mention_rate": 20.0
+        },
+        {
+          "name": "PITA 22",
+          "mentions": 1,
+          "mention_rate": 20.0
+        }
+      ]
+    },
+    "by_model": {
+      "OpenAI": {
+        "successful_queries": 3,
+        "target_mentions": 2,
+        "mention_rate": 66.7,
+        "average_position": 1.0,
+        "competitors": [
+          {
+            "name": "Kojack's Restaurant",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Zgara Greek Grill",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Arslan’s Gyros",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Spiro's Mediterranean Cuisine (La Jolla)",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Spitz – Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "The Great Greek Mediterranean Grill (San Diego, CA)",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Shawarma House SD",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Alforon",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "SD TapRoom",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "bar Ella",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Sandbox Pizza",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Costa Brava",
+            "mentions": 1,
+            "mention_rate": 33.3
+          },
+          {
+            "name": "Pacific Beach Fish Shop",
+            "mentions": 1,
+            "mention_rate": 33.3
+          }
+        ]
+      },
+      "Gemini": {
+        "successful_queries": 2,
+        "target_mentions": 1,
+        "mention_rate": 50.0,
+        "average_position": 1.0,
+        "competitors": [
+          {
+            "name": "Shawarma Shack",
+            "mentions": 2,
+            "mention_rate": 100.0
+          },
+          {
+            "name": "Arslan's Gyros",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Akhis Authentic Shawarma & Kebab",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Kojack's Restaurant",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Slowly Restaurant and Lounge",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Luna Grill",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Mezé Greek Fusion",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "PITA 22",
+            "mentions": 1,
+            "mention_rate": 50.0
+          }
+        ]
+      }
+    },
+    "by_category": {
+      "dietary_options": {
+        "successful_queries": 2,
+        "target_mentions": 1,
+        "mention_rate": 50.0,
+        "average_position": 1.0,
+        "competitors": [
+          {
+            "name": "Spitz – Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "The Great Greek Mediterranean Grill (San Diego, CA)",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Shawarma House SD",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Alforon",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Shawarma Shack",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Slowly Restaurant and Lounge",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Luna Grill",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Mezé Greek Fusion",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "PITA 22",
+            "mentions": 1,
+            "mention_rate": 50.0
+          }
+        ]
+      },
+      "greek_food": {
+        "successful_queries": 2,
+        "target_mentions": 2,
+        "mention_rate": 100.0,
+        "average_position": 1.0,
+        "competitors": [
+          {
+            "name": "Kojack's Restaurant",
+            "mentions": 2,
+            "mention_rate": 100.0
+          },
+          {
+            "name": "Arslan’s Gyros",
+            "mentions": 2,
+            "mention_rate": 100.0
+          },
+          {
+            "name": "Zgara Greek Grill",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Spiro's Mediterranean Cuisine (La Jolla)",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Shawarma Shack",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Akhis Authentic Shawarma & Kebab",
+            "mentions": 1,
+            "mention_rate": 50.0
+          }
+        ]
+      },
+      "happy_hour": {
+        "successful_queries": 1,
+        "target_mentions": 0,
+        "mention_rate": 0.0,
+        "average_position": null,
+        "competitors": [
+          {
+            "name": "SD TapRoom",
+            "mentions": 1,
+            "mention_rate": 100.0
+          },
+          {
+            "name": "bar Ella",
+            "mentions": 1,
+            "mention_rate": 100.0
+          },
+          {
+            "name": "Sandbox Pizza",
+            "mentions": 1,
+            "mention_rate": 100.0
+          },
+          {
+            "name": "Costa Brava",
+            "mentions": 1,
+            "mention_rate": 100.0
+          },
+          {
+            "name": "Pacific Beach Fish Shop",
+            "mentions": 1,
+            "mention_rate": 100.0
+          }
+        ]
+      },
+      "mediterranean_food": {
+        "successful_queries": 2,
+        "target_mentions": 1,
+        "mention_rate": 50.0,
+        "average_position": 1.0,
+        "competitors": [
+          {
+            "name": "Spitz – Pacific Beach",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "The Great Greek Mediterranean Grill (San Diego, CA)",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Shawarma House SD",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Alforon",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Shawarma Shack",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Slowly Restaurant and Lounge",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Luna Grill",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "Mezé Greek Fusion",
+            "mentions": 1,
+            "mention_rate": 50.0
+          },
+          {
+            "name": "PITA 22",
+            "mentions": 1,
+            "mention_rate": 50.0
+          }
+        ]
+      }
+    },
+    "consensus": [
+      {
+        "query_id": "q01",
+        "category": "greek_food",
+        "query": "best Greek food in Pacific Beach",
+        "successful_models": 2,
+        "target_mentions": 2,
+        "mention_rate": 100.0,
+        "models_mentioning_target": [
+          "OpenAI",
+          "Gemini"
+        ],
+        "positions": {
+          "OpenAI": 1,
+          "Gemini": 1
+        },
+        "agreement": "all_models_mention"
+      },
+      {
+        "query_id": "q03",
+        "category": "mediterranean_food",
+        "query": "Mediterranean restaurant with gluten-free options in San Diego",
+        "successful_models": 2,
+        "target_mentions": 1,
+        "mention_rate": 50.0,
+        "models_mentioning_target": [
+          "OpenAI"
+        ],
+        "positions": {
+          "OpenAI": 1
+        },
+        "agreement": "models_disagree"
+      },
+      {
+        "query_id": "q06",
+        "category": "happy_hour",
+        "query": "Happy hour Garnet Ave PB?",
+        "successful_models": 1,
+        "target_mentions": 0,
+        "mention_rate": 0.0,
+        "models_mentioning_target": [],
+        "positions": {},
+        "agreement": "no_models_mention"
+      }
+    ]
+  }
+}
