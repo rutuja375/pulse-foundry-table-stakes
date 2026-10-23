@@ -9,7 +9,7 @@ def test_parallel_benchmark_preserves_model_and_query_identity():
     maximum_active_calls = 0
     lock = threading.Lock()
 
-    def fake_runner(*, query, api_key, model):
+    def fake_runner(*, query, api_key, model, model_label):
         nonlocal active_calls, maximum_active_calls
         with lock:
             active_calls += 1
@@ -50,7 +50,7 @@ def test_parallel_benchmark_preserves_model_and_query_identity():
 
 
 def test_parallel_benchmark_records_individual_failures():
-    def fake_runner(*, query, api_key, model):
+    def fake_runner(*, query, api_key, model, model_label):
         if model == "provider/b":
             raise RuntimeError("provider unavailable")
         return {"query": query, "recommendations": []}
@@ -71,3 +71,20 @@ def test_parallel_benchmark_records_individual_failures():
 
     statuses = {item["model_label"]: item["status"] for item in results}
     assert statuses == {"Model A": "success", "Model B": "failed"}
+
+
+def test_parallel_benchmark_uses_each_models_own_api_key():
+    observed = {}
+
+    def fake_runner(*, query, api_key, model, model_label):
+        observed[model_label] = api_key
+        return {"query": query, "recommendations": []}
+
+    run_parallel_benchmark(
+        selected_models={"OpenAI": "gpt-test", "Gemini": "gemini-test"},
+        queries=[{"id": "q01", "category": "food", "query": "Question?"}],
+        api_keys={"OpenAI": "openai-key", "Gemini": "google-key"},
+        query_runner=fake_runner,
+    )
+
+    assert observed == {"OpenAI": "openai-key", "Gemini": "google-key"}

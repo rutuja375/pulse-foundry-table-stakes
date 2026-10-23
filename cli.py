@@ -8,7 +8,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from services.benchmark import RANKING_MODELS, run_parallel_benchmark
-from services.openrouter import OpenRouterError, validate_api_key
+from services.native_providers import MODEL_KEY_ENV, NATIVE_MODELS, run_native_query
+from services.openrouter import OpenRouterError, run_restaurant_query, validate_api_key
 from services.scoring import calculate_analytics, is_target_name
 
 
@@ -22,11 +23,16 @@ def parse_args():
         description="Run the Cafe Athena multi-model visibility benchmark."
     )
     parser.add_argument(
+        "--provider",
+        choices=["native", "openrouter"],
+        default="native",
+        help="Use direct provider APIs (default) or the OpenRouter fallback.",
+    )
+    parser.add_argument(
         "--models",
         nargs="+",
-        choices=list(RANKING_MODELS),
-        default=list(RANKING_MODELS),
-        help="Model labels to run. Defaults to all five.",
+        default=None,
+        help="Model labels to run. Defaults to all available for the provider.",
     )
     parser.add_argument(
         "--limit",
@@ -37,8 +43,8 @@ def parse_args():
     parser.add_argument(
         "--workers",
         type=int,
-        default=10,
-        help="Maximum concurrent API calls. Defaults to 10.",
+        default=6,
+        help="Maximum concurrent API calls. Defaults to 6.",
     )
     parser.add_argument(
         "--output",
@@ -61,21 +67,37 @@ def target_position(result):
 def main():
     load_dotenv()
     args = parse_args()
-    api_key = os.getenv("OPENROUTER_API_KEY") or getpass.getpass(
-        "OpenRouter API key (input hidden): "
-    )
+    available_models = NATIVE_MODELS if args.provider == "native" else RANKING_MODELS
+    model_labels = args.models or list(available_models)
+    unknown = [label for label in model_labels if label not in available_models]
+    if unknown:
+        raise SystemExit(f'Unknown model(s) for {args.provider}: {", ".join(unknown)}')
 
-    try:
-        validate_api_key(api_key)
-    except OpenRouterError as error:
-        raise SystemExit(str(error)) from error
+    api_key = ""
+    api_keys = None
+    query_runner = run_native_query
+    if args.provider == "native":
+        api_keys = {label: os.getenv(MODEL_KEY_ENV[label], "") for label in model_labels}
+        missing = [label for label, key in api_keys.items() if not key]
+        if missing:
+            env_names = ", ".join(MODEL_KEY_ENV[label] for label in missing)
+            raise SystemExit(f"Missing environment variable(s): {env_names}")
+    else:
+        query_runner = run_restaurant_query
+        api_key = os.getenv("OPENROUTER_API_KEY") or getpass.getpass(
+            "OpenRouter API key (input hidden): "
+        )
+        try:
+            validate_api_key(api_key)
+        except OpenRouterError as error:
+            raise SystemExit(str(error)) from error
 
     queries = json.loads(QUERY_BANK_PATH.read_text(encoding="utf-8"))
     if args.limit:
         if args.limit < 1:
             raise SystemExit("--limit must be at least 1")
         queries = queries[: args.limit]
-    selected_models = {label: RANKING_MODELS[label] for label in args.models}
+    selected_models = {label: available_models[label] for label in model_labels}
     total = len(queries) * len(selected_models)
 
     print(
@@ -101,6 +123,8 @@ def main():
         selected_models=selected_models,
         queries=queries,
         api_key=api_key,
+        api_keys=api_keys,
+        query_runner=query_runner,
         max_workers=args.workers,
         on_result=print_result,
     )

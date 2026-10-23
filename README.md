@@ -1,12 +1,12 @@
 # Cafe Athena AI Visibility Agent
 
-A small Streamlit application for the NYU SPS x Pulse Foundry hackathon. It runs a fixed bank of local restaurant queries through multiple OpenRouter models with web search, measures Cafe Athena's visibility, and identifies the competitors that appear most often.
+A small Streamlit application for the NYU SPS x Pulse Foundry hackathon. It runs a fixed bank of local restaurant queries through OpenAI, Gemini, and Claude with web search, measures Cafe Athena's visibility, and identifies the competitors that appear most often.
 
 ## What the MVP does
 
 - Uses 20 curated Pacific Beach / San Diego prompts with primary and secondary categories.
-- Runs OpenAI, Gemini, Claude, Grok, and DeepSeek independently and in parallel.
-- Searches the live web through OpenRouter.
+- Runs OpenAI, Gemini, and Claude independently and in parallel.
+- Searches the live web through each model provider's own API.
 - Records restaurant recommendations and their positions.
 - Calculates mention rate and average position by model and category.
 - Shows cross-model consensus, competitor share of voice, and query-level evidence.
@@ -15,22 +15,22 @@ A small Streamlit application for the NYU SPS x Pulse Foundry hackathon. It runs
 ## Run locally
 
 1. Install dependencies with `pip install -r requirements.txt`.
-2. Copy `.env.example` to `.env` and add your OpenRouter API key.
+2. Copy `.env.example` to `.env` and add `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, and `GOOGLE_API_KEY`.
 3. Start the application with `streamlit run app.py`.
 
 The API key can also be entered temporarily in the application's sidebar. It is not saved by the application.
+
+The `.env` file is ignored by Git and must never be committed. OpenRouter remains available as an optional fallback.
 
 ## Ranking models
 
 The dashboard can run any selection of these fixed ranking models:
 
-- `openai/gpt-5.2`
-- `google/gemini-3.8-flash`
-- `anthropic/claude-sonnet-5`
-- `x-ai/grok-latest`
-- `deepseek/deepseek-flash`
+- OpenAI: `gpt-5.2`
+- Gemini: `gemini-3.8-flash`
+- Claude: `claude-sonnet-5`
 
-A full run makes 100 model requests: 20 prompts across five models. Each selected model runs independently, and the dashboard keeps its results separate while also calculating combined measurements.
+A full direct-provider run makes 60 model requests: 20 prompts across three models. Each selected model runs independently, and the dashboard keeps its results separate while also calculating combined measurements.
 
 ## Test
 
@@ -54,4 +54,4 @@ Use `--models Gemini Claude`, `--limit 5`, or `--workers 5` to control cost and 
 
 ## Important limitation
 
-This application measures results returned by the selected OpenRouter model with web search. It is a repeatable proxy for AI-search visibility, but it is not guaranteed to reproduce the consumer interfaces of Gemini, ChatGPT, Claude, or Perplexity exactly.
+This application measures results returned by the selected model APIs with web search. It is a repeatable proxy for AI-search visibility, but it is not guaranteed to reproduce the consumer interfaces of Gemini, ChatGPT, or Claude exactly.

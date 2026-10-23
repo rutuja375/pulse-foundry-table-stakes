@@ -78,11 +78,14 @@ def run_query_job(
         "query": query_item["query"],
     }
     try:
-        result = query_runner(
+        runner_args = dict(
             query=query_item["query"],
             api_key=api_key,
             model=model_id,
         )
+        if query_runner is not run_restaurant_query:
+            runner_args["model_label"] = model_label
+        result = query_runner(**runner_args)
         return {**identity, "status": "success", "result": result}
     except Exception as error:
         return {**identity, "status": "failed", "error": str(error)}
@@ -92,7 +95,8 @@ def run_parallel_benchmark(
     *,
     selected_models: dict[str, str],
     queries: list[dict[str, str]],
-    api_key: str,
+    api_key: str | None = None,
+    api_keys: dict[str, str] | None = None,
     query_runner: Callable[..., dict[str, Any]] = run_restaurant_query,
     max_workers: int = 10,
     on_result: Callable[[dict[str, Any], int, int], None] | None = None,
@@ -108,11 +112,11 @@ def run_parallel_benchmark(
                 model_label=model_label,
                 model_id=model_id,
                 query_item=query_item,
-                api_key=api_key,
+                api_key=(api_keys or {}).get(model_label, api_key or ""),
                 query_runner=query_runner,
             ): (model_label, query_item["id"])
-            for model_label, model_id in selected_models.items()
             for query_item in queries
+            for model_label, model_id in selected_models.items()
         }
 
         for completed, future in enumerate(as_completed(futures), start=1):

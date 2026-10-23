@@ -7,7 +7,8 @@ import streamlit as st
 from dotenv import load_dotenv
 
 from services.benchmark import RANKING_MODELS, run_parallel_benchmark
-from services.openrouter import OpenRouterError, validate_api_key
+from services.native_providers import MODEL_KEY_ENV, NATIVE_MODELS, run_native_query
+from services.openrouter import OpenRouterError, run_restaurant_query, validate_api_key
 from services.scoring import calculate_analytics, is_target_name
 from services.reporting import (
     category_scorecard_rows,
@@ -64,18 +65,36 @@ st.caption("Measure how often Cafe Athena appears in AI-powered restaurant searc
 
 with st.sidebar:
     st.header("Configuration")
-    api_key = st.text_input(
-        "OpenRouter API key",
-        value=os.getenv("OPENROUTER_API_KEY", ""),
-        type="password",
-        help="Used only for this session and never saved by the application.",
+    connection = st.radio(
+        "Model connection",
+        ["Direct provider APIs", "OpenRouter fallback"],
+        help="Direct APIs keep each model independent from OpenRouter limits.",
     )
+    available_models = NATIVE_MODELS if connection == "Direct provider APIs" else RANKING_MODELS
     selected_model_labels = st.multiselect(
         "Ranking models",
-        options=list(RANKING_MODELS),
-        default=list(RANKING_MODELS),
+        options=list(available_models),
+        default=list(available_models),
         help="Every selected model runs the same query bank independently.",
     )
+    api_keys = {}
+    api_key = ""
+    if connection == "Direct provider APIs":
+        for label in selected_model_labels:
+            env_name = MODEL_KEY_ENV[label]
+            api_keys[label] = st.text_input(
+                f"{label} API key",
+                value=os.getenv(env_name, ""),
+                type="password",
+                help=f"Loaded from {env_name}; never saved by the app.",
+            )
+    else:
+        api_key = st.text_input(
+            "OpenRouter API key",
+            value=os.getenv("OPENROUTER_API_KEY", ""),
+            type="password",
+            help="Used only for this session and never saved by the application.",
+        )
     st.info(
         "Web search is enabled for every query. With the current selection, "
         f"a full run makes {len(queries) * len(selected_model_labels)} model "
@@ -108,23 +127,25 @@ if "analysis" not in st.session_state:
     st.session_state.analysis = None
 
 if st.button("Run visibility analysis", type="primary", use_container_width=True):
-    if not api_key:
-        st.error("Enter an OpenRouter API key in the sidebar.")
-    elif not selected_model_labels:
+    if not selected_model_labels:
         st.error("Select at least one ranking model.")
+    elif connection == "Direct provider APIs" and any(
+        not api_keys[label] for label in selected_model_labels
+    ):
+        missing = [label for label in selected_model_labels if not api_keys[label]]
+        st.error(f'Add API keys for: {", ".join(missing)}.')
+    elif connection == "OpenRouter fallback" and not api_key:
+        st.error("Enter an OpenRouter API key in the sidebar.")
     else:
         selected_models = {
-            label: RANKING_MODELS[label] for label in selected_model_labels
+            label: available_models[label] for label in selected_model_labels
         }
-        try:
-            validate_api_key(api_key)
-        except OpenRouterError as error:
-            st.error(str(error))
-            st.info(
-                "Paste the raw OpenRouter key beginning with `sk-or-v1-`. "
-                "The app also accepts a value copied with the `Bearer` prefix."
-            )
-            st.stop()
+        if connection == "OpenRouter fallback":
+            try:
+                validate_api_key(api_key)
+            except OpenRouterError as error:
+                st.error(str(error))
+                st.stop()
 
         progress = st.progress(
             0,
@@ -147,7 +168,9 @@ if st.button("Run visibility analysis", type="primary", use_container_width=True
             selected_models=selected_models,
             queries=queries,
             api_key=api_key,
-            max_workers=10,
+            api_keys=api_keys if connection == "Direct provider APIs" else None,
+            query_runner=(run_native_query if connection == "Direct provider APIs" else run_restaurant_query),
+            max_workers=6,
             on_result=update_progress,
         )
 
