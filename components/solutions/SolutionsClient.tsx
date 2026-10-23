@@ -76,6 +76,67 @@ function StatusLabel({ fix, state }: { fix: Fix; state: FixState }) {
   return <span style={{ fontSize: 11, letterSpacing: '0.06em', color, fontWeight: 700, whiteSpace: 'nowrap' }}>{text}</span>
 }
 
+/**
+ * The row's lead: the arithmetic, then who took the answers.
+ *
+ * An owner reading a fix needs the size of the hole before the instruction.
+ * "0/7" in the figure face, a bar that shows the seven answers split between
+ * the rivals who got them, and the names underneath with their counts. A fix
+ * with no gap of its own says so instead of inventing one.
+ */
+function GapLead({ fix }: { fix: Fix }) {
+  if (!fix.gap) {
+    return (
+      <div className="fix-gap">
+        <div className="fix-gap-figure" style={{ color: 'var(--muted)' }}>
+          ↑
+        </div>
+        <div className="fix-gap-label">supports the fixes above</div>
+      </div>
+    )
+  }
+
+  const { total, named } = fix.gap
+  // Two names fit the column; the counts underneath carry the rest.
+  const who = fix.gap.who.slice(0, 2)
+  const share = (value: number) => `${(value / Math.max(1, total)) * 100}%`
+  const extra = fix.gap.intents.length - 1
+
+  return (
+    <div className="fix-gap">
+      <div className="fix-gap-figure">
+        {named}
+        <span className="fix-gap-of">/{total}</span>
+      </div>
+      <div className="fix-gap-label">
+        {fix.gap.intent || 'all'} answers name you
+        {extra > 0 ? ` · ${extra} more intent${extra === 1 ? '' : 's'} below` : ''}
+      </div>
+      {/*
+        * Two parts, not one per rival. A single answer can name Costa Brava and
+        * Flamingo Deck, so rival counts do not partition the answers — a stacked
+        * bar read "0 of 3" with two 2s in it. This bar answers one question
+        * (how much of the intent names you) and the names below answer the other.
+        */}
+      <div className="gap-bar" aria-hidden="true">
+        {named > 0 && <span className="gap-bar-you" style={{ width: share(named) }} />}
+        <span className="gap-bar-them" style={{ width: share(Math.max(0, total - named)) }} />
+      </div>
+      <div className="fix-gap-who">
+        {who.length ? (
+          who.map(entry => (
+            <span key={entry.name}>
+              {entry.name} <b>{entry.mentions}</b>
+            </span>
+          ))
+        ) : (
+          <span>nobody named a rival here</span>
+        )}
+      </div>
+    </div>
+  )
+}
+
 function FixRow({ fix, state, onOpen }: { fix: Fix; state: FixState; onOpen: () => void }) {
   const meta = KIND_META[fix.handoff.kind]
   const Icon = meta.icon
@@ -83,33 +144,13 @@ function FixRow({ fix, state, onOpen }: { fix: Fix; state: FixState; onOpen: () 
 
   return (
     <article
+      className="fix-row"
       style={{
-        display: 'grid',
-        gridTemplateColumns: '76px minmax(0, 1fr) auto',
-        gap: 20,
-        padding: '20px 22px',
-        borderBottom: '1px solid var(--border)',
         opacity: done ? 0.6 : 1,
         transition: 'opacity 200ms ease',
       }}
     >
-      <div>
-        <span
-          style={{
-            display: 'inline-block',
-            fontSize: 10.5,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            fontWeight: 700,
-            border: '1px solid',
-            borderRadius: 999,
-            padding: '3px 9px',
-            ...PRIORITY_STYLE[fix.priority],
-          }}
-        >
-          {fix.priority}
-        </span>
-      </div>
+      <GapLead fix={fix} />
 
       <div style={{ minWidth: 0 }}>
         <h3
@@ -120,25 +161,18 @@ function FixRow({ fix, state, onOpen }: { fix: Fix; state: FixState; onOpen: () 
         </h3>
         <p style={{ margin: '6px 0 0', fontSize: 13, lineHeight: 1.6, color: 'var(--fg2)', maxWidth: '70ch' }}>{fix.why}</p>
         <div style={{ display: 'flex', gap: 14, marginTop: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-          <span
-            style={{
-              fontSize: 11.5,
-              fontFamily: 'var(--font-data)',
-              fontVariantNumeric: 'tabular-nums',
-              color: 'var(--fg)',
-              background: 'var(--surf-1)',
-              border: '1px solid var(--border)',
-              borderRadius: 6,
-              padding: '3px 8px',
-            }}
-          >
-            {fix.evidence}
-          </span>
+          {/* When the row already leads with its gap, repeating that figure here
+              would say the same thing twice in two sizes. Only the rest show. */}
+          {(fix.gap && fix.gap.intent ? fix.moreEvidence : [fix.evidence]).map(figure => (
+            <span key={figure} className="fix-evidence">
+              {figure}
+            </span>
+          ))}
           {fix.example && <span style={{ fontSize: 11.5, color: 'var(--muted)' }}>e.g. “{fix.example}”</span>}
         </div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, textAlign: 'right' }}>
+      <div className="fix-act">
         <div style={{ fontSize: 11.5, color: 'var(--muted)', fontFamily: 'var(--font-data)', lineHeight: 1.5 }}>
           {fix.effort}
           <br />
@@ -252,19 +286,40 @@ export function SolutionsClient({ report, rival }: { report: IngestedReport; riv
             <span className="section-note">· every draft waits for your approval before anything goes out</span>
           </div>
 
-          <div
-            style={{
-              background: 'var(--card-bg)',
-              border: '1px solid var(--card-border)',
-              borderRadius: 'var(--card-radius)',
-              boxShadow: 'var(--card-shadow)',
-              overflow: 'hidden',
-            }}
-          >
-            {fixes.map(f => (
-              <FixRow key={f.id} fix={f} state={states[f.id]} onOpen={() => setOpenId(f.id)} />
-            ))}
-          </div>
+          {/*
+            * Priority ladder, not one long list. Six equal-weight rows gave an
+            * owner no starting point; two bands say where the silence is total
+            * and where it is partial, and the sort inside a band stays by the
+            * number of answers lost.
+            */}
+          {(
+            [
+              { priority: 'high' as Priority, note: 'no assistant named you on these questions' },
+              { priority: 'medium' as Priority, note: 'named on some, but not most' },
+              { priority: 'low' as Priority, note: 'already named on most of these' },
+            ] as const
+          ).map(band => {
+            const inBand = fixes.filter(f => f.priority === band.priority)
+            if (!inBand.length) return null
+            return (
+              <section key={band.priority} className="fix-band">
+                <div className="fix-band-head">
+                  <span className="fix-band-label" style={PRIORITY_STYLE[band.priority]}>
+                    {band.priority}
+                  </span>
+                  <span className="fix-band-note">{band.note}</span>
+                  <span className="fix-band-count">
+                    {inBand.length} {inBand.length === 1 ? 'fix' : 'fixes'}
+                  </span>
+                </div>
+                <div className="fix-rows">
+                  {inBand.map(f => (
+                    <FixRow key={f.id} fix={f} state={states[f.id]} onOpen={() => setOpenId(f.id)} />
+                  ))}
+                </div>
+              </section>
+            )
+          })}
         </>
       )}
 

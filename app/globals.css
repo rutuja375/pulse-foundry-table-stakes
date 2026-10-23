@@ -886,6 +886,88 @@ button, input, textarea, select { font: inherit; color: inherit; }
    The pipeline captures a reason and cited sources per recommendation; showing
    them is the difference between "the model said so" and a receipt.          */
 
+/* ── Fixes: the priority ladder ────────────────────────────────────────────
+   Each band is a labelled group of rows; each row leads with the gap it
+   answers — the count, then a bar splitting the answers between you and the
+   restaurants that took them. Terracotta is you, teal is everyone else, in the
+   same colours the competitor table uses, so the two sections read as one
+   system rather than two opinions.                                          */
+
+.fix-band { margin-bottom: 30px; }
+.fix-band-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+.fix-band-label { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; }
+.fix-band-note { font-size: 12.5px; color: var(--muted); }
+.fix-band-count { margin-left: auto; font-family: var(--font-data); font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+
+.fix-rows {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+}
+
+.fix-row {
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: start;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--border);
+}
+.fix-row:last-child { border-bottom: none; }
+
+.fix-gap { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.fix-gap-figure {
+  font-family: var(--kpi-font);
+  font-size: 30px;
+  line-height: 1.05;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+.fix-gap-of { font-size: 17px; color: var(--muted); margin-left: 1px; }
+.fix-gap-label { font-size: 11px; line-height: 1.45; color: var(--muted); }
+
+.gap-bar {
+  display: flex;
+  height: 6px;
+  margin-top: 3px;
+  background: var(--surf-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.gap-bar > span + span { border-left: 1px solid var(--card-bg); }
+.gap-bar-you { background: var(--active-accent); }
+.gap-bar-them { background: var(--brand-teal); }
+.gap-bar-other { background: var(--border-strong); }
+
+.fix-gap-who {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.fix-gap-who b { color: var(--fg2); font-family: var(--font-data); font-weight: 600; }
+
+.fix-evidence {
+  font-size: 11.5px;
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+  background: var(--surf-1);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+
+.fix-act { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; text-align: right; }
+
+@media (max-width: 900px) {
+  .fix-row { grid-template-columns: 1fr; gap: 14px; }
+  .fix-act { align-items: flex-start; text-align: left; }
+}
+
 /* One line under the matrix, instead of a red word in every failed cell: the
    count still exists, it just does not read as five verdicts about the venue. */
 .matrix-note { margin: 10px 0 0; font-size: 11.5px; line-height: 1.55; color: var(--muted); }

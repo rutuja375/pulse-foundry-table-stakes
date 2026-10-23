@@ -39,6 +39,28 @@ export type Handoff =
 
 export type HandoffKind = Handoff['kind']
 
+/**
+ * The gap a fix answers, in the form the page leads with: how many answers the
+ * intent got, how many named you, and who was named in your place. The row's
+ * whole argument is "0 of 7, and all 7 went to Slowly" — the action is only
+ * credible once that arithmetic is visible.
+ */
+export interface FixGap {
+  /** Every intent label this fix covers; more than one means the row spans intents. */
+  intents: string[]
+  /**
+   * The intent the bar describes — the worst one, not the sum. A fix that covers
+   * "0 of 7 happy hour" and "3 of 9 date night" leads with 0/7: averaging them
+   * into 3/16 would put a terracotta sliver on a band that says nobody named you.
+   * The second figure stays in the evidence chip.
+   */
+  intent: string
+  total: number
+  named: number
+  /** Who was named instead, most-named first. */
+  who: Array<{ name: string; mentions: number }>
+}
+
 export interface Fix {
   id: string
   /** Which template produced the draft; seeded rewrites are keyed by it. */
@@ -48,6 +70,12 @@ export interface Fix {
   why: string
   /** The figure the fix answers, e.g. "0 of 5 group answers". */
   evidence: string
+  /**
+   * Figures that are not the lead gap. A merged fix leads with its worst intent,
+   * so the rest belong beside it rather than repeating the same sentence twice
+   * in two different sizes.
+   */
+  moreEvidence: string[]
   /** A real question from the run that this fix is for. */
   example: string | null
   priority: Priority
@@ -55,6 +83,8 @@ export interface Fix {
   impact: Level
   /** Answers lost on this gap; used for ordering. */
   lost: number
+  /** The same gap as numbers and names, for the row's lead. */
+  gap: FixGap | null
   /** Same shape as the payload contract: which intents and rivals this wins back. */
   fixes: { intents: string[]; rivals: string[] }
   handoff: Handoff
@@ -69,6 +99,8 @@ interface IntentGap {
   rival: string | null
   /** Every rival named on this intent, most-named first. */
   rivals: string[]
+  /** The same list with counts, for the bar. */
+  rivalDetail: Array<{ name: string; mentions: number }>
 }
 
 const PRIORITY_RANK: Record<Priority, number> = { high: 0, medium: 1, low: 2 }
@@ -111,9 +143,9 @@ function intentGaps(report: IngestedReport): IntentGap[] {
     }
     const ranked = Array.from(rivals.entries())
       .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-      .map(([name]) => name)
+    const rivalDetail = ranked.map(([name, mentions]) => ({ name, mentions }))
     const example = report.questions.find(q => (q.intent || 'untagged') === row.intent)?.text ?? null
-    return { ...row, example, rival: ranked[0] ?? null, rivals: ranked }
+    return { ...row, example, rival: ranked[0]?.[0] ?? null, rivals: ranked.map(([name]) => name), rivalDetail }
   })
 }
 
@@ -302,12 +334,15 @@ function schemaFix(ctx: Ctx, worstLost: number, total: number): Fix {
     title: 'Describe the restaurant in structured data',
     why: 'Structured data states your cuisine, area and menu in a form search engines and assistants parse without guessing. It backs up every page change above.',
     evidence: `backs up the fixes for ${worstLost} of ${total} lost answers`,
+    moreEvidence: [],
     example: null,
     priority: 'medium',
     effort: '15 min',
     impact: 'Medium',
     // Supporting work: ordered after the fixes it backs up, not ahead of them.
     lost: 0,
+    // No gap of its own: it backs up the fixes above rather than answering one.
+    gap: null,
     fixes: { intents: [], rivals: [] },
     handoff: {
       kind: 'snippet',
@@ -324,11 +359,13 @@ function listOutreachFix(ctx: Ctx, rival: { name: string; mentions: number }, na
     title: `Get onto the ${ctx.area} best-of lists`,
     why: `${rival.name} is named in ${rival.mentions} answers. Assistants lean on local round-ups and "best of" lists, and ${ctx.name} is not on the ones they cite.`,
     evidence: `${rival.mentions} answers name ${rival.name} · ${named} name you`,
+    moreEvidence: [],
     example: null,
     priority: named === 0 ? 'high' : 'medium',
     effort: '20 min',
     impact: impactFor(total - named, total),
     lost: total - named,
+    gap: { intents: [], intent: '', total, named, who: [{ name: rival.name, mentions: rival.mentions }] },
     fixes: { intents: [], rivals: [rival.name] },
     handoff: {
       kind: 'email',
@@ -355,18 +392,20 @@ function listOutreachFix(ctx: Ctx, rival: { name: string; mentions: number }, na
   }
 }
 
-function localOutreachFix(ctx: Ctx, named: number, total: number): Fix {
+function localOutreachFix(ctx: Ctx, named: number, total: number, who: Array<{ name: string; mentions: number }>): Fix {
   return {
     id: 'local-mentions',
     template: 'local-mentions',
     title: 'Get mentioned by people nearby',
     why: `${ctx.name} is named in ${named} of ${total} answers. Neighbourhood blogs, student papers and community newsletters are cheap mentions that assistants pick up.`,
     evidence: `${named} of ${total} answers name you`,
+    moreEvidence: [],
     example: null,
     priority: 'low',
     effort: '20 min',
     impact: 'Low',
     lost: total - named,
+    gap: { intents: [], intent: '', total, named, who },
     fixes: { intents: [], rivals: [] },
     handoff: {
       kind: 'email',
@@ -422,11 +461,19 @@ export function buildFixes(report: IngestedReport): Fix[] {
       title: template.title(ctx, gap),
       why: template.why(ctx, gap),
       evidence: `${gap.named} of ${gap.total} ${gap.intent} answers name you`,
+      moreEvidence: [],
       example: gap.example,
       priority,
       effort: template.effort,
       impact: impactFor(lost, gap.total),
       lost,
+      gap: {
+        intents: [gap.intent],
+        intent: gap.intent,
+        total: gap.total,
+        named: gap.named,
+        who: gap.rivalDetail.slice(0, 3),
+      },
       fixes: { intents: [gap.intent], rivals: gap.rivals },
       handoff: template.handoff(ctx),
     })
@@ -435,7 +482,7 @@ export function buildFixes(report: IngestedReport): Fix[] {
   const rival = report.competitors[0]
   if (rival && named / total < 0.5) fixes.push(listOutreachFix(ctx, rival, named, total))
   if (worstLost > 0) fixes.push(schemaFix(ctx, worstLost, total))
-  if (named / total < 0.5) fixes.push(localOutreachFix(ctx, named, total))
+  if (named / total < 0.5) fixes.push(localOutreachFix(ctx, named, total, report.competitors.slice(0, 3)))
 
   /*
    * One fix per template, not per intent.
@@ -454,23 +501,34 @@ export function buildFixes(report: IngestedReport): Fix[] {
     }
     // Two figures and a count. A card that lists five evidence strings in a row
     // reads as a dump; the reader needs the worst one and the sense of scale.
+    /*
+     * The card is written in the voice of its worst gap: title, why and the
+     * first figure all come from the lead intent. Otherwise a card leading with
+     * "0 of 7 happy hour" explains itself by naming the rival that took the
+     * date-night questions — two facts, one sentence, no agreement between them.
+     */
+    const rate = (gap: FixGap | null) => (!gap || !gap.total ? 1 : gap.named / gap.total)
+    const lead = rate(fix.gap) < rate(existing.gap) ? fix : existing
+    const other = lead === existing ? fix : existing
     const evidence = Array.from(
-      new Set([...existing.evidence.split(' · '), ...fix.evidence.split(' · ')])
+      new Set([...lead.evidence.split(' · '), ...other.evidence.split(' · ')])
     )
     merged.set(fix.template, {
-      ...existing,
+      ...lead,
       // Keep the more urgent priority and the larger body of lost questions.
       priority: PRIORITY_RANK[fix.priority] < PRIORITY_RANK[existing.priority] ? fix.priority : existing.priority,
       lost: existing.lost + fix.lost,
+      gap: mergeGaps(existing.gap, fix.gap),
       evidence:
         evidence.length <= 2
           ? evidence.join(' · ')
           : `${evidence.slice(0, 2).join(' · ')} · ${evidence.length - 2} more intent${evidence.length - 2 === 1 ? '' : 's'}`,
+      moreEvidence: Array.from(new Set(other.evidence.split(' · '))),
       fixes: {
         intents: Array.from(new Set([...existing.fixes.intents, ...fix.fixes.intents])),
         rivals: Array.from(new Set([...existing.fixes.rivals, ...fix.fixes.rivals])),
       },
-      example: existing.example ?? fix.example,
+      example: lead.example ?? other.example,
       impact: existing.impact === 'High' || fix.impact === 'High' ? 'High' : existing.impact,
     })
   }
@@ -478,6 +536,21 @@ export function buildFixes(report: IngestedReport): Fix[] {
   return Array.from(merged.values())
     .sort((a, b) => PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority] || b.lost - a.lost)
     .slice(0, MAX_FIXES)
+}
+
+/**
+ * Two intents sharing one fix. The lead stays the worse gap — the bar has to
+ * describe one set of questions, or a zero and a terracotta sliver end up in
+ * the same row — and the bar keeps that intent's own names rather than a blend
+ * of two, so its counts still add up to its total. The union of intent labels
+ * survives for rival-scoped views, and the second figure lives in the chip.
+ */
+function mergeGaps(a: FixGap | null, b: FixGap | null): FixGap | null {
+  if (!a) return b
+  if (!b) return a
+  const rate = (gap: FixGap) => (gap.total ? gap.named / gap.total : 1)
+  const lead = rate(a) <= rate(b) ? a : b
+  return { ...lead, intents: Array.from(new Set([...a.intents, ...b.intents])) }
 }
 
 /** The fixes that win back questions lost to one rival. */

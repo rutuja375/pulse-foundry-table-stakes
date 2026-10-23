@@ -34,8 +34,8 @@ export default async function SolutionsPage({
         </h1>
         <p className="pane-lede">
           {rival
-            ? `Scoped to the questions lost to ${rival}: each fix names the finding it answers.`
-            : 'Each fix names the finding it answers, ordered by how much of the gap it closes. Open one to review its draft — nothing is sent or published without your approval.'}
+            ? `Scoped to the questions lost to ${rival}: each fix leads with the answers it would win back, and names who took them.`
+            : 'Grouped by how badly the questions are going: high means no assistant named you at all on those questions. Each row leads with the count, then the restaurants that took the answers. Open one to review its draft — nothing is sent or published without your approval.'}
         </p>
       </header>
 
