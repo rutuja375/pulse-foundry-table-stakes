@@ -1,0 +1,187 @@
+/* ---------------------------------------------------------------------------
+   Aegean Hospitality — design tokens
+   Café Athena · Pacific Beach, San Diego
+
+   Source of truth: DESIGN.md in this folder. This file is the runtime mapping:
+   every component reads these names, never a raw color.
+
+   Palette comes from the Aegean Hospitality canvas, not from the restaurant's
+   website. Measured WCAG AA (normal text 4.5:1):
+     navy #0A1A29 on plaster          16.6:1
+     navy on brass #C39D63             7.0:1   (white on brass: 2.5 — never)
+     azure #2980B9 on plaster          4.1:1   (fill only; text uses #21618C 6.3)
+     muted #5F5E58 on plaster          6.1:1
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* Surfaces — warm plaster, never pure white except cards */
+  --bg:      #f9f8f5;
+  --surf-1:  #f3f2ee;
+  --surf-2:  #eae8e2;
+  --surf-3:  #e0ded7;
+  --card-bg: #ffffff;
+
+  /* Text — Aegean navy */
+  --fg:      #0a1a29;
+  --fg2:     #3b4652;
+  --muted:   #5f5e58;
+
+  /* Structure — hairline borders, gentle 4px corners, no shadows */
+  --border:         #e5e2da;
+  --card-border:    #e5e2da;
+  --card-radius:    4px;
+  --tooltip-radius: 4px;
+  --radius:         4px;
+  --card-shadow:    none;
+
+  /* Brand — structural UI only */
+  --accent:      #0a1a29;   /* primary — deep navy */
+  --accent-hover:#142a3d;
+  --accent-soft: #edeae3;
+  --on-accent:   #ffffff;
+
+  /* Supporting brand tones — decoration and data, never a primary action */
+  --gold:       #c39d63;    /* secondary — warm brass; navy text on it, never white */
+  --gold-text:  #7a5c26;    /* brass as type on plaster */
+  --gold-soft:  #f5eee1;
+  --azure:      #2980b9;    /* tertiary — fill and large text only */
+  --azure-strong: #21618c;  /* azure as type, or a button carrying white text */
+  --azure-soft: #e8f1f7;
+
+  /* Signals — muted, so they never outshout the brand */
+  --positive: #3f6b4e;
+  --negative: #a33b2e;
+  --bad:      #a33b2e;
+  --warning:  #8a5a1e;
+
+  /* KPI typography — Playfair carries the number, as on the restaurant's menu */
+  --kpi-size:     44px;
+  --kpi-weight:   500;
+  --kpi-tracking: -0.015em;
+  --kpi-font:     var(--font-playfair), Georgia, "Times New Roman", serif;
+  --label-size:      11px;
+  --label-case:      uppercase;
+  --label-tracking:  0.14em;
+  --label-weight:    600;
+
+  /* Card variants */
+  --card-accent-grad:   #ebf0f3;
+  --card-accent-border: #d8e0e5;
+  --kpi-pos-grad:       #edf3ee;
+  --kpi-pos-border:     #d7e3d9;
+  --kpi-pos-fg:         #3f6b4e;
+  --kpi-neg-grad:       #faefec;
+  --kpi-neg-border:     #efdad4;
+  --kpi-neg-fg:         #a33b2e;
+
+  /* Chart series — sea, sapphire, terracotta, olive */
+  --c1: #0a1a29;
+  --c2: #c39d63;
+  --c3: #2980b9;
+  --c4: #8a8880;
+
+  /* Type stacks */
+  --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-sans:  var(--font-montserrat), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* Figures in columns: tabular numerals, not a monospace face. Mono is kept
+     for code blocks (JSON-LD drafts) where character alignment is the point. */
+  --font-data:  var(--font-montserrat), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono:  ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+button, input, textarea, select { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Column figures: tabular, sans, never monospace */
+.num {
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── KPI card ───────────────────────────────────────────────────────────────
+   Warm card on plaster, hairline border, no shadow, a 300ms lift on hover.
+   The number is Playfair; the label is a tracked caps line.                     */
+
+.kpi-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  padding: 20px 24px;
+  border-radius: var(--card-radius);
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 300ms ease,
+              border-color 300ms ease,
+              box-shadow 300ms ease;
+  text-align: center;
+}
+.kpi-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 24px -14px rgba(10, 26, 41, 0.28);
+}
+
+.kpi-card--brand-accent {
+  background: var(--card-accent-grad);
+  border-color: var(--card-accent-border);
+}
+.kpi-card--brand-accent:hover { border-color: var(--accent); }
+.kpi-card--brand-accent .kpi-value-text { color: var(--accent); }
+
+.kpi-card--pos {
+  background: var(--kpi-pos-grad);
+  border-color: var(--kpi-pos-border);
+}
+.kpi-card--pos .kpi-value-text { color: var(--kpi-pos-fg); }
+
+.kpi-card--neg {
+  background: var(--kpi-neg-grad);
+  border-color: var(--kpi-neg-border);
+}
+.kpi-card--neg .kpi-value-text { color: var(--kpi-neg-fg); }
+
+/* ── Answer matrix ─────────────────────────────────────────────────────────
+   A cell is a button in disguise: hover says so, and the click opens the
+   verbatim answer. No colour change on the cell itself — the reader is
+   scanning a grid for absences, and a hover wash that recolours the number
+   would compete with the numbers that matter.                            */
+
+.mx-cell {
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+.mx-cell:hover {
+  background: var(--surf-1);
+}
+
+/* ── Print ─────────────────────────────────────────────────────────────────
+   The report is meant to be handed over as a PDF. Charts and drawers are
+   already click-only, so print hides nothing a reader needs.             */
+
+@media print {
+  body { background: #fff; }
+  .mx-cell { cursor: default; }
+  main { padding: 0 !important; max-width: none !important; }
+  section { break-inside: avoid; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kpi-card { transition: none; }
+  .kpi-card:hover { transform: none; }
+}
