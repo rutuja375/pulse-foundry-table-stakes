@@ -7,6 +7,7 @@ import streamlit as st
 from dotenv import load_dotenv
 
 from services.benchmark import RANKING_MODELS, run_parallel_benchmark
+from services.openrouter import OpenRouterError, validate_api_key
 from services.scoring import calculate_analytics, is_target_name
 from services.reporting import (
     category_scorecard_rows,
@@ -115,6 +116,16 @@ if st.button("Run visibility analysis", type="primary", use_container_width=True
         selected_models = {
             label: RANKING_MODELS[label] for label in selected_model_labels
         }
+        try:
+            validate_api_key(api_key)
+        except OpenRouterError as error:
+            st.error(str(error))
+            st.info(
+                "Paste the raw OpenRouter key beginning with `sk-or-v1-`. "
+                "The app also accepts a value copied with the `Bearer` prefix."
+            )
+            st.stop()
+
         progress = st.progress(
             0,
             text=(
@@ -170,6 +181,22 @@ if analysis:
             if scorecard["average_position"] is not None
             else "Not ranked",
         )
+
+        if scorecard["successful_queries"] == 0:
+            st.error(
+                "No model responses succeeded. Open the Evidence tab to inspect "
+                "the API errors before running the benchmark again."
+            )
+            common_errors = {}
+            for item in analysis["results"]:
+                if item.get("status") == "failed":
+                    error = item.get("error", "Unknown error")
+                    common_errors[error] = common_errors.get(error, 0) + 1
+            with st.expander("Most common API errors", expanded=True):
+                for error, count in sorted(
+                    common_errors.items(), key=lambda pair: pair[1], reverse=True
+                )[:5]:
+                    st.code(f"{count} responses: {error}")
 
         competitors = scorecard["competitors"][:10]
         if competitors:

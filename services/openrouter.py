@@ -6,10 +6,38 @@ import requests
 
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+OPENROUTER_KEY_URL = "https://openrouter.ai/api/v1/auth/key"
 
 
 class OpenRouterError(RuntimeError):
     """Raised when OpenRouter does not return a usable response."""
+
+
+def normalize_api_key(api_key: str) -> str:
+    """Accept either a raw OpenRouter key or a copied 'Bearer <key>' value."""
+    normalized = api_key.strip()
+    if normalized.lower().startswith("bearer "):
+        normalized = normalized[7:].strip()
+    return normalized
+
+
+def validate_api_key(api_key: str, timeout: int = 30) -> dict[str, Any]:
+    normalized_key = normalize_api_key(api_key)
+    if not normalized_key:
+        raise OpenRouterError("Enter a non-empty OpenRouter API key.")
+
+    response = requests.get(
+        OPENROUTER_KEY_URL,
+        headers={"Authorization": f"Bearer {normalized_key}"},
+        timeout=timeout,
+    )
+    if not response.ok:
+        try:
+            detail = response.json().get("error", {}).get("message", response.text)
+        except ValueError:
+            detail = response.text
+        raise OpenRouterError(f"OpenRouter rejected the API key: {detail}")
+    return response.json()
 
 
 def _extract_json(text: str) -> dict[str, Any]:
@@ -38,6 +66,10 @@ def run_restaurant_query(
     model: str,
     timeout: int = 120,
 ) -> dict[str, Any]:
+    normalized_key = normalize_api_key(api_key)
+    if not normalized_key:
+        raise OpenRouterError("Enter a non-empty OpenRouter API key.")
+
     prompt = f"""
 You are measuring restaurant visibility in AI search. You must search the current
 web before answering the customer question below.
@@ -67,7 +99,7 @@ Return only a JSON object with this exact shape:
     response = requests.post(
         OPENROUTER_URL,
         headers={
-            "Authorization": f"Bearer {api_key}",
+            "Authorization": f"Bearer {normalized_key}",
             "Content-Type": "application/json",
             "HTTP-Referer": "https://github.com/rutuja375/pulse-foundry-table-stakes",
             "X-Title": "Cafe Athena AI Visibility Agent",
