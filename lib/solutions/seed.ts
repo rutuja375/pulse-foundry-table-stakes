@@ -183,6 +183,47 @@ CAFE_ATHENA.cuisine = {
   ].join('\n'),
 }
 
+CAFE_ATHENA.reservations = {
+  kind: 'website',
+  page: '/reservations',
+  before: 'Phone number in the footer. No mention of online booking.',
+  after: [
+    'Reservations at Café Athena',
+    '',
+    'Book a table online through [OpenTable / Resy / Yelp] at [link] — or call [number].',
+    'We hold reservations for [N] minutes. Walk-ins are welcome at the bar, the easiest seat in Pacific Beach on a weeknight.',
+    '',
+    'Celebrating, or bringing [N] or more? See our groups page and we will set the table for you.',
+  ].join('\n'),
+}
+
+CAFE_ATHENA.affordability = {
+  kind: 'website',
+  page: '/menu',
+  before: 'Menu as a PDF download. No prices in the page text.',
+  after: [
+    'Greek lunch in Pacific Beach, most plates under $[price]',
+    '',
+    'Lunch: [gyro or pita plate] $[price] · [salad] $[price] · [lunch special] $[price]',
+    'Dinner: mains $[price]–$[price]. Two people eat well for about $[price] before drinks.',
+    '',
+    'Prices are listed here in full — no PDF to download.',
+  ].join('\n'),
+}
+
+CAFE_ATHENA.catering = {
+  kind: 'website',
+  page: '/catering',
+  before: 'No page. Catering mentioned only if a customer asks.',
+  after: [
+    'Greek catering for San Diego offices and events',
+    '',
+    'Trays for [N] to [N] people: [mezze], [mains] and [salads], delivered to Pacific Beach and [areas], or ready for pickup.',
+    'Every tray is labelled vegan, vegetarian or gluten-free, so a mixed office orders once.',
+    'Order [N] days ahead at [email] or [phone]. Menu and per-person prices: [link].',
+  ].join('\n'),
+}
+
 const SEEDS: Array<{ venue: string; drafts: Record<string, Handoff> }> = [{ venue: 'Café Athena', drafts: CAFE_ATHENA }]
 
 /** Seeded drafts for this venue, if any were written. */

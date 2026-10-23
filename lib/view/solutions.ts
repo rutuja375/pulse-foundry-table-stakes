@@ -259,6 +259,63 @@ const INTENT_TEMPLATES: Record<string, IntentTemplate> = {
   },
 }
 
+const RESERVATIONS_TEMPLATE: IntentTemplate = {
+  title: () => 'Say how to book',
+  why: (ctx, gap) =>
+    `Reservation questions ask whether you take bookings and through which app. If ${ctx.name}'s site does not say, assistants assume walk-in only and recommend places that do.${instead(gap)}`,
+  effort: '15 min',
+  handoff: ctx => ({
+    kind: 'website',
+    page: '/reservations',
+    before: 'Phone number in the footer. No mention of online booking.',
+    after: [
+      `Reservations at ${ctx.name}`,
+      '',
+      'Book online through [OpenTable / Resy / Yelp] at [link], or call [number].',
+      `We hold tables for [N] minutes. Walk-ins welcome at the bar${ctx.area ? ` — the easiest table in ${ctx.area} on a weeknight` : ''}.`,
+      'Parties of [N] or more: see our groups page.',
+    ].join('\n'),
+  }),
+}
+
+const AFFORDABILITY_TEMPLATE: IntentTemplate = {
+  title: () => 'Put prices where assistants can read them',
+  why: (ctx, gap) =>
+    `Budget questions ask for a number — lunch under $20, dinner around $30. If ${ctx.name}'s prices live in a PDF or an image, assistants cannot tell whether you fit.${instead(gap)}`,
+  effort: '30 min',
+  handoff: ctx => ({
+    kind: 'website',
+    page: '/menu',
+    before: 'Menu as a PDF download. No prices in the page text.',
+    after: [
+      `Lunch at ${ctx.name}: plates from $[price], most under $[price].`,
+      `Dinner: mains $[price]–$[price]. Two people eat well in ${ctx.area} for about $[price] before drinks.`,
+      '',
+      '[Dish] — $[price]',
+      '[Dish] — $[price]',
+    ].join('\n'),
+  }),
+}
+
+const CATERING_TEMPLATE: IntentTemplate = {
+  title: () => 'Give catering its own page',
+  why: (ctx, gap) =>
+    `Catering questions want headcounts, dietary coverage and how far ahead to order. Without a catering page, assistants send office orders to restaurants that publish one.${instead(gap)}`,
+  effort: '45 min',
+  handoff: ctx => ({
+    kind: 'website',
+    page: '/catering',
+    before: 'No page. Catering mentioned only if a customer asks.',
+    after: [
+      `Catering from ${ctx.name}`,
+      '',
+      `${ctx.cuisine} trays for offices and events in ${ctx.city || ctx.area}, from [N] to [N] people.`,
+      'Every tray is labelled vegan, vegetarian or gluten-free. Order [N] days ahead at [email/phone].',
+      'Delivery to [areas] — or pick up at the restaurant.',
+    ].join('\n'),
+  }),
+}
+
 const HAPPY_HOUR_TEMPLATE: IntentTemplate = {
   title: () => 'Turn happy hour into a page',
   why: (ctx, gap) =>
@@ -278,25 +335,40 @@ const HAPPY_HOUR_TEMPLATE: IntentTemplate = {
 }
 
 /**
- * Intents arrive as free text from the audit ("happy hour", "mediterranean
- * food"), so templates are matched by keyword over the intent and the
- * questions asked under it. First match wins; order is most specific first.
+ * Intents arrive as free text from the audit ("happy hour", "table size"), so
+ * templates are matched by keyword. The intent's own name is tried first; the
+ * questions asked under it are only a fallback, because a question carries
+ * incidental words — "cocktails" in a date-night question, "walk-ins" in a
+ * reservations question — that would send it to the wrong fix.
  */
 const TEMPLATE_KEYWORDS: Array<[key: string, pattern: RegExp]> = [
-  ['dietary', /gluten|vegan|vegetarian|halal|kosher|dietary|allerg|dairy/i],
-  ['happy-hour', /happy hour|drinks|cocktail/i],
-  ['group', /group|party|private|large table|birthday/i],
-  ['occasion', /date night|occasion|anniversary|romantic|celebrat/i],
-  ['location', /\bnear\b|walk|location|\bave\b|street|close to|nearby/i],
-  ['cuisine', /cuisine|food|best|restaurant/i],
+  ['dietary', /gluten|vegan|vegetarian|halal|kosher|dietary|allerg/i],
+  ['catering', /cater/i],
+  ['reservations', /reserv|booking|book a table/i],
+  ['affordability', /afford|cheap|budget|\bprices?\b|value for money/i],
+  ['happy-hour', /happy[ -]?hour/i],
+  ['group', /\bgroups?\b|party|parties|private|table size|large table|birthday|\bevents?\b/i],
+  ['occasion', /date[ -]?night|occasion|anniversary|romantic|celebrat/i],
+  ['location', /\bnear(by)?\b|walking distance|\blocation\b|neighbou?rhood|close to/i],
+  ['cuisine', /cuisine|\bfood\b|greek|mediterranean|\bmenu\b/i],
 ]
 
-function templateFor(intent: string, questionTexts: string[]): { key: string; template: IntentTemplate } {
-  const haystack = [intent, ...questionTexts].join(' ')
-  for (const [key, pattern] of TEMPLATE_KEYWORDS) {
-    if (pattern.test(haystack)) return { key, template: key === 'happy-hour' ? HAPPY_HOUR_TEMPLATE : INTENT_TEMPLATES[key] }
-  }
-  return { key: 'generic', template: GENERIC_TEMPLATE }
+const TEMPLATES: Record<string, IntentTemplate> = {
+  ...INTENT_TEMPLATES,
+  'happy-hour': HAPPY_HOUR_TEMPLATE,
+  reservations: RESERVATIONS_TEMPLATE,
+  affordability: AFFORDABILITY_TEMPLATE,
+  catering: CATERING_TEMPLATE,
+}
+
+function matchTemplate(text: string): string | null {
+  for (const [key, pattern] of TEMPLATE_KEYWORDS) if (pattern.test(text)) return key
+  return null
+}
+
+export function templateFor(intent: string, questionTexts: string[]): { key: string; template: IntentTemplate } {
+  const key = matchTemplate(intent) ?? matchTemplate(questionTexts.join(' '))
+  return key && TEMPLATES[key] ? { key, template: TEMPLATES[key] } : { key: 'generic', template: GENERIC_TEMPLATE }
 }
 
 const GENERIC_TEMPLATE: IntentTemplate = {
