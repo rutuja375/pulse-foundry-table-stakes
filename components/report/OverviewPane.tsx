@@ -15,7 +15,7 @@ import { KpiGrid } from '@/components/primitives/KpiGrid'
 import { Drawer } from '@/components/ui/Drawer'
 import { MatrixTable } from './MatrixTable'
 import { AssistantTable, CompetitorTable } from './SideTables'
-import { buildMatrix, formatDate, formatPosition, formatRate, headline, intentCoverage } from '@/lib/view/derive'
+import { buildMatrix, failureSummary, formatDate, formatPosition, formatRate, headline, intentCoverage } from '@/lib/view/derive'
 import type { IngestedReport } from '@/lib/view/ingest'
 
 function stripMarkdown(text: string): string {
@@ -89,6 +89,7 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
   const matrix = useMemo(() => buildMatrix(report), [report])
   const verdict = useMemo(() => headline(report), [report])
   const coverage = useMemo(() => intentCoverage(report), [report])
+  const failures = useMemo(() => failureSummary(report), [report])
 
   const startIndex = useMemo(() => {
     if (!initialAnswerKey) return null
@@ -138,10 +139,12 @@ export function OverviewPane({ report, initialAnswerKey }: { report: IngestedRep
         */}
         {report.totals.answers > 0 && report.totals.failed / report.totals.answers > 0.1 && (
           <div className="banner banner-warn" role="status">
-            <b>Incomplete run — {report.totals.failed} of {report.totals.answers} answers failed.</b>{' '}
-            The pipeline stopped partway (the account hit its spending limit mid-run), so every rate below is
-            computed from the {report.totals.answers - report.totals.failed} answers that completed. Per-assistant
-            coverage is not comparable while the denominators differ.
+            <b>
+              Incomplete run — {report.totals.failed} of {report.totals.answers} answers failed.
+            </b>{' '}
+            {failures.sentence} Every rate below is computed from the{' '}
+            {report.totals.answers - report.totals.failed} answers that completed, so per-assistant coverage is
+            not comparable while the denominators differ.
           </div>
         )}
       </header>

@@ -126,6 +126,52 @@ export function hedgers(report: IngestedReport): IngestedReport['assistants'] {
   return report.assistants.filter(a => a.refused > 0)
 }
 
+/**
+ * Why answers failed — read from the payload, never assumed.
+ *
+ * The banner used to say "the account hit its spending limit", which happened to
+ * be true of this run and would be a lie about the next one. The failure reasons
+ * are in the answers; summarise them instead of narrating them.
+ */
+const FAILURE_LABELS: Record<string, string> = {
+  '402': '402 payment required',
+  '429': '429 rate limited',
+  '500': '500 provider error',
+  '502': '502 bad gateway',
+  '503': '503 unavailable',
+  '504': '504 gateway timeout',
+  timeout: 'timeout',
+  'empty-content': 'empty reply',
+}
+
+export function failureSummary(report: IngestedReport): {
+  total: number
+  breakdown: Array<{ label: string; count: number }>
+  sentence: string
+} {
+  const failures = report.answers.filter(answer => answer.error)
+  const counts = new Map<string, number>()
+
+  for (const failure of failures) {
+    const raw = failure.error ?? 'unknown'
+    const status = raw.match(/\b(\d{3})\b/)?.[1]
+    const key = status ?? (/timeout/i.test(raw) ? 'timeout' : /empty/i.test(raw) ? 'empty-content' : 'other')
+    counts.set(key, (counts.get(key) ?? 0) + 1)
+  }
+
+  const breakdown = Array.from(counts.entries())
+    .map(([key, count]) => ({ label: FAILURE_LABELS[key] ?? key, count }))
+    .sort((a, b) => b.count - a.count)
+
+  const sentence = breakdown.length
+    ? breakdown.length === 1
+      ? `All ${failures.length} failed with ${breakdown[0].label}.`
+      : breakdown.map(entry => `${entry.count} with ${entry.label}`).join(', ') + '.'
+    : ''
+
+  return { total: failures.length, breakdown, sentence }
+}
+
 export function intentCoverage(report: IngestedReport): Array<{ intent: string; total: number; named: number }> {
   const buckets = new Map<string, { total: number; named: number }>()
   const questionIntent = new Map(report.questions.map(q => [q.id, q.intent || 'untagged']))
