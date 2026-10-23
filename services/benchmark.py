@@ -4,12 +4,15 @@ from typing import Any, Callable
 from services.openrouter import run_restaurant_query
 
 
+# Model ids must exist on OpenRouter or every query for that model fails.
+# "x-ai/grok-latest" and "deepseek/deepseek-flash" are not real ids — verified
+# against /api/v1/models — which made a full run lose 40 of its 100 requests.
 RANKING_MODELS = {
     "OpenAI": "openai/gpt-5.2",
     "Gemini": "google/gemini-3.8-flash",
     "Claude": "anthropic/claude-sonnet-5",
-    "Grok": "x-ai/grok-latest",
-    "DeepSeek": "deepseek/deepseek-flash",
+    "Grok": "x-ai/grok-4.5",
+    "DeepSeek": "deepseek/deepseek-v4-flash",
 }
 
 
